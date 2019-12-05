@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Tinkerbell | packethost.github.io</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Tinkerbell" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Home of tinkerbell.org" />
+<meta property="og:description" content="Home of tinkerbell.org" />
+<link rel="canonical" href="http://tinkerbell.org/" />
+<meta property="og:url" content="http://tinkerbell.org/" />
+<meta property="og:site_name" content="packethost.github.io" />
+<script type="application/ld+json">
+{"@type":"WebSite","url":"http://tinkerbell.org/","name":"packethost.github.io","headline":"Tinkerbell","description":"Home of tinkerbell.org","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="/assets/css/style.css?v=268b17df46f297225cfc0c07ab4330ab25cdb671">
+  </head>
+  <body>
+    <section class="main-content">
+      <h1 id="tinkerbell">Tinkerbell</h1>
+
+<h2 id="setup-a-provisioner">Setup a Provisioner</h2>
+
+<h3 id="create-a-server-under-oss-provisioner">Create a server under OSS Provisioner</h3>
+<ul>
+  <li>Select - On Demand</li>
+  <li>Hostname - <code class="language-plaintext highlighter-rouge">&lt;unique&gt;</code></li>
+  <li>Location - EWR1</li>
+  <li>Type - c2.medium.x86</li>
+  <li>OS - Ubuntu 18.04 LTS</li>
+</ul>
+
+<h3 id="set-server-network">Set server network</h3>
+<ul>
+  <li>select ‘convert to other network type’</li>
+  <li>choose Mixed/Hybrid</li>
+  <li>for Layer 2, add new VLAN
+    <ul>
+      <li>interface: eth1</li>
+      <li>network: provisioning-vlan</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="ssh-into-server-as-root">SSH into server as root</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh root@&lt;server-IP&gt;
+</code></pre></div></div>
+
+<h3 id="add-packet-nameservers">Add Packet nameservers</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /etc/resolv.conf
+nameserver 147.75.207.207
+nameserver 147.75.207.208
+</code></pre></div></div>
+
+<h3 id="add-a-static-ip-for-an-interface">Add a static IP for an interface</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /etc/network/interfaces
+auto enp1s0f1
+iface enp1s0f1 inet static
+    address 192.168.1.1
+    netmask 255.255.255.240
+
+$ ifdown  enp1s0f1
+$ ifup  enp1s0f1
+$ ip a | grep -A 5 -B 2  enp1s0f1
+</code></pre></div></div>
+
+<h3 id="update-ip-tables">Update IP Tables</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ iptables -t nat -A POSTROUTING -s 192.168.1.1/28 -j MASQUERADE
+</code></pre></div></div>
+
+<h3 id="setup-go">Setup Go</h3>
+<p><em>Download Go</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wget https://dl.google.com/go/go1.12.13.linux-amd64.tar.gz
+</code></pre></div></div>
+<p><em>Unpack</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	$ tar -C /usr/local -xzf go1.12.13.linux-amd64.tar.gz go/
+	$ rm go1.12.13.linux-amd64.tar.gz
+</code></pre></div></div>
+<p><em>Set environment</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir -p ~/go ~/go/src
+$ vi ~/.bashrc
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$GOPATH:$HOME/go
+export PATH=$PATH:$GOPATH
+$ source ~/.bashrc
+</code></pre></div></div>
+
+<h3 id="git">Git</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt update -y &amp;&amp; sudo apt upgrade -y
+$ apt install git -y
+$ wget https://github.com/git-lfs/git-lfs/releases/download/v2.9.0/git-lfs-linux-amd64-v2.9.0.tar.gz
+$ tar -C /usr/local/bin -xzf git-lfs-linux-amd64-v2.9.0.tar.gz
+$ git lfs install
+</code></pre></div></div>
+
+<h3 id="get-packet-components">Get Packet Components</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src
+$ mkdir -p github.com github.com/packethost/
+$ cd github.com/packethost/
+$ git clone https://github.com/packethost/tinkerbell.git
+$ git clone https://github.com/packethost/rover.git
+</code></pre></div></div>
+
+<p><em>Cacher</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/cacher
+$ git checkout rearrangement
+$ make
+</code></pre></div></div>
+
+<p><em>Tinkerbell</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/tinkerbell
+$ git checkout demo
+$ git lfs pull
+$ make
+</code></pre></div></div>
+
+<p><em>Rover</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/rover
+$ git checkout demo
+$ make
+</code></pre></div></div>
+
+<h3 id="install-docker--dockercompose">Install Docker &amp; DockerCompose</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl -L get.docker.com | bash
+$ curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ chmod +x /usr/local/bin/docker-compose
+</code></pre></div></div>
+
+<h3 id="setup-nginx">Setup NGINX</h3>
+<p><em>Install NGINX</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ apt install nginx -y
+</code></pre></div></div>
+
+<p><em>Configure NGINX to listen at the IP and port</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /etc/nginx/sites-available/default
+server {
+        listen 192.168.1.1:8086 default_server;
+        ...
+}
+$ service nginx restart
+</code></pre></div></div>
+
+<h3 id="update-endpoints">Update Endpoints</h3>
+<ul>
+  <li>Update the hosts in <code class="language-plaintext highlighter-rouge">tls/server-csr.in.json</code> to have an entry for host IP</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi tls/server-csr.in.json
+"hosts": [
+    "rover.@FACILITY@.packet.net",
+    "rover.registry",
+    "rover.rover",
+    "rover",
+    "localhost",
+    "127.0.0.1",
+    "192.168.1.1"
+  ],
+</code></pre></div></div>
+<ul>
+  <li>Update <code class="language-plaintext highlighter-rouge">fluent-bit.conf</code> with the host IP</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sed -i -e "s/Host 0.0.0.0/HOST 192.168.1.1/g" fluent-bit.conf
+</code></pre></div></div>
+<ul>
+  <li>Update the docker-compose.yml file based on host IP added above.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e "s/username/packetadmin/g" docker-compose.yml
+sed -i -e "s/password/P@ck3tR0cks!/g" docker-compose.yml
+sed -i -e "s/127.0.0.1:69/192.168.1.1:69/g" docker-compose.yml
+sed -i -e "s/127.0.0.1:80/192.168.1.1:80/g" docker-compose.yml
+sed -i -e "s/DNS_SERVERS: 8.8.8.8/DNS_SERVERS: '147.75.207.207,147.75.207.208'/g" docker-compose.yml
+sed -i -e "s/PUBLIC_IP: 127.0.0.1/PUBLIC_IP: 192.168.1.1/g" docker-compose.yml
+sed -i -e "s/BOOTP_BIND: 127.0.0.1:67/BOOTP_BIND: 192.168.1.1:67/g" docker-compose.yml
+sed -i -e "s/SYSLOG_BIND: 127.0.0.1:514/SYSLOG_BIND: 192.168.1.1:514/g" docker-compose.yml
+sed -i -e "s/DOCKER_REGISTRY: 127.0.0.1/DOCKER_REGISTRY: 192.168.1.1/g" docker-compose.yml
+sed -i -e "s/ROVER_GRPC_AUTHORITY: 127.0.0.1:42113/ROVER_GRPC_AUTHORITY: 192.168.1.1:42113/g" docker-compose.yml
+sed -i -e "s#ROVER_CERT_URL: http://127.0.0.1:42114/cert#ROVER_CERT_URL: http://192.168.1.1:42114/cert#g" docker-compose.yml
+sed -i -e "s/ELASTIC_SEARCH_URL: 127.0.0.1:9200/ELASTIC_SEARCH_URL: 192.168.1.1:9200/g" docker-compose.yml
+</code></pre></div></div>
+<ul>
+  <li>Define a file to hold Packet environment variables:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi ~/.packetrc
+export FACILITY="onprem"
+export PACKET_API_AUTH_TOKEN="&lt;dummy_token&gt;"
+export PACKET_API_URL=""
+export PACKET_CONSUMER_TOKEN="&lt;dummy_token&gt;"
+export PACKET_ENV="onprem"
+export PACKET_VERSION="onprem"
+export ROLLBAR_TOKEN="&lt;dummy_token&gt;"
+export ROLLBAR_DISABLE=1
+export API_AUTH_TOKEN="&lt;dummy_token&gt;"
+export API_CONSUMER_TOKEN="&lt;dummy_token&gt;"
+export FACILITY_CODE=lab1
+export PACKET_ENV=testing
+export MIRROR_HOST=192.168.1.1:8086
+
+$ echo 'source ~/.packetrc' &gt;&gt; ~/.bashrc
+</code></pre></div></div>
+
+<p>Ensure that you set <code class="language-plaintext highlighter-rouge">MIRROR_HOST</code> as the IP NGINX is listening on</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ source ~/.packetrc
+</code></pre></div></div>
+
+<h3 id="start-services">Start Services</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/rover
+$ docker-compose up -d --build elasticsearch fluentbit kibana
+$ docker-compose up -d --build certs
+$ docker-compose up -d --build registry
+$ docker-compose up -d --build db server cli tinkerbell
+$ docker-compose ps
+</code></pre></div></div>
+<p><strong>Note:</strong> The certs service must have an Exit(0) status. Also, there should be a new certs directory that holds all the certificates.</p>
+
+<h3 id="update-host-to-trust-registry-certificate">Update Host to trust Registry Certificate</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir -p /etc/docker/certs.d /etc/docker/certs.d/192.168.1.1
+$ cp certs/ca.pem /etc/docker/certs.d/192.168.1.1/ca.crt
+$ docker login 192.168.1.1 -u packetadmin -p P@ck3tR0cks!
+</code></pre></div></div>
+<p><strong>Note:</strong> If there is an error saving the credentials, the following command will fix the issue. However, I’m not certain if this is recommended.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ apt purge golang-docker-credential-helpers
+</code></pre></div></div>
+
+<h3 id="worker-image">Worker Image</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/rover/worker
+$ docker build -t 192.168.1.1/worker .
+$ docker push 192.168.1.1/worker
+</code></pre></div></div>
+
+<h3 id="action-images">Action Images</h3>
+<p>The registry must have an image for all the actions in a workflow. To push an action image:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker tag &lt;action-image&gt; &lt;registry-host&gt;/&lt;action-image&gt;
+$ docker push &lt;registry-host&gt;/&lt;action-image&gt;
+</code></pre></div></div>
+<p>Example action images:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker pull hello-world
+$ docker tag hello-world 192.168.1.1/hello-world
+$ docker push 192.168.1.1/hello-world
+$ cd worker &amp;&amp; docker build -t 192.168.1.1/worker .
+$ docker push 192.168.1.1/worker
+</code></pre></div></div>
+
+<h3 id="setup-osie">Setup Osie</h3>
+
+<p>Create the following directories:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /var/www/html/
+$ mkdir -p ipxe misc misc/osie misc/tinkerbell misc/tinkerbell/workflow
+</code></pre></div></div>
+<p>Copy the registry certificate:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cp ~/go/src/github.com/packethost/rover/certs/ca.pem misc/tinkerbell/workflow/
+</code></pre></div></div>
+<p>Get the build for workflow branch and place the required files under <code class="language-plaintext highlighter-rouge">/var/www/html/misc/osie/current</code> directory</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /var/www/html/misc/osie
+$ wget http://install.ewr1.packet.net/misc/osie/current.tar.gz
+$ tar -zxf current.tar.gz
+$ mv osie-v19.08.28.00-n\=8\,c\=b47f876\,b\=master/ current
+</code></pre></div></div>
+
+<h3 id="pushing-hardware-data-into-database">Pushing hardware data into database</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker exec -it rover_cli_1 ash
+/# vi /tmp/hardware.json
+'{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2.mb3.mbc2.1107.nrt1.packet.net", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "93176acb-8ac5-4fc2-80cc-5c66a93afd68", "name": "Andyet"}, "primary_owner": {"id": "864bb995-e2ad-442a-b3f1-40232abcadb6", "full_name": "Andyet Ops"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "nginx-sandbox", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "147.75.95.19", "enabled": true, "gateway": "147.75.95.18", "netmask": "255.255.255.254", "network": "147.75.95.18", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "10.64.11.129", "enabled": true, "gateway": "10.64.11.128", "netmask": "255.255.255.254", "network": "10.64.11.128", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "$6$qViImWbWFfH/a4pq$s1bpFFXMpQj1eQbHWsruLy6/j7qoE1Slw4pnZCCqi1k8MrOOYRqy8QJzIWnuGivTZRS3Af0pMyVOGeXPbHfRl1", "operating_system_version": {"slug": "ubuntu_16_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_16_04", "version": "16.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "t1.small.x86", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
+"name": "xe-0/0/10:0", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "&lt;worker_mac_addr&gt;", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
+
+/# rover hardware push "`cat /tmp/hardware.json`"
+/# rover hardware all
+</code></pre></div></div>
+<p><strong>Note:</strong> Replace <code class="language-plaintext highlighter-rouge">&lt;worker_mac_addr&gt;</code> in <code class="language-plaintext highlighter-rouge">/tmp/hardware.json</code> with the worker’s MAC address.</p>
+
+<h3 id="creating-a-workflow">Creating a workflow</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker exec -it rover_cli_1 ash
+/# vi /tmp/sample.tmpl
+version: '0.1'
+name: packet_osie_provision
+global_timeout: 600
+tasks:
+- name: "OS Installation"
+  worker: ""
+  actions:
+  - name: "server_partitioning"
+    image: hello-world
+    timeout: 60
+    on-timeout: do_partion recover -timeout
+    on-failure: do_partion recover -failure
+  - name: os_install
+    image: hello-world
+    timeout: 60
+    on-timeout: "os_install -timeout"
+    on-failure: "os_install -failure"
+- name: "Updated DB Entries"
+  worker: ""
+  actions:
+  - name: "update_db"
+    image: hello-world
+    timeout: 50
+    on-timeout: "rover_client update-timeout"
+    on-failure: "rover_client update-failed"
+
+/# rover template create -n 'template_name' -p /tmp/sample.tmpl
+/# rover workflow create -r &lt;target_id&gt; -t &lt;template_id&gt;
+</code></pre></div></div>
+
+<h2 id="setup-worker">Setup Worker</h2>
+<h3 id="create-a-server-under-oss-provisioner-1">Create a server under OSS Provisioner</h3>
+<ul>
+  <li>Select - On Demand</li>
+  <li>Hostname - <code class="language-plaintext highlighter-rouge">&lt;unique&gt;</code></li>
+  <li>Location - EWR1</li>
+  <li>Type - c2.medium.x86</li>
+  <li>OS - Custom iPXE</li>
+</ul>
+
+<h3 id="server-network">Server Network</h3>
+<ul>
+  <li>select ‘convert to other network type’</li>
+  <li>choose Layer 2 type</li>
+  <li>among Bonded and Individual, select Individual</li>
+  <li>add new VLAN</li>
+  <li>interface: eth0</li>
+  <li>network: provisioning-vlan</li>
+  <li>enable always PXE boot</li>
+</ul>
+
+<h3 id="connect">Connect</h3>
+<p>Use the Out-of-Band Console to connect with the server:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh d764666a-fd80-4e15-8042-7cf0e254718e@sos.ewr1.packet.net
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="mistakes-to-watch-out-for">Mistakes to watch out for</h2>
+<ul>
+  <li>Not setting the worker to always PXE</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PowerEdge R6415 - BIOS 1.8.7
+A system restart is required. The system detected an exception during the UEFI
+pre-boot environment.
+</code></pre></div></div>
+
+<ul>
+  <li>Not rebuilding the registry container after rebuilding the certs container</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Login did not succeed, error: Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "Autogenerated CA")
+</code></pre></div></div>
+
+<ul>
+  <li>Not placing the ca.pem file in the <code class="language-plaintext highlighter-rouge">misc/tinkerbell/workflow</code> directory (after rebuilding the certs container)</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Waiting for docker to respond...
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "Autogenerated CA")
+</code></pre></div></div>
+
+
+
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+
+    
+  </body>
+</html>
+
