@@ -57,8 +57,8 @@ code {
 .box {
 	padding: 20px;
 	margin: 0 auto;
-	width: 140px
-	height: 140px;
+	width: 140px;
+	height: 130px;
 	border: 3px solid #576c81;
 	background-color: #b6d7a8;
 	text-align: center;
@@ -81,7 +81,7 @@ code {
 .box a {
 position: absolute;
     display: block;
-    bottom: 0;
+    bottom: 5px;
     margin: 0 auto;
     left: 50px;
 }
