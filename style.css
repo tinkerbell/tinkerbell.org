@@ -4,11 +4,25 @@ html,body {
 	border: 0;
 	font-family: 'Source Sans Pro', sans-serif;
 }
+a,a:visited,a:hover,a:link {
+	color: #242e3c;
+}
 .logo-header {
 	background-color: #242e3c;
 }
 .logo-header-dots {
 	background: transparent url(dots.png) repeat;
+	padding: 10px;
+}
+.menu > ul {
+	list-style-type: none;
+}
+.menu > ul > li {
+	margin: 0 10px;
+	display: inline;
+}
+.menu > ul > li > a {
+	color: #fff;
 }
 .main-content {
 	width: 80%;
