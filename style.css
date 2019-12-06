@@ -37,5 +37,40 @@ a,a:visited,a:hover,a:link,a:hover {
 	margin: 0 auto;
 }
 code {
-    display: inline-block; 
+	display: inline-block; 
+}
+.alert-info {
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+.alert {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+.box-container {
+	width: 25%;
+}
+.box {
+	margin: 0 auto;
+	width: 100px
+	height: 100px;
+	border: 3px solid #242e3c;
+	background-color: #b6d7a8;
+	text-align: center;
+}
+.box h3 {
+	margin: 0;
+	padding: 5px 0;
+	font-weight: bold;
+	font-size: 14px;
+}
+.box p {
+	margin: 0;
+	padding: 2px;
+	line-height: 14px;
+	font-weight: light;
+	font-size: 12px;
 }
