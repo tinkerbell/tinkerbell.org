@@ -52,25 +52,36 @@ code {
 }
 .box-container {
 	width: 25%;
+	float: left;
 }
 .box {
+	padding: 20px;
 	margin: 0 auto;
-	width: 100px
-	height: 100px;
-	border: 3px solid #242e3c;
+	width: 140px
+	height: 140px;
+	border: 3px solid #576c81;
 	background-color: #b6d7a8;
 	text-align: center;
+	position: relative;
 }
 .box h3 {
-	margin: 0;
-	padding: 5px 0;
-	font-weight: bold;
-	font-size: 14px;
+    margin: 0;
+    padding: 5px 0;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
 }
 .box p {
 	margin: 0;
-	padding: 2px;
-	line-height: 14px;
-	font-weight: light;
-	font-size: 12px;
+    padding: 2px;
+    line-height: 22px;
+    font-weight: 300;
+    font-size: 18px;
+}
+.box a {
+position: absolute;
+    display: block;
+    bottom: 0;
+    margin: 0 auto;
+    left: 50px;
 }
