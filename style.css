@@ -1,0 +1,12 @@
+html,body {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+.logo-header {
+	background-color: #242e3c;
+}
+.logo-header-dots {
+	background: transparent url(dots.png) repeat;
+}
