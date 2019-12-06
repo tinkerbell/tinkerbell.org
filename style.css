@@ -3,6 +3,8 @@ html,body {
 	margin: 0;
 	border: 0;
 	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 300;
+	font-size: 13pt;
 }
 a,a:visited,a:hover,a:link,a:hover {
 	color: #242e3c;
@@ -29,7 +31,11 @@ a,a:visited,a:hover,a:link,a:hover {
 	margin: 0 10px;
 	display: inline;
 }
-.menu > ul > li > a,a:visited,a:hover,a:link,a:hover {
+.menu > ul > li > a,
+.menu > ul > li > a:visited,
+.menu > ul > li > a:hover,
+.menu > ul > li > a:link,
+.menu > ul > li > a:hover {
 	color: #fff;
 }
 .main-content {
@@ -63,6 +69,7 @@ code {
 	background-color: #b6d7a8;
 	text-align: center;
 	position: relative;
+	border-radius: 4px;
 }
 .box h3 {
     margin: 0;
@@ -83,5 +90,5 @@ position: absolute;
     display: block;
     bottom: 5px;
     margin: 0 auto;
-    left: 50px;
+    left: 70px;
 }
