@@ -72,23 +72,29 @@ code {
 	border-radius: 4px;
 }
 .box h3 {
-    margin: 0;
-    padding: 5px 0;
-    font-weight: bold;
-    font-size: 20px;
-    text-transform: uppercase;
+	margin: 0;
+	padding: 5px 0;
+	font-weight: bold;
+	font-size: 20px;
+	text-transform: uppercase;
 }
 .box p {
 	margin: 0;
-    padding: 2px;
-    line-height: 22px;
-    font-weight: 300;
-    font-size: 18px;
+	padding: 2px;
+	line-height: 22px;
+	font-weight: 300;
+	font-size: 18px;
 }
 .box a {
-position: absolute;
-    display: block;
-    bottom: 5px;
-    margin: 0 auto;
-    left: 70px;
+	position: absolute;
+	display: block;
+	bottom: 5px;
+	margin: 0 auto;
+	left: 70px;
+}
+@media screen and (max-width: 970px) {
+	.box-container {
+		width: 100%;
+		margin-bottom: 20px;
+	}
 }
