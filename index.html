@@ -261,47 +261,46 @@ $ docker push 192.168.1.1/worker
 <h3 id="action-images">Action Images</h3>
 <p>The registry must have an image for all the actions in a workflow. To push an action image:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker tag &lt;action-image&gt; &lt;registry-host&gt;/&lt;action-image&gt;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><code>$ docker tag &lt;action-image&gt; &lt;registry-host&gt;/&lt;action-image&gt;
 $ docker push &lt;registry-host&gt;/&lt;action-image&gt;
-</code></pre></div></div>
+</code></div></div>
 <p>Example action images:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker pull hello-world
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><code>$ docker pull hello-world
 $ docker tag hello-world 192.168.1.1/hello-world
 $ docker push 192.168.1.1/hello-world
 $ cd worker &amp;&amp; docker build -t 192.168.1.1/worker .
 $ docker push 192.168.1.1/worker
-</code></pre></div></div>
+</code></div></div>
 
 <h3 id="setup-osie">Setup Osie</h3>
 
 <p>Create the following directories:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /var/www/html/
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><code>$ cd /var/www/html/
 $ mkdir -p ipxe misc misc/osie misc/tinkerbell misc/tinkerbell/workflow
-</code></pre></div></div>
+</code></div></div>
 <p>Copy the registry certificate:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cp ~/go/src/github.com/packethost/rover/certs/ca.pem misc/tinkerbell/workflow/
-</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><code>$ cp ~/go/src/github.com/packethost/rover/certs/ca.pem misc/tinkerbell/workflow/
+</code></div></div>
 <p>Get the build for workflow branch and place the required files under <code class="language-plaintext highlighter-rouge">/var/www/html/misc/osie/current</code> directory</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /var/www/html/misc/osie
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><code>$ cd /var/www/html/misc/osie
 $ wget http://install.ewr1.packet.net/misc/osie/current.tar.gz
 $ tar -zxf current.tar.gz
 $ mv osie-v19.08.28.00-n\=8\,c\=b47f876\,b\=master/ current
-</code></pre></div></div>
+</code></div></div>
 
 <h3 id="pushing-hardware-data-into-database">Pushing hardware data into database</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker exec -it rover_cli_1 ash
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><code>$ docker exec -it rover_cli_1 ash
 /# vi /tmp/hardware.json
-'{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2.mb3.mbc2.1107.nrt1.packet.net", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "93176acb-8ac5-4fc2-80cc-5c66a93afd68", "name": "Andyet"}, "primary_owner": {"id": "864bb995-e2ad-442a-b3f1-40232abcadb6", "full_name": "Andyet Ops"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "nginx-sandbox", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "147.75.95.19", "enabled": true, "gateway": "147.75.95.18", "netmask": "255.255.255.254", "network": "147.75.95.18", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "10.64.11.129", "enabled": true, "gateway": "10.64.11.128", "netmask": "255.255.255.254", "network": "10.64.11.128", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "$6$qViImWbWFfH/a4pq$s1bpFFXMpQj1eQbHWsruLy6/j7qoE1Slw4pnZCCqi1k8MrOOYRqy8QJzIWnuGivTZRS3Af0pMyVOGeXPbHfRl1", "operating_system_version": {"slug": "ubuntu_16_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_16_04", "version": "16.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "t1.small.x86", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
-"name": "xe-0/0/10:0", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "&lt;worker_mac_addr&gt;", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
+'{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2.mb3.mbc2.1107.nrt1.packet.net", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "93176acb-8ac5-4fc2-80cc-5c66a93afd68", "name": "Andyet"}, "primary_owner": {"id": "864bb995-e2ad-442a-b3f1-40232abcadb6", "full_name": "Andyet Ops"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "nginx-sandbox", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "147.75.95.19", "enabled": true, "gateway": "147.75.95.18", "netmask": "255.255.255.254", "network": "147.75.95.18", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "10.64.11.129", "enabled": true, "gateway": "10.64.11.128", "netmask": "255.255.255.254", "network": "10.64.11.128", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "$6$qViImWbWFfH/a4pq$s1bpFFXMpQj1eQbHWsruLy6/j7qoE1Slw4pnZCCqi1k8MrOOYRqy8QJzIWnuGivTZRS3Af0pMyVOGeXPbHfRl1", "operating_system_version": {"slug": "ubuntu_16_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_16_04", "version": "16.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "t1.small.x86", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},"name": "xe-0/0/10:0", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "esr1.1107.nrt1.packet.net"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "&lt;worker_mac_addr&gt;", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
 
 /# rover hardware push "`cat /tmp/hardware.json`"
 /# rover hardware all
-</code></pre></div></div>
+</code></div></div>
 <p><strong>Note:</strong> Replace <code class="language-plaintext highlighter-rouge">&lt;worker_mac_addr&gt;</code> in <code class="language-plaintext highlighter-rouge">/tmp/hardware.json</code> with the worker’s MAC address.</p>
 
 <h3 id="creating-a-workflow">Creating a workflow</h3>
