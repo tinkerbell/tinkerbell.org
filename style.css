@@ -10,3 +10,7 @@ html,body {
 .logo-header-dots {
 	background: transparent url(dots.png) repeat;
 }
+.main-content {
+	width: 80%;
+	margin: 0 auto;
+}
