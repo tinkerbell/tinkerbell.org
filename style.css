@@ -44,7 +44,6 @@ h2 {
 	color: #03a688;
 }
 pre {
-	/* width: 100%; */
 	overflow-x: scroll;
 	padding: 20px;
 	border-radius: 4px;
@@ -73,7 +72,7 @@ hr {
 	border-radius: 4px;
 }
 .content-section {
-	margin-bottom: 50px;
+	margin-bottom: 40px;
 }
 .boxes{
 	display: flex;
