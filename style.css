@@ -42,8 +42,13 @@ a,a:visited,a:hover,a:link,a:hover {
 	width: 80%;
 	margin: 0 auto;
 }
+pre {
+	width: 100%;
+	overflow-x: scroll;
+}
 code {
-	display: inline-block; 
+	display: inline-block;
+	font-size: 11pt; 
 }
 .alert-info {
 	color: #31708f;
