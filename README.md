@@ -167,8 +167,8 @@ $ sed -i -e "s/Host 0.0.0.0/HOST 192.168.1.1/g" fluent-bit.conf
 * Update the docker-compose.yml file based on host IP added above.
 
 ```
-sed -i -e "s/username/packetadmin/g" docker-compose.yml
-sed -i -e "s/password/P@ck3tR0cks!/g" docker-compose.yml
+sed -i -e "s/username/admin/g" docker-compose.yml
+sed -i -e "s/password/pass/g" docker-compose.yml
 sed -i -e "s/127.0.0.1:69/192.168.1.1:69/g" docker-compose.yml
 sed -i -e "s/127.0.0.1:80/192.168.1.1:80/g" docker-compose.yml
 sed -i -e "s/DNS_SERVERS: 8.8.8.8/DNS_SERVERS: '147.75.207.207,147.75.207.208'/g" docker-compose.yml
@@ -224,7 +224,7 @@ $ docker-compose ps
 ```
 $ mkdir -p /etc/docker/certs.d /etc/docker/certs.d/192.168.1.1
 $ cp certs/ca.pem /etc/docker/certs.d/192.168.1.1/ca.crt
-$ docker login 192.168.1.1 -u packetadmin -p P@ck3tR0cks!
+$ docker login 192.168.1.1 -u admin -p pass
 ```
 **Note:** If there is an error saving the credentials, the following command will fix the issue. However, I’m not certain if this is recommended.
 
