@@ -3,34 +3,34 @@
 <html lang="en-US">
   <head>
     <meta charset="UTF-8">
-<title>Tinkerbell, a Provisioning Engine by Packet</title>
-<meta name="generator" content="Packet Host, Inc." />
-<meta property="og:title" content="Tinkerbell" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Tinkerbell, a Provisioning Engine by Packet" />
-<meta property="og:description" content="Tinkerbell, a Provisioning Engine by Packet" />
-<link rel="canonical" href="https://tinkerbell.org/" />
-<meta property="og:url" content="https://tinkerbell.org/" />
-<meta property="og:site_name" content="tinkerbell.org" />
-<link rel="icon" type="image/png" sizes="128x128" href="favicon.png?v=1">
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700&display=swap" rel="stylesheet">
+	<title>Tinkerbell, a Provisioning Engine by Packet</title>
+	<meta name="generator" content="Packet Host, Inc." />
+	<meta property="og:title" content="Tinkerbell" />
+	<meta property="og:locale" content="en_US" />
+	<meta name="description" content="Tinkerbell, a Provisioning Engine by Packet" />
+	<meta property="og:description" content="Tinkerbell, a Provisioning Engine by Packet" />
+	<link rel="canonical" href="https://tinkerbell.org/" />
+	<meta property="og:url" content="https://tinkerbell.org/" />
+	<meta property="og:site_name" content="tinkerbell.org" />
+	<link rel="icon" type="image/png" sizes="128x128" href="favicon.png?v=1">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700&display=swap" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css?v=10">
   </head>
   <body>
         <div class="logo-header">
-                <div class="logo-header-dots">
-                        <div class="logo">
-                                <img src="logo-white.png" height=54 />
-                        </div>
-                        <div class="menu">
-                                <ul>
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="/setup">Setup</a></li>
-                                </ul>
-                        </div>
-                </div>
+			<div class="logo-header-dots">
+				<div class="logo">
+					<img src="logo-white.png" height=54 />
+				</div>
+				<div class="menu">
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="/setup">Setup</a></li>
+					</ul>
+				</div>
+			</div>
         </div>
     <section class="main-content">
 	<br />
@@ -38,48 +38,55 @@
 		<b><i>Update December 5, 2019:</b> We are pleased to announce that Packet is open sourcing its bare metal provisioning engine under the name Tinkerbell. Packet will be opening its code repositories shortly. Links are provided below, and the setup process will be refined during this release process.</i>
 	</div>
 
-	<h3>Welcome</h3>
-	<p>Tinkerbell is a bare metal provisioning engine. It&rsquo;s built and maintained with love by the team at <a href="https://packet.com">Packet</a>.</p>
+	<div class="content-section">
+		<h3>Welcome</h3>
+		<p>Tinkerbell is a bare metal provisioning engine. It&rsquo;s built and maintained with love by the team at <a href="https://packet.com">Packet</a>.</p>
+	</div>
 
-	<h3>Overview</h3>
-	<p>There are four microservices that constitute Tinkerbell&rsquo;s provisioning stack.</p>
-
-	<div>
-		<div class="box-container">
-			<div class="box">
-				<h3>Boots</h3>
-				<p>DHCP & iPXE Server</p>
-				<a href="https://github.com/packethost/boots" width=40><img src="github-small.png" width=40 /></a>
+	<div class="content-section">
+		<h3>Overview</h3>
+		<p>There are four microservices that constitute Tinkerbell&rsquo;s provisioning stack.</p>
+		<div class="boxes">
+			<div class="box-container">
+				<div class="box">
+					<h3>Boots</h3>
+					<p>DHCP & iPXE Server</p>
+					<a href="https://github.com/packethost/boots" width=40><img src="github-small.png" width=40 /></a>
+				</div>
 			</div>
-		</div>
-		<div class="box-container">
-			<div class="box">
-				<h3>OSIE</h3>
-				<p>In-Memory Environment</p>
-				<a href="https://github.com/packethost/osie" width=40><img src="github-small.png" width=40 /></a>
+			<div class="box-container">
+				<div class="box">
+					<h3>OSIE</h3>
+					<p>In-Memory Environment</p>
+					<a href="https://github.com/packethost/osie" width=40><img src="github-small.png" width=40 /></a>
+				</div>
 			</div>
-		</div>
-		<div class="box-container">
-			<div class="box">
-				<h3>Tinkerbell</h3>
-				<p>Provisioning & Workflow Engine</p>
-				<a href="https://github.com/packethost/tinkerbell" width=40><img src="github-small.png" width=40 /></a>
+			<div class="box-container">
+				<div class="box">
+					<h3>Tinkerbell</h3>
+					<p>Provisioning & Workflow Engine</p>
+					<a href="https://github.com/packethost/tinkerbell" width=40><img src="github-small.png" width=40 /></a>
+				</div>
 			</div>
-		</div>
-		<div class="box-container">
-			<div class="box">
-				<h3>Hegel</h3>
-				<p>Metadata Service</p>
-				<a href="https://github.com/packethost/hegel" width=40><img src="github-small.png" width=40 /></a>
+			<div class="box-container">
+				<div class="box">
+					<h3>Hegel</h3>
+					<p>Metadata Service</p>
+					<a href="https://github.com/packethost/hegel" width=40><img src="github-small.png" width=40 /></a>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<h3>License</h3>
-	<p>All services are being released under the Apache 2.0 License.</p>
+	<div class="content-section">
+		<h3>License</h3>
+		<p>All services are being released under the Apache 2.0 License.</p>
+	</div>
 
-	<h3>Setup</h3>
-	<p>Full setup instructions will be provided <a href="setup">setup</a> as we complete the open source and release process.</p>
+	<div class="content-section">
+		<h3>Setup</h3>
+		<p>Full setup instructions will be provided <a href="setup">setup</a> as we complete the open source and release process.</p>
+	</div>
 
 
     </section>

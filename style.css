@@ -6,23 +6,20 @@ html,body {
 	font-weight: 300;
 	font-size: 13pt;
 }
-a,a:visited,a:hover,a:link,a:hover {
+a,a:visited,a:link,a:hover {
 	color: #242e3c;
 	text-decoration: none;
+	font-weight: normal;
 }
 .logo-header {
 	background-color: #242e3c;
 }
 .logo-header-dots {
+	display: flex;
+	justify-content: space-between;
 	height: 58px;
 	background: transparent url(dots.png) repeat;
 	padding: 10px;
-}
-.logo {
-	float: left;
-}
-.menu {
-	float: right;
 }
 .menu > ul {
 	list-style-type: none;
@@ -30,6 +27,7 @@ a,a:visited,a:hover,a:link,a:hover {
 .menu > ul > li {
 	margin: 0 10px;
 	display: inline;
+	font-weight: normal;
 }
 .menu > ul > li > a,
 .menu > ul > li > a:visited,
@@ -46,18 +44,22 @@ h2 {
 	color: #03a688;
 }
 pre {
-	width: 100%;
+	/* width: 100%; */
 	overflow-x: scroll;
 	padding: 20px;
 	border-radius: 4px;
 	background-color: #f3f6fa;
-	color: #567482;
+	color: #576c81;
 }
 code {
 	display: inline-block;
 }
 code.highlighter-rouge {
 	color: #f23005;
+}
+hr {
+	border: none;
+	border-top: 1px solid #ccc;
 }
 .alert-info {
 	color: #31708f;
@@ -70,9 +72,14 @@ code.highlighter-rouge {
 	border: 1px solid transparent;
 	border-radius: 4px;
 }
-.box-container {
-	width: 25%;
-	float: left;
+.content-section {
+	margin-bottom: 50px;
+}
+.boxes{
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
 }
 .box {
 	padding: 20px;
