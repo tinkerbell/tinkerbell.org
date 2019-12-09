@@ -42,6 +42,9 @@ a,a:visited,a:hover,a:link,a:hover {
 	width: 80%;
 	margin: 0 auto;
 }
+h2 {
+	color: #03a688;
+}
 pre {
 	width: 100%;
 	overflow-x: scroll;
