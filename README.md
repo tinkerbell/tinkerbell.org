@@ -59,8 +59,8 @@ $ wget https://dl.google.com/go/go1.12.13.linux-amd64.tar.gz
 *Unpack*
 
 ```
-	$ tar -C /usr/local -xzf go1.12.13.linux-amd64.tar.gz go/
-	$ rm go1.12.13.linux-amd64.tar.gz
+$ tar -C /usr/local -xzf go1.12.13.linux-amd64.tar.gz go/
+$ rm go1.12.13.linux-amd64.tar.gz
 ```
 *Set environment*
 

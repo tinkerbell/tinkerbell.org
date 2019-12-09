@@ -45,10 +45,16 @@ a,a:visited,a:hover,a:link,a:hover {
 pre {
 	width: 100%;
 	overflow-x: scroll;
+	padding: 20px;
+	border-radius: 4px;
+	background-color: #f3f6fa;
+	color: #567482;
 }
 code {
 	display: inline-block;
-	font-size: 11pt; 
+}
+code.highlighter-rouge {
+	color: #f23005;
 }
 .alert-info {
 	color: #31708f;
