@@ -14,9 +14,6 @@ a,a:visited,a:link {
 a:hover {
 	color: #f23005;
 }
-.github-link:hover {
-    opacity: 0.5;
-}
 .logo-header {
 	background-color: #242e3c;
 }
@@ -90,6 +87,7 @@ hr {
 	margin-bottom: 20px;
 }
 .box {
+    color: #000000;
 	padding: 20px;
 	margin: 0 auto;
 	width: 140px;
@@ -99,6 +97,10 @@ hr {
 	text-align: center;
 	position: relative;
 	border-radius: 10px;
+}
+.box:hover {
+    color: #000000;
+    box-shadow: 10px 10px 0px #03a688;
 }
 .box h3 {
 	margin: 0;
@@ -114,7 +116,7 @@ hr {
 	font-weight: 300;
 	font-size: 18px;
 }
-.box a {
+.box img {
 	position: absolute;
 	display: block;
 	bottom: 5px;
