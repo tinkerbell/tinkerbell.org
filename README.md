@@ -1,238 +1,81 @@
 # Tinkerbell
 
-## Set up a Provisioner
+# Creating Set Up 
 
-### Create a server
-* Select - On Demand
-* Hostname - `<unique>`
-* Location - EWR1
-* Type - c2.medium.x86
-* OS - Ubuntu 18.04 LTS
+## Complete Setup With Terraform
 
-### Set server network
-* select 'convert to other network type'
-* choose Mixed/Hybrid
-* for Layer 2, add new VLAN
-  * interface: eth1
-  * network: provisioning-vlan
-
-### SSH into server as root
-
-```
-$ ssh root@<server-IP>
+ - Clone the `tink` repository for latest code:
+```shell
+$ git clone https://github.com/tinkerbell/tink.git
+$ cd tink/terraform
 ```
 
-### Add Packet nameservers
+ - Update the `input.tf` file with desired values 
+ - Add your Packet `auth_token` in `input.tf`
+ - Run the following commands
+```shell
+$ terraform init
+$ terraform apply
+``` 
 
-```
-$ vi /etc/resolv.conf
-nameserver 147.75.207.207
-nameserver 147.75.207.208
-```
+The above commands will create a complete setup with `tf-provisioner` and `tf-worker` machines for the `packet` provider on which you can run any workflow. As an output it returns the IP address of the provisioner and MAC address of the worker machine.
 
-### Add a static IP for an interface
 
-```
-$ vi /etc/network/interfaces
-auto enp1s0f1
-iface enp1s0f1 inet static
-    address 192.168.1.1
-    netmask 255.255.255.240
+***_Note_ :*** The default names of machines created by Terraform are `tf-provisioner` and `tf-worker`. If you prefer other names, you need to replace `tf-provisioner` and `tf-worker` with the new ones at all places in `main.tf`.
 
-$ ifdown  enp1s0f1
-$ ifup  enp1s0f1
-$ ip a | grep -A 5 -B 2  enp1s0f1
-```
 
-### Update IP Tables
 
-```
-$ iptables -t nat -A POSTROUTING -s 192.168.1.1/28 -j MASQUERADE
-```
+## Setup without Terraform on two existing machines
 
-### Set up Go
-*Download Go*
+## 1. Setup Provisioner machine
 
-```
-$ wget https://dl.google.com/go/go1.12.13.linux-amd64.tar.gz
-```
-*Unpack*
+ ### 1.1. Setup git and git lfs
+    ```shell
+    $ sudo apt install -y git  
+    $ wget https://github.com/git-lfs/git-lfs/releases/download/v2.9.0/git-lfs-linux-amd64-v2.9.0.tar.gz  
+    $ tar -C /usr/local/bin -xzf git-lfs-linux-amd64-v2.9.0.tar.gz  
+    $ rm git-lfs-linux-amd64-v2.9.0.tar.gz  
+    $ git lfs install  
 
-```
-$ tar -C /usr/local -xzf go1.12.13.linux-amd64.tar.gz go/
-$ rm go1.12.13.linux-amd64.tar.gz
-```
-*Set environment*
+### 1.2. Setup go
+    ```shell
+    $ wget https://dl.google.com/go/go1.13.9.linux-amd64.tar.gz
+    $ tar -C /usr/local -xzf go1.13.9.linux-amd64.tar.gz go/
+    $ rm go1.13.9.linux-amd64.tar.gz
 
-```
-$ mkdir -p ~/go ~/go/src
-$ vi ~/.bashrc
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$GOPATH:$HOME/go
-export PATH=$PATH:$GOPATH
-$ source ~/.bashrc
-```
+### 1.3. Set GOPATH
+  ```
+    $ echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+    $ echo 'export GOPATH=$GOPATH:$HOME/go' >> ~/.bashrc
+    $ echo 'export PATH=$PATH:$GOPATH' >> ~/.bashrc
+    $ source ~/.bashrc
+  ```
+### 1.4. Install docker and docker-compose as follows:
+  ```
+    $ curl -L get.docker.com | bash
+    $ curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    $ chmod +x /usr/local/bin/docker-compose  
+  ```
+### 1.5. Clone the tink repo in the $GOPATH
+  ```
+    $ mkdir -p ~/go/src/github.com/tinkerbell
+    $ cd ~/go/src/github.com/tinkerbell
+    $ git clone https://github.com/tinkerbell/tink.git
+    $ cd tink
+  ```
+### 1.6. Provide the input details in "inputenv" file
 
-### Git
-
-```
-$ sudo apt update -y && sudo apt upgrade -y
-$ apt install git -y
-$ wget https://github.com/git-lfs/git-lfs/releases/download/v2.9.0/git-lfs-linux-amd64-v2.9.0.tar.gz
-$ tar -C /usr/local/bin -xzf git-lfs-linux-amd64-v2.9.0.tar.gz
-$ git lfs install
-```
-
-### Get Packet Components
-
-```
-$ cd ~/go/src
-$ mkdir -p github.com github.com/packethost/
-$ cd github.com/packethost/
-$ git clone https://github.com/packethost/boots.git
-$ git clone https://github.com/packethost/rover.git
-```
-
-*Cacher*
-
-```
-$ cd ~/go/src/github.com/packethost/cacher
-$ git checkout rearrangement
-$ make
-```
-
-*Boots*
-
-```
-$ cd ~/go/src/github.com/packethost/boots
-$ git checkout workflow
-$ git lfs pull
-$ make
-```
-
-*Rover*
-
-```
-$ cd ~/go/src/github.com/packethost/rover
-$ git checkout workflow
-$ make
-```
-
-### Install Docker & DockerCompose
-
-```
-$ curl -L get.docker.com | bash
-$ curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-$ chmod +x /usr/local/bin/docker-compose
-```
-
-### Set up NGINX
-*Install NGINX*
-
-```
-$ apt install nginx -y
-```
-
-*Configure NGINX to listen at the IP and port*
-
-```
-$ vi /etc/nginx/sites-available/default
-server {
-        listen 192.168.1.1:8086 default_server;
-        ...
-}
-$ service nginx restart
-```
-
-### Update Endpoints
-* Update the hosts in `tls/server-csr.in.json` to have an entry for host IP
-
-```
-$ vi tls/server-csr.in.json
-"hosts": [
-    "rover.@FACILITY@.packet.net",
-    "rover.registry",
-    "rover.rover",
-    "rover",
-    "localhost",
-    "127.0.0.1",
-    "192.168.1.1"
-  ],
-```
-* Update `fluent-bit.conf` with the host IP
-
-```
-$ sed -i -e "s/Host 0.0.0.0/HOST 192.168.1.1/g" fluent-bit.conf
-```
-* Update the docker-compose.yml file based on host IP added above.
-
-```
-sed -i -e "s/username/admin/g" docker-compose.yml
-sed -i -e "s/password/pass/g" docker-compose.yml
-sed -i -e "s/127.0.0.1:69/192.168.1.1:69/g" docker-compose.yml
-sed -i -e "s/127.0.0.1:80/192.168.1.1:80/g" docker-compose.yml
-sed -i -e "s/DNS_SERVERS: 8.8.8.8/DNS_SERVERS: '147.75.207.207,147.75.207.208'/g" docker-compose.yml
-sed -i -e "s/PUBLIC_IP: 127.0.0.1/PUBLIC_IP: 192.168.1.1/g" docker-compose.yml
-sed -i -e "s/BOOTP_BIND: 127.0.0.1:67/BOOTP_BIND: 192.168.1.1:67/g" docker-compose.yml
-sed -i -e "s/SYSLOG_BIND: 127.0.0.1:514/SYSLOG_BIND: 192.168.1.1:514/g" docker-compose.yml
-sed -i -e "s/DOCKER_REGISTRY: 127.0.0.1/DOCKER_REGISTRY: 192.168.1.1/g" docker-compose.yml
-sed -i -e "s/ROVER_GRPC_AUTHORITY: 127.0.0.1:42113/ROVER_GRPC_AUTHORITY: 192.168.1.1:42113/g" docker-compose.yml
-sed -i -e "s#ROVER_CERT_URL: http://127.0.0.1:42114/cert#ROVER_CERT_URL: http://192.168.1.1:42114/cert#g" docker-compose.yml
-sed -i -e "s/ELASTIC_SEARCH_URL: 127.0.0.1:9200/ELASTIC_SEARCH_URL: 192.168.1.1:9200/g" docker-compose.yml
-```
-* Define a file to hold Packet environment variables:
-
-```
-$ vi ~/.packetrc
-export FACILITY="onprem"
-export PACKET_API_AUTH_TOKEN="<dummy_token>"
-export PACKET_API_URL=""
-export PACKET_CONSUMER_TOKEN="<dummy_token>"
-export PACKET_ENV="onprem"
-export PACKET_VERSION="onprem"
-export ROLLBAR_TOKEN="<dummy_token>"
-export ROLLBAR_DISABLE=1
-export API_AUTH_TOKEN="<dummy_token>"
-export API_CONSUMER_TOKEN="<dummy_token>"
-export FACILITY_CODE=lab1
-export PACKET_ENV=testing
-export MIRROR_HOST=192.168.1.1:8086
-
-$ echo 'source ~/.packetrc' >> ~/.bashrc
-```
-
-Ensure that you set `MIRROR_HOST` as the IP NGINX is listening on
-
-```
-$ source ~/.packetrc
-```
-
-### Start Services
-
-```
-$ cd ~/go/src/github.com/packethost/rover
-$ docker-compose up -d --build elasticsearch fluentbit kibana
-$ docker-compose up -d --build certs
-$ docker-compose up -d --build registry
-$ docker-compose up -d --build db server cli tinkerbell
-$ docker-compose ps
-```
-**Note:** The certs service must have an Exit(0) status. Also, there should be a new certs directory that holds all the certificates.
-
-### Update Host to trust Registry Certificate
-
-```
-$ mkdir -p /etc/docker/certs.d /etc/docker/certs.d/192.168.1.1
-$ cp certs/ca.pem /etc/docker/certs.d/192.168.1.1/ca.crt
-$ docker login 192.168.1.1 -u admin -p pass
-```
+### 1.7. Run the following command
+  ```
+    $ sudo ./setup_with_docker_compose.sh
+  ```  
 **Note:** If there is an error saving the credentials, the following command will fix the issue. However, I’m not certain if this is recommended.
 
 ```
 $ apt purge golang-docker-credential-helpers
 ```
 
-### Action Images
+## Action Images
 The registry must have an image for all the actions in a workflow. To push an action image:
 
 ```
@@ -245,53 +88,41 @@ Example action images:
 $ docker pull hello-world
 $ docker tag hello-world 192.168.1.1/hello-world
 $ docker push 192.168.1.1/hello-world
-$ cd worker && docker build -t 192.168.1.1/worker .
-$ docker push 192.168.1.1/worker
+$ docker pull quay.io/tinkerbell/tink-worker:latest
+$ docker tag  quay.io/tinkerbell/tink-worker:latest 192.168.1.1/tink-worker .
+$ docker push 192.168.1.1/tink-worker
 ```
 
-### Set up Osie
-
-Create the following directories:
-
-```
-$ cd /var/www/html/
-$ mkdir -p ipxe misc misc/osie misc/boots misc/boots/workflow
-```
-Copy the registry certificate:
-
-```
-$ cp ~/go/src/github.com/packethost/rover/certs/ca.pem misc/boots/workflow/
-$ cp ~/go/src/github.com/packethost/rover/certs/server.pem misc/boots/workflow/
-```
-Get the build for workflow branch and place the required files under `/var/www/html/misc/osie/current` and `/var/www/html/misc/boots/workflow` directories
-
-```
-$ cd /var/www/html/misc/osie
-$ wget http://install.ewr1.packet.net/misc/osie/current.tar.gz
-$ tar -zxf current.tar.gz
-$ mv osie-v19.08.28.00-n\=8\,c\=b47f876\,b\=master/ current
-$ cd current
-$ cp workflow-helper-rc workflow-helper.sh /var/www/html/misc/boots/workflow/
-```
+## Example of creating a Workflow
 
 ### Pushing hardware data into database
 
+1. Create a file which has hardware data in json format and called as hardware.json just for example.
+2. Copy this file to `tink_tink-cli_1` container in `/tmp` folder.
+3. Get into `tink_tink-cli_1` container.
+
 ```
-$ docker exec -it rover_cli_1 ash
+$ docker exec -it tink_tink-cli_1 ash
 /# vi /tmp/hardware.json
 '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "62a1ca67-b23c-4808-ac86-d19913ca7487", "name": "Packet"}, "primary_owner": {"id": "d3e2cc7e-0509-4f4e-beb9-07354091b518", "full_name": "Packet Bot"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "packet-test", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "0.0.0.0", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "", "operating_system_version": {"slug": "ubuntu_16_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_16_04", "version": "16.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "t1.small.x86", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
 "name": "xe-0/0/10:0", "type": "data", "hostname": "test"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "test"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "test"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "test"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "<worker_mac_addr>", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
 
-/# rover hardware push "`cat /tmp/hardware.json`"
-/# rover hardware all
+/# tink hardware push "`cat /tmp/hardware.json`"
+/# tink hardware all
 ```
-**Note:** Replace `<worker_mac_addr>` in `/tmp/hardware.json` with the worker's MAC address.
+**Note :** Replace `<worker_mac_addr>` in `/tmp/hardware.json` with the worker's MAC address.
+
 
 ### Creating a workflow
+1. Create a template as per the below example and named as sample.tmpl (or whatever you want).
+2. Copy this template in `tink_tink-cli_1` container in `/tmp` folder and get into the container.
+3. Create `target` as suggested in the following example
+4. Create `template`
+5. Create `workflow`
 
 ```
-$ docker exec -it rover_cli_1 ash
-/# rover target create '{"targets": {"machine1": {"mac_addr": "&lt;worker_mac_addr&gt;"}}}'
+$ docker exec -it tink_tink-cli_1 ash
+/# tink target create '{"targets": {"machine1": {"mac_addr": "&lt;worker_mac_addr&gt;"}}}'
 /# vi /tmp/sample.tmpl
 version: '0.1'
 name: packet_osie_provision
@@ -316,36 +147,30 @@ tasks:
   - name: "update_db"
     image: hello-world
     timeout: 50
-    on-timeout: "rover_client update-timeout"
-    on-failure: "rover_client update-failed"
+    on-timeout: "tink_client update-timeout"
+    on-failure: "tink_client update-failed"
 
-/# rover template create -n 'template_name' -p /tmp/sample.tmpl
-/# rover workflow create -r <target_id> -t <template_id>
+/# tink template create -n 'template_name' -p /tmp/sample.tmpl
+/# tink workflow create -r <target_id> -t <template_id>
 ```
 
-## Set up Worker
-### Create a server
-* Select - On Demand
+## 2. Set up Worker Machine
+
 * Hostname - `<unique>`
-* Location - EWR1
-* Type - c2.medium.x86
+* Location - <same as provisioner>
+* Type - <same as provisioner>
 * OS - Custom iPXE
 
 ### Server Network
 * select 'convert to other network type'
 * choose Layer 2 type
-* among Bonded and Individual, select Individual
 * add new VLAN
 * interface: eth0
-* network: provisioning-vlan
+* network: <same as provisioner machine>
 * enable always PXE boot
 
 ### Connect
-Use the Out-of-Band Console to connect with the server:
-
-```
-$ ssh <worker_device_id>@sos.ewr1.packet.net
-```
+Use the Out-of-Band Console to connect with the worker machine:
 
 ---
 
