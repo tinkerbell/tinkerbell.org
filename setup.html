@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css?v=11">
+    <link rel="stylesheet" href="style.css?v=12">
   </head>
   <body>
 	<div class="logo-header">
@@ -34,50 +34,268 @@
 	</div>
 
 <section class="main-content setup">
-<h2 id="setup-a-provisioner">Running a Sample Workflow</h2>
 
-<h3 id="create-the-servers">Create the servers</h3>
-<ul>
-  <li>Clone the rover code with <code class="language-plaintext highlighter-rouge">setup_provisioner_and_worker</code> branch</li>
-  <li>Run <code class="language-plaintext highlighter-rouge">make</code></li>
-  <li>Change into the <code class="language-plaintext highlighter-rouge">rover/terraform</code> directory</li>
-  <li>Modify the <code class="language-plaintext highlighter-rouge">input.tf</code> file with your Packet API key and Github login credentials</li>
-  <li>Run <code class="language-plaintext highlighter-rouge">terraform init</code> and <code class="language-plaintext highlighter-rouge">terraform apply</code>
+    <h2 id="provisioner-worker-setup">Provisioner and Worker Setup</h2>
+    <p>This demo will guide you through the process of setting up a minimal system of two machines, a provisioner and a worker, as well as run a sample workflow that will install Ubuntu 18.04 onto the worker.</p>
+    <p>Below are brief descriptions of the roles each of the machines play in the system:</p>
+
+    <h4 id="provisioner-desc">Provisioner</h4>
     <ul>
-      <li>Creates a complete setup with <em>tf-provisioner</em> and <em>tf-worker</em> machines on which you can run any workflow</li>
-      <li>The IP address of provisioner and MAC address of worker machine are recorded in the <code class="language-plaintext highlighter-rouge">outputs</code> field of <code class="language-plaintext highlighter-rouge">terraform.tfstate</code></li>
+        <li>Acts as the DHCP server</li>
+        <li>Keeps track of all the workflows</li>
+        <li>Hosts any files necessary for the workflows to execute</li>
     </ul>
-  </li>
-</ul>
-<h3 id="create-sample-workflow">Create and run a workflow</h3>
-<ul>
-  <li>SSH into the <em>tf-provisioner</em> machine</li>
-  <li>Switch to the <code class="language-plaintext highlighter-rouge">first-good-workflow</code> branch
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/go/src/github.com/packethost/tinkerbell/
-git checkout first-good-workflow</code></pre></div></div>
-  </li>
-  <li>Replace only the MAC addresses in the <code class="language-plaintext highlighter-rouge">push.sh</code> file with the MAC address of the <em>tf-worker</em> machine which is retrievable from the terraform output.</li>
-  <li>Push the hardware data with <code class="language-plaintext highlighter-rouge">./push.sh</code></li>
-  <li>Create action images and push them in to the private registry:
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/go/src/github.com/packethost/rover/workflow-samples/ubuntu/v3/
-./create_image.sh</code></pre></div></div>
-  </li>
-  <li>Create the workflow
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rover target create '{"targets": {"machine1": {"mac_addr": "&lt;mac address of tf-worker&gt;"}}}'
-rover template create -n ubuntu-sample -p /root/go/src/github.com/packethost/rover/workflow-samples/ubuntu/v3/ubuntu.tmpl
-rover workflow create -t &lt;template_id&gt; -r &lt;target_id&gt;</code></pre></div></div>
-  </li>
-  <li>Reboot the <em>tf-worker</em> machine</li>
-</ul>
-<hr/>
-<h3 id="troubleshooting">Troubleshooting</h3>
-<ul>
-  <li>Terraform unable to SSH into machine
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Error: timeout - last error: SSH authentication failed (root@&lt;provisioner_ip&gt;:22): ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey], no supported methods remain</code></pre></div></div>
-    <p>Add private key to SSH authentication agent with <code class="language-plaintext highlighter-rouge">ssh-add &lt;path_to_private_key&gt;</code></p>
-  </li>
-</ul>
 
+    <h4 id="worker-desc">Worker</h4>
+    <ul>
+        <li>Is the machine that is being acted on</li>
+        <li>Asks the provisioner for available workflows </li>
+        <li>Executes the ones specified for itself</li>
+    </ul>
+    <p>It is important to note that you can run any workflow using this setup, but the purpose of this sample is to allow you to get a sense of how things work at a basic level.</p>
+
+    <h3 id="create-servers">I. Create the servers</h3>
+    <p>Using Terraform (with the Packet provider), create two servers <code class="language-plaintext highlighter-rouge">tf-provisioner</code> and <code class="language-plaintext highlighter-rouge">tf-worker</code> attached to the same VLAN.  </p>
+    <ul>
+        <li>Clone the <a href="https://github.com/tinkerbell/tink"><code>tink</code></a> repository locally:</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/tinkerbell/tink.git
+$ cd tink/demo/terraform
+</code></pre></div></div>
+
+    <ul>
+        <li>Update <code class="language-plaintext highlighter-rouge">input.tf</code> with your Packet API token and desired project ID</li>
+
+        <li>You may also update the hostnames in <code class="language-plaintext highlighter-rouge">main.tf</code> if you prefer names other than <code class="language-plaintext highlighter-rouge">tf-provisioner</code> and <code class="language-plaintext highlighter-rouge">tf-worker</code></li>
+
+        <li>Run the following commands:</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ terraform init
+$ terraform apply
+</code></pre></div></div>
+
+    <p></p>
+    <p>As an output, it returns the IP address of the provisioner and MAC address of the worker machine.</p>
+
+    <h3 id="manual-setup">Manual Setup</h3>
+    <p>If you do not wish to use Terraform, you can provision the servers manually with the following configurations.</p>
+
+    <h4 id="provisioner-setup">Provisioner</h4>
+    <ul>
+        <li>Plan: <code class="language-plaintext highlighter-rouge">c3.small.x86</code> (or any plan that supports Layer 2)</li>
+        <li>OS: <code class="language-plaintext highlighter-rouge">Ubuntu 18.04 LTS</code></li>
+        <li>After device is provisioned:
+            <ul>
+                <li>Convert network type to <code class="language-plaintext highlighter-rouge">Mixed/Hybrid</code></li>
+                <li>Attach VLAN to interface <code class="language-plaintext highlighter-rouge">eth1</code> (under Layer 2)</li></ul>
+        </li>
+    </ul>
+
+    <h4 id="worker-setup">Worker</h4>
+    <ul>
+        <li>Facility: <code class="language-plaintext highlighter-rouge">&lt;same_as_provisioner&gt;</code></li>
+        <li>Plan: <code class="language-plaintext highlighter-rouge">c3.small.x86</code> (or any plan that supports Layer 2)</li>
+        <li>OS: <code class="language-plaintext highlighter-rouge">Custom iPXE</code>
+            <ul>
+                <li>IPXE Script URL: <code class="language-plaintext highlighter-rouge">https://boot.netboot.xyz</code></li>
+                <li>Always/Persist PXE: <code class="language-plaintext highlighter-rouge">true</code></li></ul>
+        </li>
+        <li>After device is provisioned:
+            <ul>
+                <li>Convert network type to <code class="language-plaintext highlighter-rouge">Layer 2 (individual)</code></li>
+                <li>Attach VLAN to interface <code class="language-plaintext highlighter-rouge">eth0</code></li>
+                <li>Same VLAN as provisioner</li></ul>
+        </li>
+    </ul>
+
+    <h3 id="prep-provisioner-machine">II. Prep the provisioner machine</h3>
+    <p>SSH into <code class="language-plaintext highlighter-rouge">tf-provisioner</code> for the following portion.</p>
+    <p><strong>Note:</strong> From here on out, assume all code blocks are run in bash unless specified.</p>
+    <h4 id="install-git-and-git-lfs">Install Git and Git LFS</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get update -y
+sudo apt install -y git
+wget https://github.com/git-lfs/git-lfs/releases/download/v2.9.0/git-lfs-linux-amd64-v2.9.0.tar.gz
+tar -C /usr/local/bin -xzf git-lfs-linux-amd64-v2.9.0.tar.gz
+rm git-lfs-linux-amd64-v2.9.0.tar.gz
+git lfs install
+</code></pre></div></div>
+
+    <h4 id="clone-tink-repo">Clone the tink repo at the GOPATH</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir -p ~/go/src/github.com/tinkerbell
+cd ~/go/src/github.com/tinkerbell
+git clone https://github.com/tinkerbell/tink.git
+cd tink/demo
+</code></pre></div></div>
+
+    <h4 id="export-environment-variables">Export and persist the required environment variables</h4>
+    <p>Edit the environment variables in <code class="language-plaintext highlighter-rouge">tinkenv</code> with your desired configurations if you wish.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat tinkenv &amp;gt;&amp;gt; ~/.bashrc
+source ~/.bashrc
+</code></pre></div></div>
+
+    <h4 id="run-the-setup-script">Run the setup script</h4>
+    <p>The <code class="language-plaintext highlighter-rouge">setup.sh</code> script will configure the network, download necessary files, set up the certs and registry, and bring up the stack. <br />
+        The script is also separated into functions so you can rerun specific parts as needed.</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./setup.sh
+</code></pre></div></div>
+
+    <h3 id="action-images">III. Action Images</h3>
+
+    <p>Push the worker image responsible for retrieving and executing the workflows for the worker to the registry.</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull quay.io/tinkerbell/tink-worker:latest
+docker tag quay.io/tinkerbell/tink-worker:latest 192.168.1.1/tink-worker .
+docker push 192.168.1.1/tink-worker
+</code></pre></div></div>
+
+    <p>The registry must have an image for all the actions in a workflow. To push an action image:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker tag &amp;lt;action-image&amp;gt; &amp;lt;registry-host&amp;gt;/&amp;lt;action-image&amp;gt;
+docker push &amp;lt;registry-host&amp;gt;/&amp;lt;action-image&amp;gt;
+</code></pre></div></div>
+
+    <p>For this demo, we are going to need action images for installing Ubuntu 18.04 onto the worker.
+        The <code class="language-plaintext highlighter-rouge">create_images</code> script will build the images using the files under <code class="language-plaintext highlighter-rouge">workflow-samples/ubuntu</code> directory and push them to the registry.</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/go/src/github.com/tinkerbell/tink/demo/workflow-samples/ubuntu
+./create_images.sh
+</code></pre></div></div>
+
+    <h3 id="workflows">IV. Workflows</h3>
+    <h4 id="pushing-hardware-data">Pushing hardware data into database</h4>
+    <ol>
+        <li>Exec into the <code class="language-plaintext highlighter-rouge">tink_tink-cli_1</code> container.</li>
+        <li>Create a script to push hardware data into the database.</li>
+        <li>Export the necessary environment variables (<code>WORKER_MAC</code> and <code class="language-plaintext highlighter-rouge">WORKER_PLAN</code>).</li>
+        <li>Run the script.</li>
+    </ol>
+    <pre><code>$ docker exec -it tink_tink-cli_1 ash
+/# vi /tmp/push.sh
+tink hardware push '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "62a1ca67-b23c-4808-ac86-d19913ca7487", "name": "Packet"}, "primary_owner": {"id": "d3e2cc7e-0509-4f4e-beb9-07354091b518", "full_name": "Packet Bot"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "packet-test", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "0.0.0.0", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "", "operating_system_version": {"slug": "ubuntu_16_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_16_04", "version": "16.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "'$WORKER_PLAN'", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
+"name": "xe-0/0/10:0", "type": "data", "hostname": "test"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "test"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "test"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "test"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "'$WORKER_MAC'", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
+
+/# chmod +x /tmp/push.sh
+/# export WORKER_MAC=&amp;lt;worker_mac_addr&amp;gt;
+/# export WORKER_PLAN=&amp;lt;worker_plan_slug&amp;gt;
+/# /tmp/push.sh
+/# tink hardware all
+</code></pre></div></div>
+
+    <h4 id="creating-workflow">Creating a workflow</h4>
+    <ol>
+        <li>Exec into the <code class="language-plaintext highlighter-rouge">tink_tink-cli_1</code> container.</li>
+        <li>Create <code class="language-plaintext highlighter-rouge">target</code>, replacing <code class="language-plaintext highlighter-rouge">&lt;worker_mac_addr&gt;</code> with the actual worker MAC address.</li>
+        <li>Create <code class="language-plaintext highlighter-rouge">template</code>.</li>
+        <li>Create <code class="language-plaintext highlighter-rouge">workflow</code>.</li>
+    </ol>
+
+    <pre><code>$ docker exec -it tink_tink-cli_1 ash
+/# tink target create '{"targets": {"machine1": {"mac_addr": "&amp;lt;worker_mac_addr&amp;gt;"}}}'
+/# vi /tmp/ubuntu.tmpl
+version: '0.1'
+name: ubuntu_provisioning
+global_timeout: 6000
+tasks:
+- name: "os-installation"
+  worker: "{{index .Targets "machine1" "mac_addr"}}"
+  volumes:
+    - /dev:/dev
+    - /dev/console:/dev/console
+    - /lib/firmware:/lib/firmware:ro
+  actions:
+  - name: "disk-wipe"
+    image: disk-wipe:v3
+    timeout: 90
+  - name: "disk-partition"
+    image: disk-partition:v3
+    timeout: 600
+    environment:
+       MIRROR_HOST: 192.168.1.2
+    volumes:
+      - /statedir:/statedir
+  - name: "install-root-fs"
+    image: install-root-fs:v3
+    timeout: 600
+    environment:
+       MIRROR_HOST: 192.168.1.2
+  - name: "install-grub"
+    image: install-grub:v3
+    timeout: 600
+    environment:
+       MIRROR_HOST: 192.168.1.2
+    volumes:
+      - /statedir:/statedir
+
+/# tink template create -n 'ubuntu-template' -p /tmp/ubuntu.tmpl
+/# tink workflow create -r &amp;lt;target_id&amp;gt; -t &amp;lt;template_id&amp;gt;
+/# tink workflow get &amp;lt;workflow_id&amp;gt;
+</code></pre></div></div>
+
+    <p><strong>Note:</strong> For this demo, we are using the <code class="language-plaintext highlighter-rouge">ubuntu.tmpl</code> under <code class="language-plaintext highlighter-rouge">demo/workflow-samples/ubuntu</code>. <br />
+        For a more generalized example of what a template would look like, please reference <code class="language-plaintext highlighter-rouge">sample.tmpl</code> (which should already be located under <code class="language-plaintext highlighter-rouge">/tmp</code> inside the <code class="language-plaintext highlighter-rouge">tink_tink-cli_1</code> container). </p>
+
+    <h3 id="trigger-workflow">V. Trigger the Workflow</h3>
+    <ol>
+        <li>Reboot <code class="language-plaintext highlighter-rouge">tf-worker</code>.</li>
+        <li>Use the Out-of-Band Console to connect with the worker machine and monitor progress.</li>
+        <li>On <code class="language-plaintext highlighter-rouge">tf-provisioner</code>, you can check on the workflow state and events using:</li>
+    </ol>
+
+    <pre><code>$ docker exec -it tink_tink-cli_1 ash
+/# tink workflow state &amp;lt;workflow-id&amp;gt;
+/# tink workflow events &amp;lt;workflow-id&amp;gt;
+</code></pre></div></div>
+
+    <hr />
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+    <p>The following are possible errors you might run into and their possible solutions.</p>
+
+    <pre><code>PowerEdge R6415 - BIOS 1.8.7
+A system restart is required. The system detected an exception during the UEFI
+pre-boot environment.
+</code></pre></div></div>
+    <ul>
+        <li>Set the worker to always PXE</li>
+    </ul>
+
+    <pre><code>Login did not succeed, error: Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "Autogenerated CA")
+</code></pre></div></div>
+    <ul>
+        <li>Rebuild the registry container (after rebuilding the certs container)</li>
+    </ul>
+
+    <pre><code>Waiting for docker to respond...
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "Autogenerated CA")
+</code></pre></div></div>
+    <ul>
+        <li>Copy the ca.pem file over to the <code class="language-plaintext highlighter-rouge">/packet/nginx/workflow</code> directory (after rebuilding the certs container)</li>
+    </ul>
+
+    <pre><code>See 'docker run --help'.
+ * start-stop-daemon: failed to start `/sbin/workflow-helper'
+ * Failed to start Packet Workflow
+ [ !! ]
+ * ERROR: workflow-helper failed to start
+</code></pre></div></div>
+    <ul>
+        <li>Log into console with username <code class="language-plaintext highlighter-rouge">root</code> and run the following command:</li>
+    </ul>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it --privileged=true \
+    -e "DOCKER_API_VERSION=v1.35" \
+    -e "WORKER_ID=fde7c87c-d154-447e-9fce-7eb7bdec90c0" \
+    -e "DOCKER_REGISTRY=192.168.1.1" \
+    -e "TINKERBELL_GRPC_AUTHORITY=192.168.1.1:42113" \
+    -e "TINKERBELL_CERT_URL=http://192.168.1.1:42114/cert" \
+    -e "REGISTRY_USERNAME=admin" \
+    -e "REGISTRY_PASSWORD=admin123" \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /worker:/worker \
+    -v /dev:/dev \
+    -v /etc/docker/cert.d/192.168.1.1:/192.168.1.1 \
+    192.168.1.1/tink-worker
+</code></pre></div></div>
 </section>
 
   </body>
