@@ -259,3 +259,23 @@ docker run -it --privileged=true \
 	-v /etc/docker/cert.d/192.168.1.1:/192.168.1.1 \
 	192.168.1.1/tink-worker
 ```
+
+```
+ERRO[0000] Worker Finished with error rpc error: code = Unavailable desc = connection error: desc = "transport: authentication handshake failed: x509: certificate is valid for 127.0.0.1, not 192.168.1.1"
+ [ ok ]
+```
+* Tear down the stack with `docker-compose down -v`
+* Rerun the setup script with just the following functions:
+    * `build_and_setup_certs`
+    * `build_registry_and_update_worker_image`
+    * `start_docker_stack`
+* Re-push the tink-worker and action images.
+```shell script
+docker push 192.168.1.1/tink-worker
+docker push 192.168.1.1/ubuntu:base
+docker push 192.168.1.1/disk-wipe:v3
+docker push 192.168.1.1/disk-partition:v3
+docker push 192.168.1.1/install-root-fs:v3
+docker push 192.168.1.1/install-grub:v3
+```
+* Recreate the workflow.

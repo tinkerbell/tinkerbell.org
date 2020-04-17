@@ -303,8 +303,14 @@ Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signe
  [ ok ]
 </code></pre></div></div>
     <ul>
-        <li>Tear down the stack with `docker-compose down -v`</li>
-        <li>Rerun the setup script with just the <code class="language-plaintext highlighter-rouge">build_and_setup_certs</code>, <code class="language-plaintext highlighter-rouge">build_registry_and_update_worker_image</code>, <code class="language-plaintext highlighter-rouge">start_docker_stack</code> functions.</li>
+        <li>Tear down the stack with <code class="language-plaintext highlighter-rouge">docker-compose down -v</code></li>
+        <li>Rerun the setup script with just the following functions:
+            <ul>
+                <li><code class="language-plaintext highlighter-rouge">build_and_setup_certs</code></li>
+                <li><code class="language-plaintext highlighter-rouge">build_registry_and_update_worker_image</code></li>
+                <li><code class="language-plaintext highlighter-rouge">start_docker_stack</code></li>
+            </ul>
+        </li>
         <li>Re-push the tink-worker and action images.</li>
         <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker push 192.168.1.1/tink-worker
 docker push 192.168.1.1/ubuntu:base
