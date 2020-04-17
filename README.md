@@ -210,6 +210,8 @@ $ docker exec -it tink_tink-cli_1 ash
 /# tink workflow state <workflow-id>
 /# tink workflow events <workflow-id>
 ```
+**Note:** Once the workflow succeeds, disable Always IPXE on `tf-worker` and reboot it one more time to see that it is officially running Ubuntu 18.04.
+
 ---
 
 ## Troubleshooting

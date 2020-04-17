@@ -84,7 +84,7 @@ $ terraform apply
 
     <h4 id="provisioner-setup">Provisioner</h4>
     <ul>
-        <li>Plan: <code class="language-plaintext highlighter-rouge">c3.small.x86</code> (or any plan that supports Layer 2)</li>
+        <li>Plan: <code class="language-plaintext highlighter-rouge">t3.small.x86</code> (or any plan that supports Layer 2)</li>
         <li>OS: <code class="language-plaintext highlighter-rouge">Ubuntu 18.04 LTS</code></li>
         <li>After device is provisioned:
             <ul>
@@ -96,7 +96,7 @@ $ terraform apply
     <h4 id="worker-setup">Worker</h4>
     <ul>
         <li>Facility: <code class="language-plaintext highlighter-rouge">&lt;same_as_provisioner&gt;</code></li>
-        <li>Plan: <code class="language-plaintext highlighter-rouge">c3.small.x86</code> (or any plan that supports Layer 2)</li>
+        <li>Plan: <code class="language-plaintext highlighter-rouge">c2.medium.x86</code></li>
         <li>OS: <code class="language-plaintext highlighter-rouge">Custom iPXE</code>
             <ul>
                 <li>IPXE Script URL: <code class="language-plaintext highlighter-rouge">https://boot.netboot.xyz</code></li>
@@ -133,7 +133,7 @@ cd demo
     <h4 id="export-environment-variables">Export and persist the required environment variables</h4>
     <p>Edit the environment variables in <code class="language-plaintext highlighter-rouge">tinkenv</code> with your desired configurations if you wish.</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat tinkenv &amp;gt;&amp;gt; ~/.bashrc
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat tinkenv &gt;&gt; ~/.bashrc
 source ~/.bashrc
 </code></pre></div></div>
 
@@ -147,13 +147,13 @@ source ~/.bashrc
 
     <p>Push the worker image responsible for retrieving and executing the workflows for the worker to the registry.</p>
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull quay.io/tinkerbell/tink-worker:latest
-docker tag quay.io/tinkerbell/tink-worker:latest 192.168.1.1/tink-worker .
+docker tag quay.io/tinkerbell/tink-worker:latest 192.168.1.1/tink-worker
 docker push 192.168.1.1/tink-worker
 </code></pre></div></div>
 
     <p>The registry must have an image for all the actions in a workflow. To push an action image:</p>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker tag &amp;lt;action-image&amp;gt; &amp;lt;registry-host&amp;gt;/&amp;lt;action-image&amp;gt;
-docker push &amp;lt;registry-host&amp;gt;/&amp;lt;action-image&amp;gt;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker tag &lt;action-image&gt; &lt;registry-host&gt;/&lt;action-image&gt;
+docker push &lt;registry-host&gt;/&lt;action-image&gt;
 </code></pre></div></div>
 
     <p>For this demo, we are going to need action images for installing Ubuntu 18.04 onto the worker.
@@ -167,17 +167,17 @@ docker push &amp;lt;registry-host&amp;gt;/&amp;lt;action-image&amp;gt;
     <ol>
         <li>Exec into the <code class="language-plaintext highlighter-rouge">tink_tink-cli_1</code> container.</li>
         <li>Create a script to push hardware data into the database.</li>
-        <li>Export the necessary environment variables (<code>WORKER_MAC</code> and <code class="language-plaintext highlighter-rouge">WORKER_PLAN</code>).</li>
+        <li>Export the necessary environment variables (<code class="language-plaintext highlighter-rouge">WORKER_MAC</code> and <code class="language-plaintext highlighter-rouge">WORKER_PLAN</code>).</li>
         <li>Run the script.</li>
     </ol>
     <pre><code>$ docker exec -it tink_tink-cli_1 ash
 /# vi /tmp/push.sh
-tink hardware push '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "62a1ca67-b23c-4808-ac86-d19913ca7487", "name": "Packet"}, "primary_owner": {"id": "d3e2cc7e-0509-4f4e-beb9-07354091b518", "full_name": "Packet Bot"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "packet-test", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "0.0.0.0", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "", "operating_system_version": {"slug": "ubuntu_18_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_18_04", "version": "18.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "'$WORKER_PLAN'", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
+tink hardware push '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": true, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "62a1ca67-b23c-4808-ac86-d19913ca7487", "name": "Packet"}, "primary_owner": {"id": "d3e2cc7e-0509-4f4e-beb9-07354091b518", "full_name": "Packet Bot"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "packet-test", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "0.0.0.0", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "", "operating_system_version": {"slug": "ubuntu_18_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_18_04", "version": "18.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "'$WORKER_PLAN'", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
 "name": "xe-0/0/10:0", "type": "data", "hostname": "test"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "test"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "test"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "test"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "'$WORKER_MAC'", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
 
 /# chmod +x /tmp/push.sh
-/# export WORKER_MAC=&amp;lt;worker_mac_addr&amp;gt;
-/# export WORKER_PLAN=&amp;lt;worker_plan_slug&amp;gt;
+/# export WORKER_MAC=&lt;worker_mac_addr&gt;
+/# export WORKER_PLAN=&lt;worker_plan_slug&gt;
 /# /tmp/push.sh
 /# tink hardware all
 </code></pre></div></div>
@@ -191,7 +191,7 @@ tink hardware push '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_
     </ol>
 
     <pre><code>$ docker exec -it tink_tink-cli_1 ash
-/# tink target create '{"targets": {"machine1": {"mac_addr": "&amp;lt;worker_mac_addr&amp;gt;"}}}'
+/# tink target create '{"targets": {"machine1": {"mac_addr": "&lt;worker_mac_addr&gt;"}}}'
 /# vi /tmp/ubuntu.tmpl
 version: '0.1'
 name: ubuntu_provisioning
@@ -228,8 +228,8 @@ tasks:
       - /statedir:/statedir
 
 /# tink template create -n 'ubuntu-template' -p /tmp/ubuntu.tmpl
-/# tink workflow create -r &amp;lt;target_id&amp;gt; -t &amp;lt;template_id&amp;gt;
-/# tink workflow get &amp;lt;workflow_id&amp;gt;
+/# tink workflow create -r &lt;target_id&gt; -t &lt;template_id&gt;
+/# tink workflow get &lt;workflow_id&gt;
 </code></pre></div></div>
 
     <p><strong>Note:</strong> For this demo, we are using the <code class="language-plaintext highlighter-rouge">ubuntu.tmpl</code> under <code class="language-plaintext highlighter-rouge">demo/workflow-samples/ubuntu</code>. <br />
@@ -243,9 +243,10 @@ tasks:
     </ol>
 
     <pre><code>$ docker exec -it tink_tink-cli_1 ash
-/# tink workflow state &amp;lt;workflow-id&amp;gt;
-/# tink workflow events &amp;lt;workflow-id&amp;gt;
+/# tink workflow state &lt;workflow-id&gt;
+/# tink workflow events &lt;workflow-id&gt;
 </code></pre></div></div>
+    <p><strong>Note:</strong> Once the workflow succeeds, disable Always IPXE on <code class="language-plaintext highlighter-rouge">tf-worker</code> and reboot it one more time to see that it is officially running Ubuntu 18.04.</p>
 
     <hr />
 
@@ -282,21 +283,38 @@ Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signe
 </code></pre></div></div>
     <ul>
         <li>Log into console with username <code class="language-plaintext highlighter-rouge">root</code> and run the following command:</li>
-    </ul>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it --privileged=true \
-    -e "DOCKER_API_VERSION=v1.35" \
-    -e "WORKER_ID=fde7c87c-d154-447e-9fce-7eb7bdec90c0" \
-    -e "DOCKER_REGISTRY=192.168.1.1" \
-    -e "TINKERBELL_GRPC_AUTHORITY=192.168.1.1:42113" \
-    -e "TINKERBELL_CERT_URL=http://192.168.1.1:42114/cert" \
-    -e "REGISTRY_USERNAME=admin" \
-    -e "REGISTRY_PASSWORD=admin123" \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v /worker:/worker \
-    -v /dev:/dev \
-    -v /etc/docker/cert.d/192.168.1.1:/192.168.1.1 \
-    192.168.1.1/tink-worker
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it --privileged=true \
+-e "DOCKER_API_VERSION=v1.35" \
+-e "WORKER_ID=fde7c87c-d154-447e-9fce-7eb7bdec90c0" \
+-e "DOCKER_REGISTRY=192.168.1.1" \
+-e "TINKERBELL_GRPC_AUTHORITY=192.168.1.1:42113" \
+-e "TINKERBELL_CERT_URL=http://192.168.1.1:42114/cert" \
+-e "REGISTRY_USERNAME=admin" \
+-e "REGISTRY_PASSWORD=admin123" \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /worker:/worker \
+-v /dev:/dev \
+-v /etc/docker/cert.d/192.168.1.1:/192.168.1.1 \
+192.168.1.1/tink-worker
 </code></pre></div></div>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERRO[0000] Worker Finished with error rpc error: code = Unavailable desc = connection error: desc = "transport: authentication handshake failed: x509: certificate is valid for 127.0.0.1, not 192.168.1.1"
+ [ ok ]
+</code></pre></div></div>
+    <ul>
+        <li>Tear down the stack with `docker-compose down -v`</li>
+        <li>Rerun the setup script with just the <code class="language-plaintext highlighter-rouge">build_and_setup_certs</code>, <code class="language-plaintext highlighter-rouge">build_registry_and_update_worker_image</code>, <code class="language-plaintext highlighter-rouge">start_docker_stack</code> functions.</li>
+        <li>Re-push the tink-worker and action images.</li>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker push 192.168.1.1/tink-worker
+docker push 192.168.1.1/ubuntu:base
+docker push 192.168.1.1/disk-wipe:v3
+docker push 192.168.1.1/disk-partition:v3
+docker push 192.168.1.1/install-root-fs:v3
+docker push 192.168.1.1/install-grub:v3
+</code></pre></div></div>
+        <li>Recreate the workflow.</li>
+    </ul>
 </section>
 
   </body>
