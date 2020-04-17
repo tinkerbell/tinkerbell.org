@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css?v=11">
+    <link rel="stylesheet" href="style.css?v=12">
   </head>
   <body>
 	<div class="logo-header">
@@ -32,367 +32,297 @@
 			</div>
 		</div>
 	</div>
-    <section class="main-content setup">
 
-<h2 id="setup-a-provisioner">Set up a Provisioner</h2>
+<section class="main-content setup">
 
-<h3 id="create-a-server-under-oss-provisioner">Create a server</h3>
-<ul>
-  <li>Select - On Demand</li>
-  <li>Hostname - <code class="language-plaintext highlighter-rouge">&lt;unique&gt;</code></li>
-  <li>Location - EWR1</li>
-  <li>Type - c2.medium.x86</li>
-  <li>OS - Ubuntu 18.04 LTS</li>
-</ul>
+    <h2 id="provisioner-worker-setup">Provisioner and Worker Setup</h2>
+    <p>This demo will guide you through the process of setting up a minimal system of two machines, a provisioner and a worker, as well as run a sample workflow that will install Ubuntu 18.04 onto the worker.</p>
+    <p>Below are brief descriptions of the roles each of the machines play in the system:</p>
 
-<h3 id="set-server-network">Set server network</h3>
-<ul>
-  <li>select ‘convert to other network type’</li>
-  <li>choose Mixed/Hybrid</li>
-  <li>for Layer 2, add new VLAN
+    <h4 id="provisioner-desc">Provisioner</h4>
     <ul>
-      <li>interface: eth1</li>
-      <li>network: provisioning-vlan</li>
+        <li>Acts as the DHCP server</li>
+        <li>Keeps track of all the workflows</li>
+        <li>Hosts any files necessary for the workflows to execute</li>
     </ul>
-  </li>
-</ul>
 
-<h3 id="ssh-into-server-as-root">SSH into server as root</h3>
+    <h4 id="worker-desc">Worker</h4>
+    <ul>
+        <li>Is the machine that is being acted on</li>
+        <li>Asks the provisioner for available workflows </li>
+        <li>Executes the ones specified for itself</li>
+    </ul>
+    <p>It is important to note that you can run any workflow using this setup, but the purpose of this sample is to allow you to get a sense of how things work at a basic level.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh root@&lt;server-IP&gt;
+    <h3 id="create-servers">I. Create the servers</h3>
+    <p>Using Terraform (with the Packet provider), create two servers <code class="language-plaintext highlighter-rouge">tf-provisioner</code> and <code class="language-plaintext highlighter-rouge">tf-worker</code> attached to the same VLAN.  </p>
+    <ul>
+        <li>Clone the <a href="https://github.com/tinkerbell/tink"><code>tink</code></a> repository locally:</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone https://github.com/tinkerbell/tink.git
+$ cd tink/demo/terraform
 </code></pre></div></div>
 
-<h3 id="add-packet-nameservers">Add Packet nameservers</h3>
+    <ul>
+        <li>Update <code class="language-plaintext highlighter-rouge">input.tf</code> with your Packet API token and desired project ID</li>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /etc/resolv.conf
-nameserver 147.75.207.207
-nameserver 147.75.207.208
+        <li>You may also update the hostnames in <code class="language-plaintext highlighter-rouge">main.tf</code> if you prefer names other than <code class="language-plaintext highlighter-rouge">tf-provisioner</code> and <code class="language-plaintext highlighter-rouge">tf-worker</code></li>
+
+        <li>Run the following commands:</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ terraform init
+$ terraform apply
 </code></pre></div></div>
 
-<h3 id="add-a-static-ip-for-an-interface">Add a static IP for an interface</h3>
+    <p></p>
+    <p>As an output, it returns the IP address of the provisioner and MAC address of the worker machine.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /etc/network/interfaces
-auto enp1s0f1
-iface enp1s0f1 inet static
-    address 192.168.1.1
-    netmask 255.255.255.240
+    <h3 id="manual-setup">Manual Setup</h3>
+    <p>If you do not wish to use Terraform, you can provision the servers manually with the following configurations.</p>
 
-$ ifdown  enp1s0f1
-$ ifup  enp1s0f1
-$ ip a | grep -A 5 -B 2  enp1s0f1
+    <h4 id="provisioner-setup">Provisioner</h4>
+    <ul>
+        <li>Plan: <code class="language-plaintext highlighter-rouge">t3.small.x86</code> (or any plan that supports Layer 2)</li>
+        <li>OS: <code class="language-plaintext highlighter-rouge">Ubuntu 18.04 LTS</code></li>
+        <li>After device is provisioned:
+            <ul>
+                <li>Convert network type to <code class="language-plaintext highlighter-rouge">Mixed/Hybrid</code></li>
+                <li>Attach VLAN to interface <code class="language-plaintext highlighter-rouge">eth1</code> (under Layer 2)</li></ul>
+        </li>
+    </ul>
+
+    <h4 id="worker-setup">Worker</h4>
+    <ul>
+        <li>Facility: <code class="language-plaintext highlighter-rouge">&lt;same_as_provisioner&gt;</code></li>
+        <li>Plan: <code class="language-plaintext highlighter-rouge">c2.medium.x86</code></li>
+        <li>OS: <code class="language-plaintext highlighter-rouge">Custom iPXE</code>
+            <ul>
+                <li>IPXE Script URL: <code class="language-plaintext highlighter-rouge">https://boot.netboot.xyz</code></li>
+                <li>Always/Persist PXE: <code class="language-plaintext highlighter-rouge">true</code></li></ul>
+        </li>
+        <li>After device is provisioned:
+            <ul>
+                <li>Convert network type to <code class="language-plaintext highlighter-rouge">Layer 2 (individual)</code></li>
+                <li>Attach VLAN to interface <code class="language-plaintext highlighter-rouge">eth0</code></li>
+                <li>Same VLAN as provisioner</li></ul>
+        </li>
+    </ul>
+
+    <h3 id="prep-provisioner-machine">II. Prep the provisioner machine</h3>
+    <p>SSH into <code class="language-plaintext highlighter-rouge">tf-provisioner</code> for the following portion.</p>
+    <p><strong>Note:</strong> From here on out, assume all code blocks are run in bash unless specified.</p>
+    <h4 id="install-git-and-git-lfs">Install Git and Git LFS</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get update -y
+sudo apt install -y git
+wget https://github.com/git-lfs/git-lfs/releases/download/v2.9.0/git-lfs-linux-amd64-v2.9.0.tar.gz
+tar -C /usr/local/bin -xzf git-lfs-linux-amd64-v2.9.0.tar.gz
+rm git-lfs-linux-amd64-v2.9.0.tar.gz
+git lfs install
 </code></pre></div></div>
 
-<h3 id="update-ip-tables">Update IP Tables</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ iptables -t nat -A POSTROUTING -s 192.168.1.1/28 -j MASQUERADE
+    <h4 id="clone-tink-repo">Clone the tink repo at the GOPATH</h4>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir -p ~/go/src/github.com/tinkerbell
+cd ~/go/src/github.com/tinkerbell
+git clone https://github.com/tinkerbell/tink.git && cd tink
+git checkout demo-v2
+cd demo
 </code></pre></div></div>
 
-<h3 id="setup-go">Set up Go</h3>
-<p><em>Download Go</em></p>
+    <h4 id="export-environment-variables">Export and persist the required environment variables</h4>
+    <p>Edit the environment variables in <code class="language-plaintext highlighter-rouge">tinkenv</code> with your desired configurations if you wish.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wget https://dl.google.com/go/go1.12.13.linux-amd64.tar.gz
-</code></pre></div></div>
-<p><em>Unpack</em></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ tar -C /usr/local -xzf go1.12.13.linux-amd64.tar.gz go/
-$ rm go1.12.13.linux-amd64.tar.gz
-</code></pre></div></div>
-<p><em>Set environment</em></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir -p ~/go ~/go/src
-$ vi ~/.bashrc
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$GOPATH:$HOME/go
-export PATH=$PATH:$GOPATH
-$ source ~/.bashrc
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat tinkenv &gt;&gt; ~/.bashrc
+source ~/.bashrc
 </code></pre></div></div>
 
-<h3 id="git">Git</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt update -y &amp;&amp; sudo apt upgrade -y
-$ apt install git -y
-$ wget https://github.com/git-lfs/git-lfs/releases/download/v2.9.0/git-lfs-linux-amd64-v2.9.0.tar.gz
-$ tar -C /usr/local/bin -xzf git-lfs-linux-amd64-v2.9.0.tar.gz
-$ git lfs install
+    <h4 id="run-the-setup-script">Run the setup script</h4>
+    <p>The <code class="language-plaintext highlighter-rouge">setup.sh</code> script will configure the network, download necessary files, set up the certs and registry, and bring up the stack. <br />
+        The script is also separated into functions so you can rerun specific parts as needed.</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ./setup.sh
 </code></pre></div></div>
 
-<h3 id="get-packet-components">Get Packet Components</h3>
+    <h3 id="action-images">III. Action Images</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src
-$ mkdir -p github.com github.com/packethost/
-$ cd github.com/packethost/
-$ git clone https://github.com/packethost/boots.git
-$ git clone https://github.com/packethost/rover.git
+    <p>Push the worker image responsible for retrieving and executing the workflows for the worker to the registry.</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull quay.io/tinkerbell/tink-worker:latest
+docker tag quay.io/tinkerbell/tink-worker:latest 192.168.1.1/tink-worker
+docker push 192.168.1.1/tink-worker
 </code></pre></div></div>
 
-<p><em>Boots</em></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/boots
-$ git checkout workflow
-$ git lfs pull
-$ make
+    <p>The registry must have an image for all the actions in a workflow. To push an action image:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker tag &lt;action-image&gt; &lt;registry-host&gt;/&lt;action-image&gt;
+docker push &lt;registry-host&gt;/&lt;action-image&gt;
 </code></pre></div></div>
 
-<p><em>Rover</em></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/rover
-$ git checkout workflow
-$ make server cli worker
+    <p>For this demo, we are going to need action images for installing Ubuntu 18.04 onto the worker.
+        The <code class="language-plaintext highlighter-rouge">create_images</code> script will build the images using the files under <code class="language-plaintext highlighter-rouge">workflow-samples/ubuntu</code> directory and push them to the registry.</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/go/src/github.com/tinkerbell/tink/demo/workflow-samples/ubuntu
+./create_images.sh
 </code></pre></div></div>
 
-<h3 id="install-docker--dockercompose">Install Docker &amp; DockerCompose</h3>
+    <h3 id="workflows">IV. Workflows</h3>
+    <h4 id="pushing-hardware-data">Pushing hardware data into database</h4>
+    <ol>
+        <li>Exec into the <code class="language-plaintext highlighter-rouge">tink_tink-cli_1</code> container.</li>
+        <li>Create a script to push hardware data into the database.</li>
+        <li>Export the necessary environment variables (<code class="language-plaintext highlighter-rouge">WORKER_MAC</code> and <code class="language-plaintext highlighter-rouge">WORKER_PLAN</code>).</li>
+        <li>Run the script.</li>
+    </ol>
+    <pre><code>$ docker exec -it tink_tink-cli_1 ash
+/# vi /tmp/push.sh
+tink hardware push '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": true, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "62a1ca67-b23c-4808-ac86-d19913ca7487", "name": "Packet"}, "primary_owner": {"id": "d3e2cc7e-0509-4f4e-beb9-07354091b518", "full_name": "Packet Bot"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "packet-test", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "0.0.0.0", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "", "operating_system_version": {"slug": "ubuntu_18_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_18_04", "version": "18.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "'$WORKER_PLAN'", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
+"name": "xe-0/0/10:0", "type": "data", "hostname": "test"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "test"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "test"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "test"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "'$WORKER_MAC'", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ curl -L get.docker.com | bash
-$ curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-$ chmod +x /usr/local/bin/docker-compose
+/# chmod +x /tmp/push.sh
+/# export WORKER_MAC=&lt;worker_mac_addr&gt;
+/# export WORKER_PLAN=&lt;worker_plan_slug&gt;
+/# /tmp/push.sh
+/# tink hardware all
 </code></pre></div></div>
 
-<h3 id="setup-nginx">Set up NGINX</h3>
-<p><em>Install NGINX</em></p>
+    <h4 id="creating-workflow">Creating a workflow</h4>
+    <ol>
+        <li>Exec into the <code class="language-plaintext highlighter-rouge">tink_tink-cli_1</code> container.</li>
+        <li>Create <code class="language-plaintext highlighter-rouge">target</code>, replacing <code class="language-plaintext highlighter-rouge">&lt;worker_mac_addr&gt;</code> with the actual worker MAC address.</li>
+        <li>Create <code class="language-plaintext highlighter-rouge">template</code>.</li>
+        <li>Create <code class="language-plaintext highlighter-rouge">workflow</code>.</li>
+    </ol>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ apt install nginx -y
-</code></pre></div></div>
-
-<p><em>Configure NGINX to listen at the IP and port</em></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi /etc/nginx/sites-available/default
-server {
-        listen 192.168.1.1:8086 default_server;
-        ...
-}
-$ service nginx restart
-</code></pre></div></div>
-
-<h3 id="update-endpoints">Update Endpoints</h3>
-<ul>
-  <li>Update the hosts in <code class="language-plaintext highlighter-rouge">tls/server-csr.in.json</code> to have an entry for host IP</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi tls/server-csr.in.json
-"hosts": [
-    "rover.@FACILITY@.packet.net",
-    "rover.registry",
-    "rover.rover",
-    "rover",
-    "localhost",
-    "127.0.0.1",
-    "192.168.1.1"
-  ],
-</code></pre></div></div>
-<ul>
-  <li>Update <code class="language-plaintext highlighter-rouge">fluent-bit.conf</code> with the host IP</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sed -i -e "s/Host 0.0.0.0/HOST 192.168.1.1/g" fluent-bit.conf
-</code></pre></div></div>
-<ul>
-  <li>Update the docker-compose.yml file based on host IP added above.</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sed -i -e "s/username/admin/g" docker-compose.yml
-sed -i -e "s/password/pass/g" docker-compose.yml
-sed -i -e "s/127.0.0.1:69/192.168.1.1:69/g" docker-compose.yml
-sed -i -e "s/127.0.0.1:80/192.168.1.1:80/g" docker-compose.yml
-sed -i -e "s/DNS_SERVERS: 8.8.8.8/DNS_SERVERS: '147.75.207.207,147.75.207.208'/g" docker-compose.yml
-sed -i -e "s/PUBLIC_IP: 127.0.0.1/PUBLIC_IP: 192.168.1.1/g" docker-compose.yml
-sed -i -e "s/BOOTP_BIND: 127.0.0.1:67/BOOTP_BIND: 192.168.1.1:67/g" docker-compose.yml
-sed -i -e "s/SYSLOG_BIND: 127.0.0.1:514/SYSLOG_BIND: 192.168.1.1:514/g" docker-compose.yml
-sed -i -e "s/DOCKER_REGISTRY: 127.0.0.1/DOCKER_REGISTRY: 192.168.1.1/g" docker-compose.yml
-sed -i -e "s/ROVER_GRPC_AUTHORITY: 127.0.0.1:42113/ROVER_GRPC_AUTHORITY: 192.168.1.1:42113/g" docker-compose.yml
-sed -i -e "s#ROVER_CERT_URL: http://127.0.0.1:42114/cert#ROVER_CERT_URL: http://192.168.1.1:42114/cert#g" docker-compose.yml
-sed -i -e "s/ELASTIC_SEARCH_URL: 127.0.0.1:9200/ELASTIC_SEARCH_URL: 192.168.1.1:9200/g" docker-compose.yml
-</code></pre></div></div>
-<ul>
-  <li>Define a file to hold Packet environment variables:</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vi ~/.packetrc
-export FACILITY="onprem"
-export PACKET_API_AUTH_TOKEN="&lt;dummy_token&gt;"
-export PACKET_API_URL=""
-export PACKET_CONSUMER_TOKEN="&lt;dummy_token&gt;"
-export PACKET_ENV="onprem"
-export PACKET_VERSION="onprem"
-export ROLLBAR_TOKEN="&lt;dummy_token&gt;"
-export ROLLBAR_DISABLE=1
-export API_AUTH_TOKEN="&lt;dummy_token&gt;"
-export API_CONSUMER_TOKEN="&lt;dummy_token&gt;"
-export FACILITY_CODE=lab1
-export PACKET_ENV=testing
-export MIRROR_HOST=192.168.1.1:8086
-
-$ echo 'source ~/.packetrc' &gt;&gt; ~/.bashrc
-</code></pre></div></div>
-
-<p>Ensure that you set <code class="language-plaintext highlighter-rouge">MIRROR_HOST</code> as the IP NGINX is listening on</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ source ~/.packetrc
-</code></pre></div></div>
-
-<h3 id="start-services">Start Services</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd ~/go/src/github.com/packethost/rover
-$ docker-compose up -d --build elasticsearch fluentbit kibana
-$ docker-compose up -d --build certs
-$ docker-compose up -d --build registry
-$ docker-compose up -d --build db server cli tinkerbell
-$ docker-compose ps
-</code></pre></div></div>
-<p><strong>Note:</strong> The certs service must have an Exit(0) status. Also, there should be a new certs directory that holds all the certificates.</p>
-
-<h3 id="update-host-to-trust-registry-certificate">Update Host to trust Registry Certificate</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mkdir -p /etc/docker/certs.d /etc/docker/certs.d/192.168.1.1
-$ cp certs/ca.pem /etc/docker/certs.d/192.168.1.1/ca.crt
-$ docker login 192.168.1.1 -u admin -p pass
-</code></pre></div></div>
-<p><strong>Note:</strong> If there is an error saving the credentials, the following command will fix the issue. However, I’m not certain if this is recommended.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ apt purge golang-docker-credential-helpers
-</code></pre></div></div>
-
-<h3 id="action-images">Action Images</h3>
-<p>The registry must have an image for all the actions in a workflow. To push an action image:</p>
-
-<div class="language-plaintext highlighter-rouge"><pre class="highlight"><div class="highlight"><code>$ docker tag &lt;action-image&gt; &lt;registry-host&gt;/&lt;action-image&gt;
-$ docker push &lt;registry-host&gt;/&lt;action-image&gt;
-</code></pre></div></div>
-<p>Example action images:</p>
-
-<div class="language-plaintext highlighter-rouge"><pre class="highlight"><div class="highlight"><code>$ docker pull hello-world
-$ docker tag hello-world 192.168.1.1/hello-world
-$ docker push 192.168.1.1/hello-world
-$ cd worker &amp;&amp; docker build -t 192.168.1.1/worker .
-$ docker push 192.168.1.1/worker
-</code></pre></div></div>
-
-<h3 id="setup-osie">Set up Osie</h3>
-
-<p>Create the following directories:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /var/www/html/
-$ mkdir -p ipxe misc misc/osie misc/boots misc/boots/workflow
-</code></pre></div></div>
-<p>Copy the registry certificate:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cp ~/go/src/github.com/packethost/rover/certs/ca.pem misc/boots/workflow/
-$ cp ~/go/src/github.com/packethost/rover/certs/server.pem misc/boots/workflow/
-</code></pre></div></div>
-<p>Get the build for workflow branch and place the required files under <code class="language-plaintext highlighter-rouge">/var/www/html/misc/osie/current</code> directory</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cd /var/www/html/misc/osie
-$ wget http://install.ewr1.packet.net/misc/osie/current.tar.gz
-$ tar -zxf current.tar.gz
-$ mv osie-v19.08.28.00-n\=8\,c\=b47f876\,b\=master/ current
-$ cd current
-$ cp workflow-helper-rc workflow-helper.sh /var/www/html/misc/boots/workflow/
-</code></pre></div></div>
-
-<h3 id="pushing-hardware-data-into-database">Pushing hardware data into database</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker exec -it rover_cli_1 ash
-/# vi /tmp/hardware.json
-{"id": "hardware-uuid", "arch": "x86_64", "name": "node-name", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "instance-uuid", "tags": [], "state": "active", "rescue": false, "project": {"id": "project-uuid", "name": "Ops", "organization": {"id": "org-uuid", "name": "name"}, "primary_owner": {"id": "owner-uuid", "full_name": "owner-name"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "nginx-sandbox", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "ip-address", "enabled": true, "gateway": "gateway, "netmask": "netmask", "network": "network", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "address", "enabled": true, "gateway": "gateway", "netmask": "netmask-hex", "network": "network", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "address", "enabled": true, "gateway": "gateway", "netmask": "netmask, "network": "network, "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "crypted-root-password", "operating_system_version": {"slug": "ubuntu_16_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_16_04", "version": "16.04", "image_tag": "image-tag"}}, "services": {}, "allow_pxe": true, "plan_slug": "t1.small.x86", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "manufacturer-uuid", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "network-port-uuid", "data": {"mac": "mac", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "uuid", "data": {"mac": null, "bond": null},"name": "xe-0/0/10:0", "type": "data", "hostname": "hostname"}, {"id": "uuid", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "hostname"}]}, {"id": "uuid", "data": {"mac": "mac", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "port-uuid", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "hostname"}, {"id": "uuid", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "hostname"}]}, {"id": "uuid", "data": {"mac": "&lt;worker_mac_addr&gt;", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}
-
-/# rover hardware push "`cat /tmp/hardware.json`"
-/# rover hardware all
-</code></pre></div></div>
-<p><strong>Note:</strong> Replace <code class="language-plaintext highlighter-rouge">&lt;worker_mac_addr&gt;</code> in <code class="language-plaintext highlighter-rouge">/tmp/hardware.json</code> with the worker’s MAC address.</p>
-
-<h3 id="creating-a-workflow">Creating a workflow</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker exec -it rover_cli_1 ash
-/# rover target create '{"targets": {"machine1": {"mac_addr": "&lt;worker_mac_addr&gt;"}}}'
-/# vi /tmp/sample.tmpl
+    <pre><code>$ docker exec -it tink_tink-cli_1 ash
+/# tink target create '{"targets": {"machine1": {"mac_addr": "&lt;worker_mac_addr&gt;"}}}'
+/# vi /tmp/ubuntu.tmpl
 version: '0.1'
-name: packet_osie_provision
-global_timeout: 600
+name: ubuntu_provisioning
+global_timeout: 6000
 tasks:
-- name: "OS Installation"
-  worker: ""
+- name: "os-installation"
+  worker: "{{index .Targets "machine1" "mac_addr"}}"
+  volumes:
+    - /dev:/dev
+    - /dev/console:/dev/console
+    - /lib/firmware:/lib/firmware:ro
   actions:
-  - name: "server_partitioning"
-    image: hello-world
-    timeout: 60
-    on-timeout: do_partion recover -timeout
-    on-failure: do_partion recover -failure
-  - name: os_install
-    image: hello-world
-    timeout: 60
-    on-timeout: "os_install -timeout"
-    on-failure: "os_install -failure"
-- name: "Updated DB Entries"
-  worker: ""
-  actions:
-  - name: "update_db"
-    image: hello-world
-    timeout: 50
-    on-timeout: "rover_client update-timeout"
-    on-failure: "rover_client update-failed"
+  - name: "disk-wipe"
+    image: disk-wipe:v3
+    timeout: 90
+  - name: "disk-partition"
+    image: disk-partition:v3
+    timeout: 600
+    environment:
+       MIRROR_HOST: 192.168.1.2
+    volumes:
+      - /statedir:/statedir
+  - name: "install-root-fs"
+    image: install-root-fs:v3
+    timeout: 600
+    environment:
+       MIRROR_HOST: 192.168.1.2
+  - name: "install-grub"
+    image: install-grub:v3
+    timeout: 600
+    environment:
+       MIRROR_HOST: 192.168.1.2
+    volumes:
+      - /statedir:/statedir
 
-/# rover template create -n 'template_name' -p /tmp/sample.tmpl
-/# rover workflow create -r &lt;target_id&gt; -t &lt;template_id&gt;
+/# tink template create -n 'ubuntu-template' -p /tmp/ubuntu.tmpl
+/# tink workflow create -r &lt;target_id&gt; -t &lt;template_id&gt;
+/# tink workflow get &lt;workflow_id&gt;
 </code></pre></div></div>
 
-<h2 id="setup-worker">Set up Worker</h2>
-<h3 id="create-a-server-under-oss-provisioner-1">Create a server</h3>
-<ul>
-  <li>Select - On Demand</li>
-  <li>Hostname - <code class="language-plaintext highlighter-rouge">&lt;unique&gt;</code></li>
-  <li>Location - EWR1</li>
-  <li>Type - c2.medium.x86</li>
-  <li>OS - Custom iPXE</li>
-</ul>
+    <p><strong>Note:</strong> For this demo, we are using the <code class="language-plaintext highlighter-rouge">ubuntu.tmpl</code> under <code class="language-plaintext highlighter-rouge">demo/workflow-samples/ubuntu</code>. <br />
+        For a more generalized example of what a template would look like, please reference <code class="language-plaintext highlighter-rouge">sample.tmpl</code> (which should already be located under <code class="language-plaintext highlighter-rouge">/tmp</code> inside the <code class="language-plaintext highlighter-rouge">tink_tink-cli_1</code> container). </p>
 
-<h3 id="server-network">Server Network</h3>
-<ul>
-  <li>select ‘convert to other network type’</li>
-  <li>choose Layer 2 type</li>
-  <li>among Bonded and Individual, select Individual</li>
-  <li>add new VLAN</li>
-  <li>interface: eth0</li>
-  <li>network: provisioning-vlan</li>
-  <li>enable always PXE boot</li>
-</ul>
+    <h3 id="trigger-workflow">V. Trigger the Workflow</h3>
+    <ol>
+        <li>Reboot <code class="language-plaintext highlighter-rouge">tf-worker</code>.</li>
+        <li>Use the Out-of-Band Console to connect with the worker machine and monitor progress.</li>
+        <li>On <code class="language-plaintext highlighter-rouge">tf-provisioner</code>, you can check on the workflow state and events using:</li>
+    </ol>
 
-<h3 id="connect">Connect</h3>
-<p>Use the Out-of-Band Console to connect with the server:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ssh &lt;worker_device_id&gt;@sos.ewr1.packet.net
+    <pre><code>$ docker exec -it tink_tink-cli_1 ash
+/# tink workflow state &lt;workflow-id&gt;
+/# tink workflow events &lt;workflow-id&gt;
 </code></pre></div></div>
+    <p><strong>Note:</strong> Once the workflow succeeds, disable Always IPXE on <code class="language-plaintext highlighter-rouge">tf-worker</code> and reboot it one more time to see that it is officially running Ubuntu 18.04.</p>
 
-<hr />
+    <hr />
 
-<h2 id="mistakes-to-watch-out-for">Mistakes to watch out for</h2>
-<ul>
-  <li>Not setting the worker to always PXE</li>
-</ul>
+    <h2 id="troubleshooting">Troubleshooting</h2>
+    <p>The following are possible errors you might run into and their possible solutions.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PowerEdge R6415 - BIOS 1.8.7
+    <pre><code>PowerEdge R6415 - BIOS 1.8.7
 A system restart is required. The system detected an exception during the UEFI
 pre-boot environment.
 </code></pre></div></div>
+    <ul>
+        <li>Set the worker to always PXE</li>
+    </ul>
 
-<ul>
-  <li>Not rebuilding the registry container after rebuilding the certs container</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Login did not succeed, error: Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "Autogenerated CA")
+    <pre><code>Login did not succeed, error: Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "Autogenerated CA")
 </code></pre></div></div>
+    <ul>
+        <li>Rebuild the registry container (after rebuilding the certs container)</li>
+    </ul>
 
-<ul>
-  <li>Not copying the ca.pem and server.pem files over to the <code class="language-plaintext highlighter-rouge">misc/boots/workflow</code> directory (after rebuilding the certs container)</li>
-</ul>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight">
-<pre class="highlight"><code>Waiting for docker to respond...
+    <pre><code>Waiting for docker to respond...
 WARNING! Using --password via the CLI is insecure. Use --password-stdin.
 Error response from daemon: Get https://192.168.1.1/v2/: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "Autogenerated CA")
 </code></pre></div></div>
+    <ul>
+        <li>Copy the ca.pem file over to the <code class="language-plaintext highlighter-rouge">/packet/nginx/workflow</code> directory (after rebuilding the certs container)</li>
+    </ul>
 
-    </section>
+    <pre><code>See 'docker run --help'.
+ * start-stop-daemon: failed to start `/sbin/workflow-helper'
+ * Failed to start Packet Workflow
+ [ !! ]
+ * ERROR: workflow-helper failed to start
+</code></pre></div></div>
+    <ul>
+        <li>Log into console with username <code class="language-plaintext highlighter-rouge">root</code> and run the following command:</li>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it --privileged=true \
+-e "DOCKER_API_VERSION=v1.35" \
+-e "WORKER_ID=fde7c87c-d154-447e-9fce-7eb7bdec90c0" \
+-e "DOCKER_REGISTRY=192.168.1.1" \
+-e "TINKERBELL_GRPC_AUTHORITY=192.168.1.1:42113" \
+-e "TINKERBELL_CERT_URL=http://192.168.1.1:42114/cert" \
+-e "REGISTRY_USERNAME=admin" \
+-e "REGISTRY_PASSWORD=admin123" \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /worker:/worker \
+-v /dev:/dev \
+-v /etc/docker/cert.d/192.168.1.1:/192.168.1.1 \
+192.168.1.1/tink-worker
+</code></pre></div></div>
+    </ul>
 
-    
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERRO[0000] Worker Finished with error rpc error: code = Unavailable desc = connection error: desc = "transport: authentication handshake failed: x509: certificate is valid for 127.0.0.1, not 192.168.1.1"
+ [ ok ]
+</code></pre></div></div>
+    <ul>
+        <li>Tear down the stack with <code class="language-plaintext highlighter-rouge">docker-compose down -v</code></li>
+        <li>Rerun the setup script with just the following functions:
+            <ul>
+                <li><code class="language-plaintext highlighter-rouge">build_and_setup_certs</code></li>
+                <li><code class="language-plaintext highlighter-rouge">build_registry_and_update_worker_image</code></li>
+                <li><code class="language-plaintext highlighter-rouge">start_docker_stack</code></li>
+            </ul>
+        </li>
+        <li>Re-push the tink-worker and action images.</li>
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker push 192.168.1.1/tink-worker
+docker push 192.168.1.1/ubuntu:base
+docker push 192.168.1.1/disk-wipe:v3
+docker push 192.168.1.1/disk-partition:v3
+docker push 192.168.1.1/install-root-fs:v3
+docker push 192.168.1.1/install-grub:v3
+</code></pre></div></div>
+        <li>Recreate the workflow.</li>
+    </ul>
+</section>
+
   </body>
 </html>
 
