@@ -1,7 +1,7 @@
 # Tinkerbell
 
 ## Provisioner and Worker Setup 
-This demo will guide you through the process of setting up a minimal system of two machines, a provisioner and a worker, as well as run a sample workflow that will install Ubuntu 18.04 onto the worker.
+This demo will guide you through the process of setting up a minimal system of two machines, a provisioner and a worker, as well as run a sample workflow that will display a simple hello world.
 
 Below are brief descriptions of the roles each of the machines play in the system:
 
@@ -72,7 +72,7 @@ SSH into `tf-provisioner` for the following portion.
 The `setup.sh` script will configure the network, download necessary files, set up the certs and registry, and bring up the stack.  
 The script is also separated into functions so you can rerun specific parts as needed.
 ```shell script
-wget https://raw.githubusercontent.com/tinkerbell/tink/deploy_stack/setup.sh && chmod +x setup.sh
+wget https://raw.githubusercontent.com/tinkerbell/tink/master/setup.sh && chmod +x setup.sh
 ./setup.sh
 ```
 
@@ -90,11 +90,11 @@ docker tag <action-image> <registry-host>/<action-image>
 docker push <registry-host>/<action-image>
 ```
 
-For this demo, we are going to need action images for installing Ubuntu 18.04 onto the worker. 
-The `create_images` script will build the images using the files under `workflow-samples/ubuntu` directory and push them to the registry.
+For this demo, we are going to need an action image for displaying hello-world.
 ```shell script
-cd ~/go/src/github.com/tinkerbell/tink/demo/workflow-samples/ubuntu
-./create_images.sh
+docker pull hello-world
+docker tag hello-world 192.168.1.1/hello-world
+docker push 192.168.1.1/hello-world
 ```
 
 ### IV. Workflows
@@ -123,62 +123,37 @@ tink hardware push '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_
 
 
 #### Creating a workflow
-2. Exec into the `deploy_tink-cli_1` container.
-3. Create `target`, replacing `<worker_mac_addr>` with the actual worker MAC address.
-4. Create `template`.
-5. Create `workflow`.
+1. Exec into the `deploy_tink-cli_1` container.
+2. Create `target`, replacing `<worker_mac_addr>` with the actual worker MAC address.
+3. Create `template`.
+4. Create `workflow`.
 
 ```
 $ docker exec -it deploy_tink-cli_1 ash
 /# tink target create '{"targets": {"machine1": {"mac_addr": "<worker_mac_addr>"}}}'
-/# vi /tmp/ubuntu.tmpl
+/# vi /tmp/hello.tmpl
 version: '0.1'
-name: ubuntu_provisioning
+name: hello_world
 global_timeout: 6000
 tasks:
-- name: "os-installation"
+- name: "hello-world"
   worker: "{{index .Targets "machine1" "mac_addr"}}"
-  volumes:
-    - /dev:/dev
-    - /dev/console:/dev/console
-    - /lib/firmware:/lib/firmware:ro
   actions:
-  - name: "disk-wipe"
-    image: disk-wipe:v3
+  - name: "hello-world"
+    image: hello-world
     timeout: 90
-  - name: "disk-partition"
-    image: disk-partition:v3
-    timeout: 600
-    environment:
-       MIRROR_HOST: 192.168.1.2
-    volumes:
-      - /statedir:/statedir
-  - name: "install-root-fs"
-    image: install-root-fs:v3
-    timeout: 600
-    environment:
-       MIRROR_HOST: 192.168.1.2
-  - name: "install-grub"
-    image: install-grub:v3
-    timeout: 600
-    environment:
-       MIRROR_HOST: 192.168.1.2
-    volumes:
-      - /statedir:/statedir
 
-/# tink template create -n 'ubuntu-template' -p /tmp/ubuntu.tmpl
+/# tink template create -n 'hello-world' -p /tmp/hello.tmpl
 /# tink workflow create -r <target_id> -t <template_id>
 /# tink workflow get <workflow_id>
 ```
-**Note:** For this demo, we are using the `ubuntu.tmpl` under `demo/workflow-samples/ubuntu`.  
-For a more generalized example of what a template would look like, please reference `sample.tmpl` (which should already be located under `/tmp` inside the `tink_tink-cli_1` container). 
 
 ### V. Trigger the Workflow
 1. Reboot `tf-worker`.
 2. Use the Out-of-Band Console to connect with the worker machine and monitor progress.
 3. On `tf-provisioner`, you can check on the workflow state and events using:
 ```
-$ docker exec -it tink_tink-cli_1 ash
+$ docker exec -it deploy_tink-cli_1 ash
 /# tink workflow state <workflow-id>
 /# tink workflow events <workflow-id>
 ```
