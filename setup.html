@@ -98,7 +98,7 @@ $ terraform apply
     <h4 id="worker-setup">Worker</h4>
     <ul>
         <li>Facility: <code class="language-plaintext highlighter-rouge">&lt;same_as_provisioner&gt;</code></li>
-        <li>Plan: <code class="language-plaintext highlighter-rouge">c2.medium.x86</code></li>
+        <li>Plan: <code class="language-plaintext highlighter-rouge">c3.small.x86</code> (or any plan that supports Layer 2)</li>
         <li>OS: <code class="language-plaintext highlighter-rouge">Custom iPXE</code>
             <ul>
                 <li>IPXE Script URL: <code class="language-plaintext highlighter-rouge">https://boot.netboot.xyz</code></li>
@@ -146,12 +146,25 @@ docker push 192.168.1.1/hello-world
     <h4 id="pushing-hardware-data">Pushing hardware data into database</h4>
     <ol>
         <li>Exec into the <code class="language-plaintext highlighter-rouge">deploy_tink-cli_1</code> container.</li>
-        <li>Create a script to push hardware data into the database.</li>
-        <li>Export the necessary environment variables (<code class="language-plaintext highlighter-rouge">WORKER_MAC</code> and <code class="language-plaintext highlighter-rouge">WORKER_PLAN</code>).</li>
-        <li>Run the script.</li>
+        <li>Create a file containing the hardware data (in json format), replacing <code class="language-plaintext highlighter-rouge">&lt;worker_mac_addr&gt;</code> with the actual worker MAC.
+            <ul>
+                <li>The worker MAC can be found in the Terraform output (and also in the generated <code class="language-plaintext highlighter-rouge">terraform.tfstate</code> file). However, if you did not use Terraform to provision the servers, you can call the <a href="https://www.packet.com/developers/api/devices/#retrieve-a-device">Packet API <code class="language-plaintext highlighter-rouge">devices</code> endpoint</a>, and the worker MAC will be the MAC under <code class="language-plaintext highlighter-rouge">eth0</code>.
+                    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://api.packet.net/devices/{device_id}
+...
+          "type": "NetworkPort",
+          "name": "eth0",
+          "data": {
+              "bonded": false,
+              "mac": "00:00:00:00:00:00" // worker mac
+          },
+...
+</code></pre></div></div>
+                </li>
+            </ul>
+        </li>
+        <li>Push the hardware data into the database.</li>
     </ol>
-    <p><strong>Note:</strong> The worker MAC can be found in the terraform output.</p>
-    <pre><code>$ docker exec -it deploy_tink-cli_1 ash
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker exec -it deploy_tink-cli_1 ash
 /# vi /tmp/hardware.json
 {
   "id": "373324c8-7fb5-11ea-9227-0242ac120004",
@@ -173,7 +186,7 @@ docker push 192.168.1.1/hello-world
   "network_ports": [
     {
       "data": {
-      "mac": "<worker_mac_addr>"
+      "mac": "&lt;worker_mac_addr&gt;"
       },
       "name": "eth0",
       "type": "data"
@@ -184,6 +197,7 @@ docker push 192.168.1.1/hello-world
 /# tink hardware push "`cat /tmp/hardware.json`"
 /# tink hardware all
 </code></pre></div></div>
+    <p><strong>Note:</strong> You will also have to adjust the <code class="language-plaintext highlighter-rouge">address</code> and <code class="language-plaintext highlighter-rouge">gateway</code> under <code class="language-plaintext highlighter-rouge">ip_addresses</code> accordingly if you chose a non-default subnet and host IP address.</p>
 
     <h4 id="creating-workflow">Creating a workflow</h4>
     <ol>
