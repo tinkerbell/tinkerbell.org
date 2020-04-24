@@ -1,7 +1,7 @@
 # Tinkerbell
 
 ## Provisioner and Worker Setup 
-This demo will guide you through the process of setting up a minimal system of two machines, a provisioner and a worker, as well as run a sample workflow that will install Ubuntu 18.04 onto the worker.
+This demo will guide you through the process of setting up a minimal system of two machines, a provisioner and a worker, as well as run a sample workflow that will display a simple hello world.
 
 Below are brief descriptions of the roles each of the machines play in the system:
 
@@ -68,38 +68,13 @@ SSH into `tf-provisioner` for the following portion.
 
 **Note:** From here on out, assume all code blocks are run in bash unless specified.
 
-#### Install Git and Git LFS
-```shell script
-sudo apt-get update -y
-sudo apt install -y git  
-wget https://github.com/git-lfs/git-lfs/releases/download/v2.9.0/git-lfs-linux-amd64-v2.9.0.tar.gz  
-tar -C /usr/local/bin -xzf git-lfs-linux-amd64-v2.9.0.tar.gz  
-rm git-lfs-linux-amd64-v2.9.0.tar.gz  
-git lfs install
-```
-
-#### Clone the `tink` repo at the GOPATH  and switch to the `demo-v2` branch
-```shell script
-mkdir -p ~/go/src/github.com/tinkerbell
-cd ~/go/src/github.com/tinkerbell
-git clone https://github.com/tinkerbell/tink.git && cd tink
-git checkout demo-v2
-cd demo
-```
-
-#### Export and persist the required environment variables
-Edit the environment variables in `tinkenv` with your desired configurations if you wish.
-```shell script
-cat tinkenv >> ~/.bashrc
-source ~/.bashrc
-```
-
 #### Run the setup script
 The `setup.sh` script will configure the network, download necessary files, set up the certs and registry, and bring up the stack.  
 The script is also separated into functions so you can rerun specific parts as needed.
 ```shell script
-sudo ./setup.sh
-```  
+wget https://raw.githubusercontent.com/tinkerbell/tink/master/setup.sh && chmod +x setup.sh
+./setup.sh
+```
 
 ### III. Action Images
 Push the worker image responsible for retrieving and executing the workflows for the worker to the registry.
@@ -115,95 +90,102 @@ docker tag <action-image> <registry-host>/<action-image>
 docker push <registry-host>/<action-image>
 ```
 
-For this demo, we are going to need action images for installing Ubuntu 18.04 onto the worker. 
-The `create_images` script will build the images using the files under `workflow-samples/ubuntu` directory and push them to the registry.
+For this demo, we are going to need an action image for displaying hello-world.
 ```shell script
-cd ~/go/src/github.com/tinkerbell/tink/demo/workflow-samples/ubuntu
-./create_images.sh
+docker pull hello-world
+docker tag hello-world 192.168.1.1/hello-world
+docker push 192.168.1.1/hello-world
 ```
 
 ### IV. Workflows
 
 #### Pushing hardware data into database
 
-1. Exec into the `tink_tink-cli_1` container.
-2. Create a script to push hardware data into the database.
-3. Export the necessary environment variables (`WORKER_MAC` and `WORKER_PLAN`).
-4. Run the script.
-
-**Note:** The worker MAC can be found in the terraform output.
+1. Exec into the `deploy_tink-cli_1` container.
+2. Create a file containing the hardware data (in json format), replacing `<worker_mac_addr>` with the actual worker MAC.
+    * The worker MAC can be found in the Terraform output (and also in the generated `terraform.tfstate` file). However, if you did not use Terraform to provision the servers, you can call the [Packet API `devices` endpoint](https://www.packet.com/developers/api/devices/#retrieve-a-device), and the worker MAC will be the MAC under `eth0`.
+      ```
+      https://api.packet.net/devices/{device_id}
+      ...
+                  "type": "NetworkPort",
+                  "name": "eth0",
+                  "data": {
+                      "bonded": false,
+                      "mac": "00:00:00:00:00:00" // worker mac
+                  },
+      ...
+      ```
+3. Push the hardware data into the database.
 
 ```
-$ docker exec -it tink_tink-cli_1 ash
-/# vi /tmp/push.sh
-tink hardware push '{"id": "fde7c87c-d154-447e-9fce-7eb7bdec90c0", "arch": "x86_64", "name": "node2", "type": "node", "state": "provisioning", "vlan_id": 3210, "efi_boot": false, "instance": {"id": "947a6217-bffd-40ca-92d2-684b3986fdbc", "tags": [], "state": "active", "rescue": false, "project": {"id": "24248879-ec99-4c97-ac1d-375c0bf71ff6", "name": "Ops", "organization": {"id": "62a1ca67-b23c-4808-ac86-d19913ca7487", "name": "Packet"}, "primary_owner": {"id": "d3e2cc7e-0509-4f4e-beb9-07354091b518", "full_name": "Packet Bot"}}, "storage": {"disks": [{"device": "/dev/sda", "wipeTable": true, "partitions": [{"size": 4096, "label": "BIOS", "number": 1}, {"size": "3993600", "label": "SWAP", "number": 2}, {"size": 0, "label": "ROOT", "number": 3}]}], "filesystems": [{"mount": {"point": "/", "create": {"options": ["-L", "ROOT"]}, "device": "/dev/sda3", "format": "ext4"}}, {"mount": {"point": "none", "create": {"options": ["-L", "SWAP"]}, "device": "/dev/sda2", "format": "swap"}}]}, "hostname": "packet-test", "ssh_keys": [], "userdata": "", "allow_pxe": true, "always_pxe": true, "customdata": {}, "ip_addresses": [{"cidr": 31, "type": "data", "public": true, "address": "0.0.0.0", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}, {"cidr": 127, "type": "data", "public": true, "address": "2604:1380:3000:1100::1", "enabled": true, "gateway": "2604:1380:3000:1100::", "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe", "network": "2604:1380:3000:1100::", "management": true, "address_family": 6}, {"cidr": 31, "type": "data", "public": false, "address": "", "enabled": true, "gateway": "0.0.0.0", "netmask": "255.255.255.254", "network": "0.0.0.0", "management": true, "address_family": 4}], "network_ready": true, "ipxe_script_url": null, "crypted_root_password": "", "operating_system_version": {"slug": "ubuntu_18_04-t1.small.x86-09042018", "distro": "ubuntu", "os_slug": "ubuntu_18_04", "version": "18.04", "image_tag": "7844cf38831a092c4c6eb712a2edd7349226dafd"}}, "services": {}, "allow_pxe": true, "plan_slug": "'$WORKER_PLAN'", "allow_workflow":true, "management": {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}, "bonding_mode": 5, "ip_addresses": [{"cidr": 31, "type": "data", "public": false, "address": "172.16.1.35", "enabled": true, "gateway": "172.16.1.34", "netmask": "255.255.255.254", "network": "172.16.1.34", "management": true, "address_family": 4}, {"type": "ipmi", "address": "192.168.1.5", "gateway": "192.168.1.1", "netmask": "255.255.255.240"}], "manufacturer": {"id": "f7dbf901-d210-4594-ab82-f529a36bdd70", "slug": "supermicro"}, "facility_code": "nrt1", "network_ports": [{"id": "7da65f4d-5d00-4270-9f6f-9959ebea2800", "data": {"mac": "0c:c4:7a:81:0b:5e", "bond": "bond0"}, "name": "eth0", "type": "data", "connected_ports": [{"id": "6c2f17e5-8517-4727-b9c7-115497a82ee3", "data": {"mac": null, "bond": null},
-"name": "xe-0/0/10:0", "type": "data", "hostname": "test"}, {"id": "fcf4f876-f22d-40e6-a3fd-88826bc93a84", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:0", "type": "data", "hostname": "test"}]}, {"id": "3a112edd-300f-4e64-839b-ae9152925293", "data": {"mac": "0c:c4:7a:81:0b:5f", "bond": "bond0"}, "name": "eth1", "type": "data", "connected_ports": [{"id": "b7bb8ba9-e34d-439b-912b-b9ab0c3189bf", "data": {"mac": null, "bond": null}, "name": "xe-0/0/10:2", "type": "data", "hostname": "test"}, {"id": "35061d64-7b25-4d0b-9e15-164e513149e5", "data": {"mac": null, "bond": null}, "name": "xe-1/0/10:2", "type": "data", "hostname": "test"}]}, {"id": "356d1cf0-498f-46c6-b2e6-d5fdfdd5c5b3", "data": {"mac": "'$WORKER_MAC'", "bond": null}, "name": "ipmi0", "type": "ipmi"}], "plan_version_slug": "baremetal_0_01", "preinstalled_operating_system_version": {}}'
+$ docker exec -it deploy_tink-cli_1 ash
+/# vi /tmp/hardware.json
+{
+  "id": "373324c8-7fb5-11ea-9227-0242ac120004",
+  "arch": "x86_64",
+  "allow_pxe": true,
+  "allow_workflow": true,
+  "ip_addresses": [
+    {
+     "address": "192.168.1.5",
+     "address_family": 4,
+     "enabled": true,
+     "gateway": "192.168.1.1",
+     "management": true,
+     "netmask": "255.255.255.0",
+     "public": false
+    }
+  ],
+  "facility_code": "ewr1",
+  "network_ports": [
+    {
+      "data": {
+      "mac": "<worker_mac_addr>"
+      },
+      "name": "eth0",
+      "type": "data"
+    }
+  ]
+}
 
-/# chmod +x /tmp/push.sh
-/# export WORKER_MAC=<worker_mac_addr>
-/# export WORKER_PLAN=<worker_plan_slug>
-/# /tmp/push.sh
+/# tink hardware push "`cat /tmp/hardware.json`"
 /# tink hardware all
 ```
 
+**Note:** You will also have to adjust the `address` and `gateway` under `ip_addresses` accordingly if you chose a non-default subnet and host IP address.
 
 #### Creating a workflow
-2. Exec into the `tink_tink-cli_1` container.
-3. Create `target`, replacing `<worker_mac_addr>` with the actual worker MAC address.
-4. Create `template`.
-5. Create `workflow`.
+1. Exec into the `deploy_tink-cli_1` container.
+2. Create `target`, replacing `<worker_mac_addr>` with the actual worker MAC address.
+3. Create `template`.
+4. Create `workflow`.
 
 ```
-$ docker exec -it tink_tink-cli_1 ash
+$ docker exec -it deploy_tink-cli_1 ash
 /# tink target create '{"targets": {"machine1": {"mac_addr": "<worker_mac_addr>"}}}'
-/# vi /tmp/ubuntu.tmpl
+/# vi /tmp/hello.tmpl
 version: '0.1'
-name: ubuntu_provisioning
+name: hello_world
 global_timeout: 6000
 tasks:
-- name: "os-installation"
+- name: "hello-world"
   worker: "{{index .Targets "machine1" "mac_addr"}}"
-  volumes:
-    - /dev:/dev
-    - /dev/console:/dev/console
-    - /lib/firmware:/lib/firmware:ro
   actions:
-  - name: "disk-wipe"
-    image: disk-wipe:v3
+  - name: "hello-world"
+    image: hello-world
     timeout: 90
-  - name: "disk-partition"
-    image: disk-partition:v3
-    timeout: 600
-    environment:
-       MIRROR_HOST: 192.168.1.2
-    volumes:
-      - /statedir:/statedir
-  - name: "install-root-fs"
-    image: install-root-fs:v3
-    timeout: 600
-    environment:
-       MIRROR_HOST: 192.168.1.2
-  - name: "install-grub"
-    image: install-grub:v3
-    timeout: 600
-    environment:
-       MIRROR_HOST: 192.168.1.2
-    volumes:
-      - /statedir:/statedir
 
-/# tink template create -n 'ubuntu-template' -p /tmp/ubuntu.tmpl
+/# tink template create -n 'hello-world' -p /tmp/hello.tmpl
 /# tink workflow create -r <target_id> -t <template_id>
 /# tink workflow get <workflow_id>
 ```
-**Note:** For this demo, we are using the `ubuntu.tmpl` under `demo/workflow-samples/ubuntu`.  
-For a more generalized example of what a template would look like, please reference `sample.tmpl` (which should already be located under `/tmp` inside the `tink_tink-cli_1` container). 
 
 ### V. Trigger the Workflow
 1. Reboot `tf-worker`.
 2. Use the Out-of-Band Console to connect with the worker machine and monitor progress.
 3. On `tf-provisioner`, you can check on the workflow state and events using:
 ```
-$ docker exec -it tink_tink-cli_1 ash
+$ docker exec -it deploy_tink-cli_1 ash
 /# tink workflow state <workflow-id>
 /# tink workflow events <workflow-id>
 ```
