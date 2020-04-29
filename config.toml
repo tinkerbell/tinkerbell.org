@@ -1,0 +1,45 @@
+baseURL = "https://tinkerbell.org/"
+languageCode = "en-us"
+theme = "hugo-theme-learn"
+title = "Tinkerbell"
+description = "Tinkerbell, a Provisioning engine by Packet"
+Paginate = 4
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[params]
+  author = "Packet" # add your company name
+  github = "https://github.com/tinkerbell" # add your github profile name
+  email = "hello@tinkerbell.org"
+  showVisitedLinks = false
+  disableBreadcrumb = false
+  disableNextPrev = false
+  disableLanguageSwitchingButton = true
+  themeVariant = "mine"
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-fw fa-slack'></i> Community Slack"
+url = "https://slack.packet.net/"
+weight = 10
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-fw fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/tinkerbell/"
+weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-fw fa-file-contract '></i> License"
+url = "/license"
+weight = 40
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-fw fa-question-circle'></i> Support"
+url = "/support"
+weight = 50
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-fw fa-twitter'></i> Twitter"
+url = "https://twitter.com/tinkerbell_oss"
+weight = 60
