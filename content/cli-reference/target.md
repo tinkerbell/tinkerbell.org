@@ -29,11 +29,10 @@ Target operations:
 
  - The command below creates a workflow target and returns its UUID.
  ```shell
-  $ tink target create '{"targets": {"machine1": {"mac_addr": "98:03:9b:4b:c5:34"}}}' 
+  $ tink target create '{"targets": {"machine1": {"mac_addr": "98:03:9b:4b:c5:34"}}}'
  ```
 
 ### See Also
- - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations 
+ - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations
  - [tink template](/cli-reference/template/) - Template operations
  - [tink workflow](/cli-reference/workflow/) - Workflow operations
-

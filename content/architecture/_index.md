@@ -11,4 +11,3 @@ toc = true
 
 #### Workflow
 ![Architecture](/images/docs/ephemeral-data.png)
-

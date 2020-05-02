@@ -9,7 +9,8 @@ toc = true
 ### Pushing hardware data into database
 1. Exec into the _deploy_tink-cli_1_ container.
 2. Create a file containing the hardware data (in json format), replacing _<worker_mac_addr>_ with the actual worker MAC
-- The worker MAC can be found in the Terraform output (and also in the generated _terraform.tfstate_ file). However, if you did not use Terraform to provision the servers, you can call the Packet API _devices_ endpoint, and the worker MAC will be the MAC under _eth0_.
+   - The worker MAC can be found in the Terraform output (and also in the generated _terraform.tfstate_ file).
+     However, if you did not use Terraform to provision the servers, you can call the Packet API _devices_ endpoint, and the worker MAC will be the MAC under _eth0_.
 ```
 https://api.packet.net/devices/{device_id}
 ...

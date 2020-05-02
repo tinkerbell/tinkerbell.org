@@ -14,7 +14,8 @@ docker tag quay.io/tinkerbell/tink-worker:latest 192.168.1.1/tink-worker
 docker push 192.168.1.1/tink-worker
 ```
 
-- The registry must have an image for all the actions in a workflow. To push an action image:
+- The registry must have an image for all the actions in a workflow.
+  To push an action image:
 ```sh
 docker tag <action-image> <registry-host>/<action-image>
 docker push <registry-host>/<action-image>

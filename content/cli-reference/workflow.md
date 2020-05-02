@@ -36,7 +36,6 @@ Workflow operations:
  ```
 
 ### See Also
- - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations 
+ - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations
  - [tink target](/cli-reference/target/) - Target operations
  - [tink template](/cli-reference/template/) - Template operations
-
