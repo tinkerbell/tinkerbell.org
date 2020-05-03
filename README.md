@@ -74,3 +74,10 @@ When the PR is merged site will be updated automatically by Netlify.
 The code snippets and the documentation is licensed under Apache license.
 See [LICENSE](./LICENSE) for the full license text.
 
+<<<<<<< HEAD
+=======
+1. Install Yarn https://classic.yarnpkg.com/en/docs/install/
+2. Install gatsby-cli https://www.gatsbyjs.org/docs/quick-start/#install-the-gatsby-cli
+3. Install the dependencies for the site `yarn install`
+4. Run the Gatsby development server `gatsby develop`
+>>>>>>> Update readme
