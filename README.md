@@ -60,7 +60,17 @@ Find the documentation page file (`.md` file) under `content/` and edit it.
 [Create a Pull Request](https://help.github.com/en/articles/creating-a-pull-request) with your changes.
 When the PR is merged site will be updated automatically by Netlify.
 
+### Running Gatsby version
+
+1. Install npm https://www.npmjs.com/get-npm
+2. Install gatsby-cli https://www.gatsbyjs.org/docs/quick-start/#install-the-gatsby-cli
+3. Install the dependencies `npm install`
+4. Run `gatsby develop` for Gatsby development server
+5. Run `gatsby build` or `npm run build` for build
+6. For netlify deployment, please use `npm run build` for build command as mentioned in https://www.gatsbyjs.org/docs/deploying-to-netlify/
+
 ## Licensing
 
 The code snippets and the documentation is licensed under Apache license.
 See [LICENSE](./LICENSE) for the full license text.
+

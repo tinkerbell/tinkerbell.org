@@ -1,0 +1,58 @@
+{
+  "name": "tinkerbell",
+  "private": true,
+  "description": "tinkerbell.org website",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "dependencies": {
+    "foundation-sites": "^6.6.3",
+    "gatsby": "^2.21.0",
+    "gatsby-image": "^2.4.0",
+    "gatsby-plugin-manifest": "^2.4.1",
+    "gatsby-plugin-prettier-eslint": "^1.0.4",
+    "gatsby-plugin-react-helmet": "^3.3.0",
+    "gatsby-plugin-sass": "^2.3.0",
+    "gatsby-plugin-sharp": "^2.6.0",
+    "gatsby-remark-copy-linked-files": "^2.3.1",
+    "gatsby-remark-images": "^3.3.0",
+    "gatsby-remark-prismjs": "^3.5.0",
+    "gatsby-remark-responsive-iframe": "^2.4.1",
+    "gatsby-remark-smartypants": "^2.3.0",
+    "gatsby-source-filesystem": "^2.3.0",
+    "gatsby-transformer-json": "^2.4.0",
+    "gatsby-transformer-remark": "^2.8.0",
+    "gatsby-transformer-sharp": "^2.5.0",
+    "gatsby-transformer-yaml": "^2.4.0",
+    "node-sass": "^4.14.0",
+    "prismjs": "^1.20.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^6.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tinkerbell/tinkerbell.github.io"
+  },
+  "bugs": {
+    "url": "https://github.com/tinkerbell/tinkerbell.github.io/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run format"
+    }
+  }
+}

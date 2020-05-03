@@ -1,0 +1,12 @@
+- page: setup
+  label: Setup
+- page: concepts
+  label: Concepts
+- page: concepts
+  label: Concepts
+- page: architecture
+  label: Architecture
+- page: cli-reference
+  label: CLI Reference
+- page: troubleshooting
+  label: Troubleshooting
