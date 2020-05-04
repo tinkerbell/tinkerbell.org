@@ -49,10 +49,5 @@
   },
   "bugs": {
     "url": "https://github.com/tinkerbell/tinkerbell.github.io/issues"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format"
-    }
   }
 }
