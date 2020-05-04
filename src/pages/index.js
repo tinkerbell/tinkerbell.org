@@ -9,10 +9,10 @@ const Homepage = ({ data }) => {
     <Layout>
       <section className="section larger">
         <div className="grid-container">
-          <div className="grid-x grid-padding-x align-justify align-middle">
-            <TextImage className={'mb80'} data={data.sectionOne} />
-            <ImageText data={data.sectionTwo} />
-          </div>
+
+          <TextImage className={'mb80'} data={data.sectionOne} />
+          <ImageText data={data.sectionTwo} />
+
         </div>
       </section>
 
