@@ -2,7 +2,6 @@
 
 For complete documentation visit [tinkerbell.org](https://tinkerbell.org/)
 
-<<<<<<< HEAD
 Tinkerbell is a bare metal provisioning engine.
 It’s built and maintained with love by the team at Packet.
 

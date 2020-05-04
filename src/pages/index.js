@@ -45,7 +45,7 @@ const Homepage = ({ data }) => {
         </div>
       </section>
 
-      <section className="section bg-blue pb80i">
+      <section className="section bg-blue pb80i bg-stars">
         <div className="grid-container">
           <div className="grid-x grid-padding-x align-justify">
 
