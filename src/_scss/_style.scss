@@ -132,14 +132,23 @@ header {
   padding-top: 150px;
   padding-bottom: 150px;
 
+  &.full-height {
+    height: calc(100vh - 295px);
+  }
+
   * {
     font-size: rem-calc(18);
   }
 
+  h1,
   h2 {
     font-size: rem-calc(40);
     font-weight: 600;
     margin-bottom: 25px;
+  }
+
+  h1 {
+    font-size: rem-calc(50);
   }
 
   &.larger {

@@ -7,7 +7,7 @@ import Nav from "../components/nav";
 import Footer from "../components/footer";
 import { useStaticQuery, graphql } from "gatsby";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, hero = true }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -18,7 +18,10 @@ const Layout = ({ children }) => {
       }
     }
   `)
-
+  let heroTag = '';
+  if (hero === true) {
+    heroTag = <Hero />;
+  }
   return (
     <>
       <Helmet title={data.site.siteMetadata.title} defer={false}>
@@ -29,7 +32,7 @@ const Layout = ({ children }) => {
         <meta name="description" content={data.site.siteMetadata.description} />
       </Helmet>
       <Nav />
-      <Hero />
+      {heroTag}
       <div id="content-wrapper">
         {children}
       </div>
