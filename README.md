@@ -9,12 +9,12 @@ It’s built and maintained with love by the team at Packet.
 ## Contributing
 
 This website uses Hugo to generate static HTML pages.
-It's hosted and automatically build by Netlify (see [netlify.toml](./netlify.toml "View file") for more details).
+It's hosted and automatically build by Netlify (see [netlify.toml](./netlify.toml 'View file') for more details).
 
-- [`content/`](./content/ "View the directory") directory contains
+- [`content/`](./content/ 'View the directory') directory contains
   documentation files
-- [`config.toml`](./config.toml "View file") is the Hugo configuration
-- [`netlify.toml`](./netlify.toml "View file") is Netlify
+- [`config.toml`](./config.toml 'View file') is the Hugo configuration
+- [`netlify.toml`](./netlify.toml 'View file') is Netlify
   configuration
 
 ### Build the site locally

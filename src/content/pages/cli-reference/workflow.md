@@ -11,6 +11,7 @@ Workflow operations.
 ### Synopsis
 
 Workflow operations:
+
 ```shell
   create      create a workflow
   data        get workflow data
@@ -29,13 +30,15 @@ Workflow operations:
 
 ### Examples
 
- - Create a workflow using a template and a target
- ```shell
-  $ tink workflow create -t <template-uuid> -r <target-uuid>
-  $ tink workflow create -t edb80a56-b1f2-4502-abf9-17326324192b -r 9356ae1d-6165-4890-908d-7860ed04b421
- ```
+- Create a workflow using a template and a target
+
+```shell
+ $ tink workflow create -t <template-uuid> -r <target-uuid>
+ $ tink workflow create -t edb80a56-b1f2-4502-abf9-17326324192b -r 9356ae1d-6165-4890-908d-7860ed04b421
+```
 
 ### See Also
- - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations
- - [tink target](/cli-reference/target/) - Target operations
- - [tink template](/cli-reference/template/) - Template operations
+
+- [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations
+- [tink target](/cli-reference/target/) - Target operations
+- [tink template](/cli-reference/template/) - Template operations
