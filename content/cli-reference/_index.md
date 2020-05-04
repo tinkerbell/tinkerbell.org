@@ -10,7 +10,9 @@ Command line interface for Packet Workflow.
 
 ### Synopsis
 
-Command line interface for Packet Workflow. The CLI allows you to update the hardware details with respect to a worker machine. It also enables you to create a template and a target which is eventually used to create a workflow.
+Command line interface for Packet Workflow.
+The CLI allows you to update the hardware details with respect to a worker machine.
+It also enables you to create a template and a target which is eventually used to create a workflow.
 
 ### Operations
 
@@ -30,8 +32,7 @@ Command line interface for Packet Workflow. The CLI allows you to update the har
 
 ### See Also
 
- - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations 
+ - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations
  - [tink target](/cli-reference/target/) - Target operations
  - [tink template](/cli-reference/template/) - Template operations
  - [tink workflow](/cli-reference/workflow/) - Workflow operations
-

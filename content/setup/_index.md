@@ -29,4 +29,3 @@ Below are brief descriptions of the roles each of the machines play in the syste
 {{% notice note %}}
 It is important to note that you can run any workflow using this setup, but the purpose of this sample is to allow you to get a sense of how things work at a basic level.
 {{% /notice %}}
-
