@@ -32,7 +32,7 @@ const Homepage = ({ data }) => {
 
                   return (<div key={index} className={"cell " + classNameCell}>
                     <div className="box">
-                      <a href="{data.node.url}" className="permalink"></a>
+                      <a href={data.node.url} className="permalink"></a>
                       <h3>{data.node.title}</h3>
                       <p>{data.node.description}</p>
                     </div>
