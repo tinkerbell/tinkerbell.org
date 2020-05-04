@@ -4,25 +4,13 @@ import { useStaticQuery, graphql } from "gatsby";
 import packetLogo from "../images/packet-logo.png"
 
 const Footer = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      placeholderImage: file(relativePath: { eq: "packet-logo.png" }) {
-        childImageSharp {
-          fixed(width: 100) {
-            ...GatsbyImageSharpFixed_withWebp
-          }
-        }
-      }
-    }
-  `)
 
   return (
     <footer id="footer" className="bg-blue">
       <div className="grid-container">
         <section className="grid-x grid-margin-x">
           <div className="cell large-6">
-            <p>An open source project brought to you by <a href="https://www.packet.com/" title="Packet"><img className='footer-logo' src={packetLogo} alt="Packet" /></a></p>
-            {/* <Img className='footer-logo' fixed={data.placeholderImage.childImageSharp.fixed} /></p> */}
+            <p>An open source project brought to you by <a className="logo-footer" href="https://www.packet.com/" title="Packet"><img className='footer-logo' src={packetLogo} alt="Packet" /></a></p>
           </div>
           <div className="cell large-6">
             <nav id="nav-footer" className="nav">
