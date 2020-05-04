@@ -1,6 +1,6 @@
 # Tinkerbell
 
-For complete documentation visit [tinkerbell.org][https://tinkerbell.org/]
+For complete documentation visit [tinkerbell.org](https://tinkerbell.org/)
 
 Tinkerbell is a bare metal provisioning engine.
 It’s built and maintained with love by the team at Packet.
