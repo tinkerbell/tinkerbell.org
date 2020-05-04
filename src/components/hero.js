@@ -1,26 +1,25 @@
-import React from 'react';
-import tinkerbellLogo from "../images/tinkerbell-logo.png"
-import { useStaticQuery, graphql } from "gatsby";
-import Img from "gatsby-image";
+import React from 'react'
+import tinkerbellLogo from '../images/tinkerbell-logo.png'
+import { useStaticQuery, graphql } from 'gatsby'
+import Img from 'gatsby-image'
 
 const Hero = () => {
-
   const data = useStaticQuery(graphql`
-  query  {
-    markdownRemark(frontmatter: {id: {eq: "hero"}}) {
-      html
-      frontmatter {
-        title
-        image {
-          childImageSharp {
-            fluid(maxWidth: 800) {
-              ...GatsbyImageSharpFluid
+    query {
+      markdownRemark(frontmatter: { id: { eq: "hero" } }) {
+        html
+        frontmatter {
+          title
+          image {
+            childImageSharp {
+              fluid(maxWidth: 800) {
+                ...GatsbyImageSharpFluid
+              }
             }
           }
         }
       }
     }
-  }
   `)
 
   const { markdownRemark } = data
@@ -39,7 +38,7 @@ const Hero = () => {
           </div>
         </section>
       </div>
-    </header >
+    </header>
   )
 }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import Layout from "../layouts/index"
+import React from 'react'
+import Layout from '../layouts/index'
 
 const NotFoundPage = () => (
   <Layout hero={false}>
@@ -13,8 +13,7 @@ const NotFoundPage = () => (
         </div>
       </div>
     </section>
-
   </Layout>
 )
 
-export default NotFoundPage;
+export default NotFoundPage
