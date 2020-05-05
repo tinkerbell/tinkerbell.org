@@ -44,28 +44,6 @@ const Homepage = ({ data }) => {
         </div>
       </section>
 
-      <section className="section bg-blue pb80i bg-stars">
-        <div className="grid-container">
-          <div className="grid-x grid-padding-x align-justify">
-            <div className="cell large-6">
-              <div className="youtube">
-                <iframe
-                  src={data.sectionFour.frontmatter.video + '?rel=0&amp;fs=0'}
-                  frameBorder="0"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div className="cell large-6 fancy-link">
-              <div className="pl50 m-pl0 m-pt40">
-                <h2>{data.sectionFour.frontmatter.title}</h2>
-                <div dangerouslySetInnerHTML={{ __html: data.sectionFour.html }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </Layout>
   )
 }
@@ -116,14 +94,6 @@ export const query = graphql`
       html
       frontmatter {
         title
-      }
-    }
-
-    sectionFour: markdownRemark(frontmatter: { id: { eq: "section-4" } }) {
-      html
-      frontmatter {
-        title
-        video
       }
     }
   }
