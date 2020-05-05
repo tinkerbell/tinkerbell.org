@@ -10,8 +10,8 @@ toc = true
 
 ```sh
 docker pull quay.io/tinkerbell/tink-worker:latest
-docker tag quay.io/tinkerbell/tink-worker:latest 192.168.1.1/tink-worker
-docker push 192.168.1.1/tink-worker
+docker tag quay.io/tinkerbell/tink-worker:latest <registry-host>/tink-worker
+docker push <registry-host>/tink-worker
 ```
 
 - The registry must have an image for all the actions in a workflow.
@@ -24,6 +24,6 @@ docker push <registry-host>/<action-image>
 - For this demo, we are going to need an action image for displaying hello-world.
 ```sh
 docker pull hello-world
-docker tag hello-world 192.168.1.1/hello-world
-docker push 192.168.1.1/hello-world
+docker tag hello-world <registry-host>/hello-world
+docker push <registry-host>/hello-world
 ```
