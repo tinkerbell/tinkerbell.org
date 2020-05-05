@@ -12,9 +12,7 @@ Using Terraform (with the Packet provider), create two servers _tf-provisioner_ 
 - Clone the *tink* repository locally and switch to the *demo-v2* branch:
 ```sh
 git clone https://github.com/tinkerbell/tink.git
-cd tink
-git checkout demo-v2
-cd demo/terraform
+cd tink/deploy/terraform
 ```
 
 - Update the _<packet_api_token>_ and _<project_id>_ fields in _input.tf_ with your Packet API token and desired project ID
