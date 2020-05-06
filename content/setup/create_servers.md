@@ -6,23 +6,23 @@ weight = 20
 toc = true
 +++
 
-### Using Terraform
+### Automated setup using Terraform
 Using Terraform (with the Packet provider), create two servers _tf-provisioner_ and _tf-worker_ attached to the same VLAN.
 
 - Clone the *tink* repository locally and switch to the *demo-v2* branch:
 ```sh
-$ git clone https://github.com/tinkerbell/tink.git
-$ cd tink
-$ git checkout demo-v2
-$ cd demo/terraform
+git clone https://github.com/tinkerbell/tink.git
+cd tink/deploy/terraform
 ```
 
 - Update the _<packet_api_token>_ and _<project_id>_ fields in _input.tf_ with your Packet API token and desired project ID
+    - Make sure the API token is a user API token (created/accessed under _API keys_ in your personal settings)
+    - You may also update the hostnames in _main.tf_ if you prefer names other than _tf-provisioner_ and _tf-worker_
 - You may also update the hostnames in _main.tf_ if you prefer names other than _tf-provisioner_ and _tf-worker_
 - Run the following commands:
 ```sh
-$ terraform init
-$ terraform apply
+terraform init
+terraform apply
 ```
 *Note:* As an output, it returns the IP address of the provisioner and MAC address of the worker machine.
 
