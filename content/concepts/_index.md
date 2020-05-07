@@ -2,13 +2,14 @@
 title = "Concepts"
 date = 2019-01-04T16:16:15+05:30
 draft = false
-weight = 30
+weight = 20
 toc = true
 +++
 
 ### Template
 
-A template is a Go template based definition that defines the overall flow of a workflow.
+A template is a YAML definition which defines the overall workflow.
+It is independent of a worker and therefore fetches the worker values using Go template when a workflow is created.
 A user must write a template based on a valid template format.
 Template can consist of custom variable which can be substituted before execution.
 For example, a target is defined separately and is substituted in a template at the time of creating a workflow.
@@ -90,15 +91,15 @@ A target can be accessed in template like (refer above template):
 
 The provisioner machine is the main driver for executing a workflow.
 A provisioner houses the following components:
- - Database (Postgres)
- - Tinkerbell (CLI and server)
- - Boots
- - Hegel
- - Image Registry (optional)
- - Elasticsearch
- - Fluent Bit
- - Kibana
- - NGINX
+ - [Database](/components/#database) (Postgres)
+ - [Tinkerbell](/components/#tinkerbell) (CLI and server)
+ - [Boots](/components/#boots)
+ - [Hegel](/components/#hegel)
+ - [Image Registry](/components/#image-repository)
+ - [Elasticsearch](/components/#elasticsearch)
+ - [Fluent Bit](/components/#fluent-bit)
+ - [Kibana](/components/#kibana)
+ - [NGINX](/components/#nginx)
 
 It is upto you if you would like to divide these components into multiple servers.
 

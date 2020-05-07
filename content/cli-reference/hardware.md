@@ -11,7 +11,7 @@ Hardware (worker) data operations.
 ### Synopsis
 
 Hardware operations:
-```shell
+```
   all         Get all known hardware for facility
   id          Get hardware by id
   ingest      Trigger tinkerbell to ingest
@@ -27,7 +27,56 @@ Hardware operations:
   -h, --help   help for hardware
 ```
 
-### See Also
- - [tink target](/cli-reference/target/) - Target operations
- - [tink template](/cli-reference/template/) - Template operations
- - [tink workflow](/cli-reference/workflow/) - Workflow operations
+### Examples
+
+Consider the following hardware data (saved as data.json) for a worker machine to be part of a workflow:
+```
+{
+  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
+  "arch": "x86_64",
+  "allow_pxe": true,
+  "allow_workflow": true,
+  "facility_code": "onprem",
+  "ip_addresses": [
+    {
+      "address": "192.168.1.5",
+      "address_family": 4,
+      "enabled": true,
+      "gateway": "192.168.1.1",
+      "management": true,
+      "netmask": "255.255.255.248",
+      "public": false
+    }
+  ],
+  "network_ports": [
+    {
+      "data": {
+        "mac": "ec:0d:9a:bf:ff:dc"
+      },
+      "name": "eth0",
+      "type": "data"
+    }
+  ]
+}
+```
+
+ - push the data with either of the following:
+```
+$ tink hardware push --file data.json
+$ cat data.json | tink hardware push
+```
+
+ - get hardware data using ID:
+```
+$ tink hardware id ce2e62ed-826f-4485-a39f-a82bb74338e2
+```
+
+ - get hardware data using MAC address:
+```
+$ tink hardware mac ec:0d:9a:bf:ff:dc
+```
+
+ - get hardware data using IP address:
+```
+$ tink hardware ip 192.168.1.5
+```
