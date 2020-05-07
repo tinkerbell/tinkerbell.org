@@ -24,13 +24,13 @@ Workflow operations:
 ### Options
 
 ```
-  -h, --help   help for target
+  -h, --help   help for workflow
 ```
 
 ### Examples
 
- - Create a workflow using a template and a target
- ```
-  $ tink workflow create -t <template-uuid> -r <target-uuid>
-  $ tink workflow create -t edb80a56-b1f2-4502-abf9-17326324192b -r 9356ae1d-6165-4890-908d-7860ed04b421
+ - Create a workflow using a template and a targeted hardware devices
+ ```shell
+  $ tink workflow create -t <template-uuid> -r <targeted_hardware_devices_in_json_format>
+  $ tink workflow create -t edb80a56-b1f2-4502-abf9-17326324192b -r '{"device_1":"mac/IP", "device_2":"mac/IP"}'
  ```
