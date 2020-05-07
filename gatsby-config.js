@@ -8,7 +8,7 @@ module.exports = {
   /* Your site config here */
   siteMetadata: {
     title: `Tinkerbell.org`,
-    description: `Tinkerbell is a bare metal provisioning engine. It’s built and maintained with by the team at Packet.`,
+    description: `Tinkerbell is a bare metal provisioning engine. It’s built and maintained by the team at Packet.`,
     url: "https://tinkerbell.org", // No trailing slash allowed!
     image: "/images/tinkerbell-social-image.png", // Path to image in the 'static' folder
     twitterUsername: "@packethost",
