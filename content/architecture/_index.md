@@ -2,7 +2,7 @@
 title = "Architecture"
 date = 2019-01-04T16:16:15+05:30
 draft = false
-weight = 40
+weight = 30
 toc = true
 +++
 

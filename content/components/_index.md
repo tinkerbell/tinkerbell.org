@@ -2,7 +2,7 @@
 title = "Components"
 date = 2019-05-05T16:16:15+05:30
 draft = false
-weight = 30
+weight = 10
 toc = true
 +++
 
