@@ -80,8 +80,3 @@ $ tink hardware mac ec:0d:9a:bf:ff:dc
 ```shell
 $ tink hardware ip 192.168.1.5
 ```
-
-### See Also
- - [tink target](/cli-reference/target/) - Target operations
- - [tink template](/cli-reference/template/) - Template operations
- - [tink workflow](/cli-reference/workflow/) - Workflow operations

@@ -50,9 +50,3 @@ Template operations:
   $ tink template update <template-uuid> -p <path-to-new-template-file>
   $ tink template update edb80a56-b1f2-4502-abf9-17326324192b -p /tmp/new-sample-template.tmpl
  ```
-
-### See Also
-
- - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations
- - [tink target](/cli-reference/target/) - Target operations
- - [tink workflow](/cli-reference/workflow/) - Workflow operations

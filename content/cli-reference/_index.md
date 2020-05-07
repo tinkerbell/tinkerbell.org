@@ -29,10 +29,3 @@ It also enables you to create a template and a target which is eventually used t
 ```
   -h, --help   help for tinkerbell
 ```
-
-### See Also
-
- - [tink hardware](/cli-reference/hardware/) - Hardware (worker) data operations
- - [tink target](/cli-reference/target/) - Target operations
- - [tink template](/cli-reference/template/) - Template operations
- - [tink workflow](/cli-reference/workflow/) - Workflow operations
