@@ -11,7 +11,7 @@ Target operations.
 ### Synopsis
 
 Target operations:
-```shell
+```
   create      create a target
   delete      delete a target
   get         get a target

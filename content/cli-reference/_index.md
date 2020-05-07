@@ -16,7 +16,7 @@ It also enables you to create a template and a target which is eventually used t
 
 ### Operations
 
-```shell
+```
   hardware    tink hardware client
   help        help about any command
   target      tink target client
