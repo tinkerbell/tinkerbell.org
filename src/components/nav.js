@@ -7,7 +7,7 @@ const Nav = ({ data }) => {
     <nav id="nav-main" className="nav">
       <div className="grid-container">
         <section className="grid-x grid-margin-x align-middle">
-          <div className="cell large-2"><Link to="/" className="logo"><img src={tinkerbellLogo} /></Link></div>
+          <div className="cell large-2 text-left"><Link to="/" className="logo"><img src={tinkerbellLogo} /></Link></div>
           <div className="cell large-10">
             <ul>
               <li>
