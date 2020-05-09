@@ -22,7 +22,7 @@ Template operations:
 ### Options
 
 ```
-  -h, --help   help for target
+  -h, --help   help for template
 ```
 
 ### Examples

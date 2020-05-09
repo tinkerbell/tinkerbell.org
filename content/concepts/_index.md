@@ -6,13 +6,16 @@ weight = 20
 toc = true
 +++
 
+### Hardware
+A *hardware device* is defined separately and is substituted in a template at the time of creating a workflow.
+
 ### Template
 
 A template is a YAML definition which defines the overall workflow.
 It is independent of a worker and therefore fetches the worker values using Go template when a workflow is created.
 A user must write a template based on a valid template format.
 Template can consist of custom variable which can be substituted before execution.
-For example, a target is defined separately and is substituted in a template at the time of creating a workflow.
+For example, worker is a targeted hardware is defined separately and is substituted in a template at the time of creating a workflow.
 
 A template is stored as a blob in the database and is parsed later during the creation of a worflow.
 A user can CRUD a template using the CLI (`tink template`).
@@ -24,13 +27,13 @@ name: ubuntu_provisioning
 global_timeout: 6000
 tasks:
 - name: "os-installation"
-  worker: "{{index .Targets "machine1" "mac_addr"}}"
+  worker: "{{.device_1}}"
   volumes:
     - /dev:/dev
     - /dev/console:/dev/console
     - /lib/firmware:/lib/firmware:ro
   environment:
-    MIRROR_HOST: 192.168.1.2
+    MIRROR_HOST: <MIRROR_HOST_IP>
   actions:
   - name: "disk-wipe"
     image: disk-wipe
@@ -39,7 +42,7 @@ tasks:
     image: disk-partition
     timeout: 600
     environment:
-       MIRROR_HOST: 192.168.1.3
+       MIRROR_HOST: <MIRROR_HOST_IP>
     volumes:
       - /statedir:/statedir
   - name: "install-root-fs"
@@ -63,28 +66,11 @@ For example, in the above template the `MIRROR_HOST` environment variable define
 However, the other actions will receive the original value defined at the task level.
 
 
-### Targets
-
-Targets are mapping between the virtual worker name and the actual host.
-Currently we are refer targets with MAC or IP address.
-Here is a sample target definition:
-
-```json
-{
-    "machine1":  {
-        "ip_addr": "192.168.1.2"
-    },
-    "machine2" :  {
-        "mac_addr": "ca:00:64:b8:2d:00"
-    }
-}
-```
-
-A target can be accessed in template like (refer above template):
+A hardware device can be accessed in template like (refer above template):
 
 ```
-{{ index .Targets "machine1" "ip_addr"}}
-{{ index .Targets "machine2" "mac_addr"}}
+{{.device_1}}
+{{.device_2}}
 ```
 
 ### Provisioner
@@ -104,6 +90,8 @@ A provisioner houses the following components:
 It is upto you if you would like to divide these components into multiple servers.
 
 ### Worker
+
+A worker is targeted hardware on which workflow needs to run.
 
 Any node that has its data being pushed into Tinkerbell can become a part of a workflow.
 A worker can be a part of multiple workflows.
