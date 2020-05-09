@@ -30,7 +30,7 @@ name: hello_world_workflow
 global_timeout: 600
 tasks:
 - name: "hello world"
-  worker: "{{index .Targets "machine1" "mac_addr"}}"
+  worker: "{{.device_1}}"
   actions:
   - name: "hello_world"
     image: hello-world
@@ -41,16 +41,12 @@ tasks:
 ### Workflow
 
 We can now define a workflow with the following steps:
- - Create a target:
- ```shell
-  $ tink target create '{"targets": {"machine1": {"mac_addr": "<worker-mac-address>"}}}'
- ```
  - Create a template:
  ```shell
   $ tink template create -n hello-world -p hello-world.tmpl
  ```
  - Create a workflow:
  ```shell
-  $ tink workflow create -t <template-uuid> -r <target-uuid>
+  $ tink workflow create -t <template-uuid> -r '{"device_1": "mac/IP"}'
  ```
  - Reboot the worker machine
