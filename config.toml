@@ -69,7 +69,7 @@ weight = 40
 
 
 [[menu.tink]]
-name = "Tinker"
+name = "Tink"
 url = "https://github.com/tinkerbell/tink"
 title = "Provisioning & Workflow Engine"
 weight = 10
