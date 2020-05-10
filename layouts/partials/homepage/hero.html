@@ -1,0 +1,15 @@
+<header id="hero">
+    <div class="grid-container">
+        <section class="grid-x grid-padding-x align-middle hero-content">
+            {{range where .Site.Pages "Type" "=" "hero"}} 
+            <div class="cell large-5 pr0 medium-order-1 small-order-2">
+                <h1>{{ .Title }}</h1>
+                {{ .Content }}
+            </div>
+            <div class="cell large-7 medium-order-2 small-order-1 m-mb50">
+                <img src="{{ .Params.image }}">
+            </div>
+            {{ end }}
+        </section>
+    </div>
+</header>

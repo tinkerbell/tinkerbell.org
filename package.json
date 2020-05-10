@@ -1,0 +1,36 @@
+{
+  "name": "tinkerbell.org",
+  "version": "1.0.0",
+  "description": "Tinkerbell website",
+  "scripts": {
+    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinkerbell/tinkerbell.org/"
+  },
+  "keywords": [
+    "tinkerbell"
+  ],
+  "author": "@packethost",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tinkerbell/tinkerbell.org/issues"
+  },
+  "homepage": "https://tinkerbell.org",
+  "devDependencies": {
+    "laravel-mix": "^5.0.4",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "autoprefixer": "^9.4.5",
+    "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "2.0.1"
+  },
+  "dependencies": {
+    "foundation-sites": "^6.6.3"
+  }
+}

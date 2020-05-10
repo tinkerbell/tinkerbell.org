@@ -2,21 +2,24 @@ baseURL = "https://tinkerbell.org/"
 languageCode = "en-us"
 theme = "hugo-theme-learn"
 title = "Tinkerbell"
-description = "Tinkerbell, a Provisioning engine by Packet"
 Paginate = 4
 
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
 
 [params]
-  author = "Packet" # add your company name
-  github = "https://github.com/tinkerbell" # add your github profile name
-  email = "hello@tinkerbell.org"
-  showVisitedLinks = false
-  disableBreadcrumb = false
-  disableNextPrev = false
-  disableLanguageSwitchingButton = true
-  themeVariant = "mine"
+ author = "Packet" # add your company name
+ description = "Tinkerbell, a Provisioning engine by Packet"
+ github = "https://github.com/tinkerbell" # add your github profile name
+ email = "hello@tinkerbell.org"
+ showVisitedLinks = false
+ disableBreadcrumb = false
+ disableNextPrev = false
+ disableLanguageSwitchingButton = true
+ themeVariant = "mine"
+ image = "images/social/tinkerbell-social-image.png" # relative to static
+ sitename = "Tinkerbell.org"
+ twitter = "@tinkerbell_oss"
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-fw fa-slack'></i> Community Slack"
@@ -43,3 +46,50 @@ weight = 50
 name = "<i class='fab fa-fw fa-twitter'></i> Twitter"
 url = "https://twitter.com/tinkerbell_oss"
 weight = 60
+
+[[menu.homepage]]
+name = "Docs"
+url = "/components"
+weight = 10
+
+[[menu.homepage]]
+name = "Get Started on Github"
+url = "https://github.com/tinkerbell/"
+weight = 20
+
+[[menu.homepage]]
+name = "Slack Channel"
+url = "https://slack.packet.net/"
+weight = 30
+
+[[menu.homepage]]
+name = "Twitter"
+url = "https://twitter.com/tinkerbell_oss"
+weight = 40
+
+
+[[menu.tink]]
+name = "Tinker"
+url = "https://github.com/tinkerbell/tink"
+title = "Provisioning & Workflow Engine"
+weight = 10
+
+[[menu.tink]]
+name = "BOOTS"
+url = "https://github.com/tinkerbell/boots"
+title = "DHCP & iPXE Server"
+weight = 20
+
+[[menu.tink]]
+name = "OSIE"
+url = "https://github.com/tinkerbell/osie"
+title = "In-Memory Environment"
+weight = 30
+
+[[menu.tink]]
+name = "HEGEL"
+url = "https://github.com/tinkerbell/hegel"
+title = "Metadata Service"
+weight = 40
+
+

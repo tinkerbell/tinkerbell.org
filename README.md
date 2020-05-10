@@ -42,6 +42,26 @@ hugo server -D
 
 Site can be viewed at [http://localhost:1313](http://localhost:1313)
 
+### Generate custom css files
+
+- Run npm insall
+
+```sh
+npm install
+```
+
+- Development
+
+```sh
+npm run watch
+```
+
+- Production
+
+```sh
+npm run production
+```
+
 ### Making changes
 
 #### Adding a new documentation page

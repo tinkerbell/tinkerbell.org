@@ -1,0 +1,18 @@
+<nav id="nav-main" class="nav">
+    <div class="grid-container">
+        <section class="grid-x grid-margin-x align-middle">
+            <div class="cell large-2 text-left"><a aria-current="page" class="logo" href="/"><img src="/images/tinkerbell-logo.png" alt="tinkerbell"></a></div>
+            <div class="cell large-10">
+                {{with .Site.Menus.homepage}}
+                <ul>
+                      {{ range sort . "Weight"}}
+                          <li> 
+                              {{.Pre}}<a href="{{.URL | absLangURL }}">{{safeHTML .Name}}</a>{{.Post}}
+                          </li>
+                      {{end}}
+                </ul>
+                {{end}}
+            </div>
+        </section>
+    </div>
+</nav>
