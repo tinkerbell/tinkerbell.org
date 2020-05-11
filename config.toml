@@ -27,7 +27,7 @@ url = "https://slack.packet.net/"
 weight = 10
 
 [[menu.shortcuts]]
-name = "<i class='fab fa-fw fa-github'></i> Github repo"
+name = "<i class='fab fa-fw fa-github'></i> GitHub"
 identifier = "ds"
 url = "https://github.com/tinkerbell/"
 weight = 20
@@ -48,12 +48,12 @@ url = "https://twitter.com/tinkerbell_oss"
 weight = 60
 
 [[menu.homepage]]
-name = "Docs"
+name = "Documentation"
 url = "/components"
 weight = 10
 
 [[menu.homepage]]
-name = "Get Started on Github"
+name = "GitHub"
 url = "https://github.com/tinkerbell/"
 weight = 20
 

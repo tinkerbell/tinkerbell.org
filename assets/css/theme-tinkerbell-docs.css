@@ -1,1 +1,73 @@
-body{font-family:Gotham A,Gotham B,Helvetica,Roboto,Arial,sans-serif}h1,h2,h3,h4,h5{font-family:Gotham A,Gotham B,Helvetica,Roboto,Arial,sans-serif!important}a{color:#05254c}#header-wrapper{background:#05254c;border-bottom:none}#sidebar{background-color:#05254c}#sidebar ul.topics{padding-bottom:30px}#sidebar ul.topics li.parent{background-color:#1d5086}#sidebar ul.topics li a{font-size:15px}#sidebar ul.topics li>a{padding-top:0;padding-bottom:0;font-size:14px}#sidebar ul.topics ul{padding-bottom:0}#sidebar ul.topics ul li a{padding-top:4px;padding-bottom:4px}#shortcuts{border-top:1px solid #1d5086;padding-top:30px}#shortcuts li a{font-size:14px}#shortcuts li a i{margin-right:5px}#body-inner h1,#body-inner h2,#body-inner h3,#body-inner h4,#body-inner h5{text-align:left;text-transform:none}
+body {
+  font-family: "Gotham A", "Gotham B", Helvetica, Roboto, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Gotham A", "Gotham B", Helvetica, Roboto, Arial, sans-serif !important;
+}
+
+a {
+  color: #05254c;
+}
+
+#header-wrapper {
+  background: #05254c;
+  border-bottom: none;
+}
+
+#sidebar {
+  background-color: #05254c;
+}
+#sidebar ul.topics {
+  padding-bottom: 30px;
+}
+#sidebar ul.topics li.parent {
+  background-color: #1d5086;
+}
+#sidebar ul.topics li a {
+  font-size: 15px;
+}
+#sidebar ul.topics li > a {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 14px;
+}
+#sidebar ul.topics ul {
+  padding-bottom: 0;
+}
+#sidebar ul.topics ul li a {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#shortcuts {
+  border-top: 1px solid #1d5086;
+  padding-top: 30px;
+}
+#shortcuts li a {
+  font-size: 14px;
+}
+#shortcuts li a i {
+  margin-right: 5px;
+}
+
+#body-inner h1, #body-inner h2, #body-inner h3, #body-inner h4, #body-inner h5 {
+  text-align: left;
+  text-transform: none;
+}
+
+.searchbox input {
+  background-color: #05254c;
+  border-color: #1d5086;
+}
+
+.autocomplete-suggestions {
+  border: none;
+}
+.autocomplete-suggestions .autocomplete-suggestion {
+  font-size: 14px;
+  line-height: 18px;
+}
+.autocomplete-suggestions .autocomplete-suggestion.selected {
+  background: #1d5086 !important;
+}

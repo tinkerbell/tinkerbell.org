@@ -59,3 +59,19 @@ a {
 		text-transform: none;
 	}
 }
+.searchbox {
+	input {
+		background-color: $blue1;
+		border-color: $blue3;
+	}
+}
+.autocomplete-suggestions  {
+	border:none;
+	.autocomplete-suggestion {
+		font-size: 14px;
+	    line-height: 18px;
+		&.selected {
+			background: $blue3!important;
+		}
+	}
+}
