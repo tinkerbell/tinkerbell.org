@@ -1,0 +1,65 @@
+// mobile
+@include breakpoint(medium down) {
+  header {
+    &#hero {
+      padding-bottom: 0;
+
+      .hero-image {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  .section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .hero-content {
+    padding-top: 40px;
+    padding-bottom: 80px;
+  }
+
+  #nav-main {
+    .logo {
+      margin-bottom: 30px;
+    }
+  }
+
+  .nav {
+    ul {
+      display: block;
+      text-align: left;
+
+      li {
+        margin: 0;
+      }
+    }
+  }
+
+  #nav-footer {
+    padding-bottom: 60px;
+
+    &.nav {
+      ul {
+        justify-content: flex-start;
+        display: flex;
+
+        li {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .logo-footer {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-bottom: 20px;
+
+    .footer-logo {
+      margin-left: 0;
+    }
+  }
+}

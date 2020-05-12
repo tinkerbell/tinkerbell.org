@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ .Page.Language | default "en" }}" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{ hugo.Generator }}
+    {{ partial "meta.html" . }}
+    {{ partial "favicon.html" . }}
+    
+    <title>{{ if .IsHome }} {{ .Title }} {{ else }} {{ .Title }} - {{ .Site.Title }} {{ end }}</title>
+
+    {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+    
+    <link href="https://cloud.typography.com/6193438/7900212/css/fonts.css" rel="stylesheet" />
+    
+    {{ $css := resources.Get "css/theme-tinkerbell.css" | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  </head>
+  <body class="" data-url="{{ .RelPermalink }}">
+    {{ partial "homepage/menu.html" . }}
+    {{ partial "homepage/hero.html" . }}

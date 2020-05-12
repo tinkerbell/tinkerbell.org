@@ -1,0 +1,79 @@
+@import './colors';
+body {
+	font-family: 'Gotham A', 'Gotham B', Helvetica, Roboto, Arial, sans-serif;
+}
+h1,h2,h3,h4,h5 {
+	font-family: 'Gotham A', 'Gotham B', Helvetica, Roboto, Arial, sans-serif!important;
+}
+a {
+	color: $blue1;
+}
+#header-wrapper {
+	background: $blue1;
+	border-bottom: none;
+}
+#sidebar {
+	background-color: $blue1;
+	ul.topics {
+		padding-bottom: 30px;
+		li {
+			&.parent {
+				background-color: $blue3;
+			}
+			a {
+				font-size: 15px;
+			}
+			> a {
+				padding-top: 0;
+				padding-bottom: 0;
+				font-size: 14px;
+			}
+		}
+		ul {
+			padding-bottom: 0;
+			li {
+				a {
+					padding-top: 4px;
+					padding-bottom: 4px;
+				}
+			}
+		}
+	}
+}
+
+#shortcuts {
+	border-top: 1px solid $blue3;
+	padding-top: 30px;
+	li {
+		a {
+			font-size: 14px;
+			i {
+				margin-right: 5px;
+			}
+		}
+	}
+}
+#body-inner {
+	h1,h2,h3,h4,h5 {
+		text-align: left;
+		text-transform: none;
+	}
+}
+.searchbox {
+	border-color: $blue3;
+	background-color: $blue1;
+	input {
+		background-color: $blue1;
+		border-color: $blue3;
+	}
+}
+.autocomplete-suggestions  {
+	border:none;
+	.autocomplete-suggestion {
+		font-size: 14px;
+	    line-height: 18px;
+		&.selected {
+			background: $blue3!important;
+		}
+	}
+}

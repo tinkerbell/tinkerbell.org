@@ -1,0 +1,16 @@
+{{ $baseUrl := .Site.BaseURL }}
+
+{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+
+{{ with .Site.Params.sitename }}<meta property="og:title" content="{{ . }}" />{{ end }}
+{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">
+<meta itemprop="description" content="{{ . }}" />
+<meta property="og:description" content="{{ . }}" />
+<meta name="twitter:description" content="{{ . }}" />{{ end }}
+
+{{ with .Site.Params.image }}<meta property="og:image" content="{{ $baseUrl }}{{ . }}">
+<meta property="twitter:image" content="{{ $baseUrl }}{{ . }}">
+{{ end }}
+<meta name="twitter:card" content="summary_large_image" />
+{{ with .Site.Params.twitter }}<meta name="twitter:creator" content="{{ . }}" />{{ end }}
+{{ with .Site.Params.sitename }}<meta name="twitter:title" content="{{ . }}" />{{ end }}
