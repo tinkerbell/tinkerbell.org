@@ -7,4 +7,4 @@ hidden = true
 
 Standardize infrastructure and application management using the same API-centric, declarative configuration and automation approach pioneered by the Kubernetes community.
 
-[Get Started](https://tinkerbell.org/setup/).
+[Get Started](https://tinkerbell.org/setup/)
