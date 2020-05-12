@@ -12,14 +12,13 @@ Command line interface for Packet Workflow.
 
 Command line interface for Packet Workflow.
 The CLI allows you to update the hardware details with respect to a worker machine.
-It also enables you to create a template and a target which is eventually used to create a workflow.
+It also enables you to create a template and push the hardware data which is eventually used to create a workflow.
 
 ### Operations
 
 ```
   hardware    tink hardware client
   help        help about any command
-  target      tink target client
   template    tink template client
   workflow    tink workflow client
 ```
