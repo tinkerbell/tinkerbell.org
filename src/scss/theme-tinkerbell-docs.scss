@@ -77,3 +77,25 @@ a {
 		}
 	}
 }
+.button {
+	background: #3986a7;
+	padding: 13px 15px;
+	box-shadow: none;
+	display: inline-block;
+	border-radius: 5px;
+	&:hover {
+		box-shadow: none;
+		background: $blue3;
+	}
+	&.highlight {
+		&:after {
+			display: none!important;
+		}
+	}
+}
+.text-medium {
+	font-weight: 500;
+}
+.text-bold {
+	font-weight: 600;
+}
