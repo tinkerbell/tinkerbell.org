@@ -1,7 +1,7 @@
 baseURL = "https://tinkerbell.org/"
+title = "Tinkerbell - Bare Metal Automation"
 languageCode = "en-us"
 theme = "hugo-theme-learn"
-title = "Tinkerbell"
 Paginate = 4
 
 [outputs]
@@ -9,7 +9,7 @@ home = [ "HTML", "RSS", "JSON"]
 
 [params]
  author = "Packet" # add your company name
- description = "Tinkerbell, a Provisioning engine by Packet"
+ description = "Tinkerbell is an open-source bare metal provisioning engine, built for a cloud native world and maintained by the team at Packet."
  github = "https://github.com/tinkerbell" # add your github profile name
  email = "hello@tinkerbell.org"
  showVisitedLinks = false
@@ -20,6 +20,8 @@ home = [ "HTML", "RSS", "JSON"]
  image = "images/social/tinkerbell-social-image.png" # relative to static
  sitename = "Tinkerbell.org"
  twitter = "@tinkerbell_oss"
+ ogtitle = "Flexible automation for bare metal"
+ ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed by Packet, an Equinix company."
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"
