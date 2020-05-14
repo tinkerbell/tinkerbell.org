@@ -44,12 +44,28 @@ a {
 
 #shortcuts {
 	border-top: 1px solid $blue3;
+	padding: 0 1rem;
 	padding-top: 30px;
-	li {
-		a {
-			font-size: 14px;
-			i {
-				margin-right: 5px;
+	ul {
+		li {
+			a {
+				font-size: 14px;
+				display: inline-block;
+				em {
+					display: inline-block;
+					font-style: normal;
+				}
+				i {
+					margin-right: 5px;
+				}
+			}
+			&.active-s {
+				a {
+					em {
+						display: inline-block;
+						border-bottom: 1px solid #fff;
+					}
+				}
 			}
 		}
 	}
