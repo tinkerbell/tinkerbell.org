@@ -9,6 +9,36 @@ toc = true
 ### Pushing hardware data
 
  - Exec into the tink CLI container using `docker exec -ti deploy_tink-cli_1 /bin/sh`:
+ - Here is a sample of minimal hardware data that can be used to get you started with the [Hello World!](/examples/hello-world) example.
+```
+{
+  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
+  "arch": "x86_64",
+  "allow_pxe": true,
+  "allow_workflow": true,
+  "facility_code": "onprem",
+  "ip_addresses": [
+    {
+      "address": "192.168.1.5",
+      "address_family": 4,
+      "enabled": true,
+      "gateway": "192.168.1.1",
+      "management": true,
+      "netmask": "255.255.255.248",
+      "public": false
+    }
+  ],
+  "network_ports": [
+    {
+      "data": {
+        "mac": "ec:0d:9a:bf:ff:dc"
+      },
+      "name": "eth0",
+      "type": "data"
+    }
+  ]
+}
+```
  - Create a file containing the hardware data (say data.json)
    - ensure that you replace _<worker_mac_addr>_ with the actual worker MAC.
    - the worker MAC can be found in the Terraform output (and also in the generated _terraform.tfstate_ file).
