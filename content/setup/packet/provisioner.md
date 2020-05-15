@@ -16,11 +16,11 @@ From here on out, assume all code blocks are run in `bash` unless specified.
 #### Run the setup script
 
 The _setup.sh_ script will:
-    - configure the network
-    - download necessary files
-    - setup the certificates
-    - setup a Docker registry
-    - start tinkerbell components
+  - configure the network
+  - download necessary files
+  - setup the certificates
+  - setup a Docker registry
+  - start tinkerbell components
 
 The script is also separated into functions so you can rerun specific parts as needed.
 
