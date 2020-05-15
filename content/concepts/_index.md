@@ -73,6 +73,10 @@ A hardware device can be accessed in template like (refer above template):
 {{.device_2}}
 ```
 
+ {{% notice note %}}
+  These keys can only contain *letters*, *numbers* and *underscores*.
+ {{% /notice %}}
+
 ### Provisioner
 
 The provisioner machine is the main driver for executing a workflow.
