@@ -122,3 +122,14 @@ a {
 .mt20 {
 	margin-top: 20px;
 }
+#logo {
+	display: block!important;
+	margin-bottom: 30px;
+	svg {
+		display: block;
+		margin: 0;
+		padding: 0;
+		height: 55px;
+		width: auto;
+	}
+}
