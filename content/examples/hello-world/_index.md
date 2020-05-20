@@ -10,7 +10,7 @@ Here is an example to execute the most simple workflow that says "Hello World!".
 
 ### Prerequisite
 
-You have a setup ready with a provisioner and a worker node. If not, please follow the steps [here](setup.md) to complete the setup.
+You have a setup ready with a provisioner and a worker node. If not, please follow the steps [here](/setup) to complete the setup.
 
 ### Action images
 
