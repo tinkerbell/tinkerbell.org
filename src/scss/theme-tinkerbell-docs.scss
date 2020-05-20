@@ -88,3 +88,16 @@ a {
 		width: auto;
 	}
 }
+#body {
+	a.highlight {
+		color:#0082a7;
+		&:after {
+			width: 100%;
+		}
+		&:hover {
+			&:after {
+				width: 0;
+			}	
+		}
+	}
+}
