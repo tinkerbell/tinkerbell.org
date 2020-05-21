@@ -2,7 +2,7 @@
 title = "CLI Reference"
 date = 2019-01-04T16:16:15+05:30
 draft = false
-weight = 60
+weight = 70
 toc = true
 +++
 

@@ -24,6 +24,37 @@ https://api.packet.net/devices/{device_id}
           },
 ...
 ```
+ - Here is the minimal hardware data that can get you started with the [Hello World!](/examples/hello-world) example.
+```
+{
+  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
+  "arch": "x86_64",
+  "allow_pxe": true,
+  "allow_workflow": true,
+  "facility_code": "onprem",
+  "ip_addresses": [
+    {
+      "address": "192.168.1.5",
+      "address_family": 4,
+      "enabled": true,
+      "gateway": "192.168.1.1",
+      "management": true,
+      "netmask": "255.255.255.248",
+      "public": false
+    }
+  ],
+  "network_ports": [
+    {
+      "data": {
+        "mac": "ec:0d:9a:bf:ff:dc"
+      },
+      "name": "eth0",
+      "type": "data"
+    }
+  ]
+}
+```
+ - You can read more about the hardware data under [here](/hardware-data).
 
 {{% notice note %}}
 You will also have to adjust the `address` and `gateway` under `ip_addresses` accordingly if you chose a non-default subnet and host IP address.

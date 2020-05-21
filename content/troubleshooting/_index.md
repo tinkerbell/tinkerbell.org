@@ -2,7 +2,7 @@
 title = "Troubleshooting"
 date = 2019-05-05T16:16:15+05:30
 draft = false
-weight = 50
+weight = 80
 toc = true
 +++
 
