@@ -54,7 +54,7 @@ https://api.packet.net/devices/{device_id}
   ]
 }
 ```
- - You can read more about the hardware data under [concepts](/concepts/#hardware-data).
+ - You can read more about the hardware data under [here](/hardware-data).
 
 {{% notice note %}}
 You will also have to adjust the `address` and `gateway` under `ip_addresses` accordingly if you chose a non-default subnet and host IP address.
