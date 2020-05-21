@@ -10,56 +10,6 @@ toc = true
 
 A *hardware device* is defined separately and is substituted in a template at the time of creating a workflow.
 
-### Hardware Data
-
-Hardware data holds the details about the hardware that you wish to use with a workflow.
-A hardware may have multiple network devices that can be used in a worklfow.
-The details about all those devices is maintained in JSON format as hardware data.
-Here is a sample of minimal hardware data that can get you started with a simple [Hello World!](/examples/hello-world) workflow.
-```json
-{
-  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
-  "arch": "x86_64",
-  "allow_pxe": true,
-  "allow_workflow": true,
-  "facility_code": "onprem",
-  "ip_addresses": [
-    {
-      "address": "192.168.1.5",
-      "address_family": 4,
-      "enabled": true,
-      "gateway": "192.168.1.1",
-      "management": true,
-      "netmask": "255.255.255.248",
-      "public": false
-    }
-  ],
-  "network_ports": [
-    {
-      "data": {
-        "mac": "ec:0d:9a:bf:ff:dc"
-      },
-      "name": "eth0",
-      "type": "data"
-    }
-  ]
-}
-```
-The following section explains each top-level property:
-
-|  Property | Description |
-|-----------|-------------|
-|id         |A UUID used to uniquely identify the hardware. The `id` can be generated using the `uuidgen`. If you are in Packet environment, you can get the `id` from the server overview page.|
-|arch       |The hardware architecture. Example: `x86_64`|
-|allow_pxe  |Must be set to `true` to PXE; `false` otherwise.|
-|allow_workflow|Must be set to `true` to execute a workflow.|
-|facility_code|The Packet facility code where you have your setup running. For local setup, `onprem` or any other string value can be used.|
-|ip_addresses|Details for DHCP.|
-|ip_addresses.address|The worker IP address to be requested over DHCP.|
-|network_ports|List of network devices (workers) on the hardware.|
-|network_ports.data.mac|MAC address of the network device (worker).|
-
-
 ### Template
 
 A template is a YAML definition which defines the overall workflow.
