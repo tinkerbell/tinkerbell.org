@@ -24,7 +24,7 @@ If you have a hardware that has a single network/worker device on it, its hardwa
   "allow_pxe": true,
   "allow_workflow": true,
   "plan_slug": "t1.small.x86",
-  "facility_code": "nrt1",
+  "facility_code": "onprem",
   "instance": {
     "storage": {
       "disks": [
@@ -157,3 +157,39 @@ The following section explains each property in the above example:
 |network_ports[].data.mac|MAC address of the network device (worker).|
 |network_ports[].name|It must set to `eth0` for a worker node.|
 |network_ports[].type|Set as `data`.|
+
+### The Minimal Hardware Data
+
+While the hardware data is essential, not all the properties are required for every workflow.
+In fact, it's upto a workflow designer how they want to use the data in their workflow.
+Therefore, you may start with the minimal data given below and only add the properties you would want to use in your workflow.
+
+```
+{
+  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
+  "arch": "x86_64",
+  "allow_pxe": true,
+  "allow_workflow": true,
+  "facility_code": "onprem",
+  "ip_addresses": [
+    {
+      "address": "192.168.1.5",
+      "address_family": 4,
+      "enabled": true,
+      "gateway": "192.168.1.1",
+      "management": true,
+      "netmask": "255.255.255.248",
+      "public": false
+    }
+  ],
+  "network_ports": [
+    {
+      "data": {
+        "mac": "ec:0d:9a:bf:ff:dc"
+      },
+      "name": "eth0",
+      "type": "data"
+    }
+  ]
+}
+```
