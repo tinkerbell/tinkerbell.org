@@ -36,17 +36,37 @@ tasks:
     image: hello-world
     timeout: 60
 ```
-
+{{% notice note %}}
+ Here *device_1* is the key for which the corresponding value will appear when the template is rendered. Value for *device_1* is fetched from data passed with `tink workflow create` command as mentioned below. For more information about it look into template section of [concepts](/concepts)
+{{% /notice %}}
 
 ### Workflow
 
-We can now define a workflow with the following steps:
+We can now create/define a workflow with the following steps:
+
+ - Push/Inject the hardware data
+ ```shell
+  $ tink hardware push --file <file in which you have the hardware data in json format>
+ ```
+ {{% notice note %}}
+ To know more about hardware data visit this [hardware-data-page](/setup/packet/hardware-data/)
+ {{% /notice %}}
+
  - Create a template:
  ```shell
   $ tink template create -n hello-world -p hello-world.tmpl
  ```
  - Create a workflow:
  ```shell
-  $ tink workflow create -t <template-uuid> -r '{"device_1": "mac/IP"}'
+  $ tink workflow create -t <template-uuid> -r '{"device_1": "MAC address/IP address"}'
  ```
+ {{% notice note %}}
+  Here you need to replace the value of "device_1" with the actual MAC address or IP address of the hardware/device. This is the device/hardware on which your workflow will run. Look at the following example:
+  ```shell
+  $ tink workflow create -t <template-uuid> -r '{"device_1": "00:00:00:00:00:00"}'
+  or
+  $ tink workflow create -t <template-uuid> -r '{"device_1": "192.168.1.1"}'
+  ```
+ {{% /notice %}}
+
  - Reboot the worker machine
