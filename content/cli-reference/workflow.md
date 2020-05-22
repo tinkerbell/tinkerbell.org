@@ -34,3 +34,6 @@ Workflow operations:
   $ tink workflow create -t <template-uuid> -r <targeted_hardware_devices_in_json_format>
   $ tink workflow create -t edb80a56-b1f2-4502-abf9-17326324192b -r '{"device_1":"mac/IP", "device_2":"mac/IP"}'
  ```
+ {{% notice note %}} 
+  The key used in the above command which is *device_1* should be in sync with *worker* field in the *template* and can only contain *letters*, *numbers* and *underscores*. Click [here](/concepts/) to check the template structure.
+ {{% /notice %}}

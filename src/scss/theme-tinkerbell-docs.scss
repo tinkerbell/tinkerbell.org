@@ -77,3 +77,27 @@ a {
 		}
 	}
 }
+#logo {
+	display: block!important;
+	margin-bottom: 30px;
+	svg {
+		display: block;
+		margin: 0;
+		padding: 0;
+		height: 55px;
+		width: auto;
+	}
+}
+#body {
+	a.highlight {
+		color:#0082a7;
+		&:after {
+			width: 100%;
+		}
+		&:hover {
+			&:after {
+				width: 0;
+			}	
+		}
+	}
+}

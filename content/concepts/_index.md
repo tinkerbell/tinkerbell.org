@@ -7,6 +7,7 @@ toc = true
 +++
 
 ### Hardware
+
 A *hardware device* is defined separately and is substituted in a template at the time of creating a workflow.
 
 ### Template
@@ -72,6 +73,10 @@ A hardware device can be accessed in template like (refer above template):
 {{.device_1}}
 {{.device_2}}
 ```
+
+ {{% notice note %}}
+  These keys can only contain *letters*, *numbers* and *underscores*.
+ {{% /notice %}}
 
 ### Provisioner
 
