@@ -7,6 +7,7 @@ toc = true
 +++
 
 ### Hardware
+
 A *hardware device* is defined separately and is substituted in a template at the time of creating a workflow.
 
 ### Template
