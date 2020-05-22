@@ -23,7 +23,7 @@ home = [ "HTML", "RSS", "JSON"]
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-fw fa-slack'></i> Community Slack"
-url = "https://slack.packet.net/"
+url = "https://slack.packet.com/"
 weight = 10
 
 [[menu.shortcuts]]
@@ -59,7 +59,7 @@ weight = 20
 
 [[menu.homepage]]
 name = "Slack Channel"
-url = "https://slack.packet.net/"
+url = "https://slack.packet.com/"
 weight = 30
 
 [[menu.homepage]]
