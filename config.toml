@@ -22,8 +22,8 @@ home = [ "HTML", "RSS", "JSON"]
  twitter = "@tinkerbell_oss"
 
 [[menu.shortcuts]]
-name = "<i class='fab fa-fw fa-slack'></i> Community Slack"
-url = "https://slack.packet.com/"
+name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"
+url = "/community-slack/"
 weight = 10
 
 [[menu.shortcuts]]
@@ -59,7 +59,7 @@ weight = 20
 
 [[menu.homepage]]
 name = "Slack Channel"
-url = "https://slack.packet.com/"
+url = "/community-slack/"
 weight = 30
 
 [[menu.homepage]]

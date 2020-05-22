@@ -1,6 +1,7 @@
 <nav id="sidebar" class="{{if $.Site.Params.showVisitedLinks }}showVisitedLinks{{end}}">
 
 {{ $currentNode := . }}
+{{ $currentURL := .URL }}
 {{ $showvisitedlinks := .Site.Params.showVisitedLinks }}
   <div id="header-wrapper">
     <div id="header">
@@ -24,16 +25,14 @@
           {{end}}
         {{end}} 
     </ul>
-
+    
     {{ $disableShortcutsTitle := .Site.Params.DisableShortcutsTitle}}
     {{with .Site.Menus.shortcuts}}
       <section id="shortcuts">
         <!-- <h3>{{ if not $disableShortcutsTitle}}{{ T "Shortcuts-Title"}}{{ end }}</h3> -->
         <ul>
           {{ range sort . "Weight"}}
-              <li> 
-                  {{.Pre}}<a class="padding" href="{{.URL | absLangURL }}">{{safeHTML .Name}}</a>{{.Post}}
-              </li>
+              {{.Pre}}<li class="{{if eq .URL $currentURL}}active-s{{end}}"><a href="{{.URL | absLangURL }}">{{safeHTML .Name}}</a></li>{{.Post}}
           {{end}}
         </ul>
       </section>
