@@ -10,11 +10,13 @@ Here is an example to execute the most simple workflow that says "Hello World!".
 
 ### Prerequisite
 
-You have a setup ready with a provisioner and a worker node. If not, please follow the steps [here](/setup) to complete the setup.
+You have a setup ready with a provisioner and a worker node.
+If not, please follow the steps [here](/setup) to complete the setup.
 
 ### Action images
 
-The workflow will have a single task that will have a single action. The action here is to say `Hello-world!`, so we will push the action image to the Docker registry on provisioner:
+The workflow will have a single task that will have a single action.
+The action here is to say `Hello-world!`, so we will push the action image to the Docker registry on provisioner:
 
 ```
 $ docker pull hello-world
@@ -24,7 +26,8 @@ $ docker push <registry-host>/hello-world
 
 ### Workflow Template
 
-Below is the template for this workflow. Save this template as `hello-world.tmpl`.
+Below is the template for this workflow.
+Save this template as `hello-world.tmpl`.
 
 ```yaml
 version: "0.1"
@@ -40,7 +43,9 @@ tasks:
 ```
 
 {{% notice note %}}
-Here _device_1_ is the key for which the corresponding value will appear when the template is rendered. Value for _device_1_ is fetched from data passed with `tink workflow create` command as mentioned below. For more information about it look into template section of [concepts](/concepts).
+Here _device_1_ is the key for which the corresponding value will appear when the template is rendered.
+Value for _device_1_ is fetched from data passed with `tink workflow create` command as mentioned below.
+For more information about it look into template section of [concepts](/concepts).
 {{% /notice %}}
 
 ### Workflow
@@ -70,7 +75,9 @@ To know more about hardware data visit this [hardware-data-page](/setup/packet/h
 ```
 
 {{% notice note %}}
-Here you need to replace the value of _device_1_ with the actual MAC address or IP address of the hardware/device. This is the device/hardware on which your workflow will run. Look at the following example:
+Here you need to replace the value of _device_1_ with the actual MAC address or IP address of the hardware/device.
+This is the device/hardware on which your workflow will run.
+Look at the following example:
 
 ```
 $ tink workflow create -t <template-uuid> -r '{"device_1": "00:00:00:00:00:00"}'

@@ -38,5 +38,6 @@ Workflow operations:
 ```
 
 {{% notice note %}}
-The key used in the above command which is _device_1_ should be in sync with _worker_ field in the _template_ and can only contain _letters_, _numbers_ and _underscores_. Click [here](/concepts/) to check the template structure.
+The key used in the above command which is _device_1_ should be in sync with _worker_ field in the _template_ and can only contain _letters_, _numbers_ and _underscores_.
+Click [here](/concepts/) to check the template structure.
 {{% /notice %}}
