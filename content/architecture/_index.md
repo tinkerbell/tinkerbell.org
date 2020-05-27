@@ -7,7 +7,9 @@ toc = true
 +++
 
 #### Interface
+
 ![Architecture](/images/docs/workflow-architecture.png)
 
 #### Workflow
+
 ![Architecture](/images/docs/ephemeral-data.png)

@@ -7,19 +7,22 @@ toc = true
 +++
 
 ### Automated setup using Terraform
+
 Using Terraform (with the Packet provider), create two servers _tf-provisioner_ and _tf-worker_ attached to the same VLAN.
 
-- Clone the *tink* repository:
+- Clone the _tink_ repository:
+
 ```
 git clone https://github.com/tinkerbell/tink.git
 cd tink/deploy/terraform
 ```
 
 - Update the `<packet_api_token>` and `<project_id>` fields in _input.tf_ with your Packet API token and desired project ID
-    - Make sure the API token is a user API token (created/accessed under _API keys_ in your personal settings)
-    - You may also update the hostnames in _main.tf_ if you prefer names other than _tf-provisioner_ and _tf-worker_
+  - Make sure the API token is a user API token (created/accessed under _API keys_ in your personal settings)
+  - You may also update the hostnames in _main.tf_ if you prefer names other than _tf-provisioner_ and _tf-worker_
 - You may also update the hostnames in _main.tf_ if you prefer names other than _tf-provisioner_ and _tf-worker_
 - Run the following commands:
+
 ```
 terraform init
 terraform apply
@@ -29,25 +32,26 @@ terraform apply
 As an output, it returns the IP address of the provisioner and MAC address of the worker machine.
 {{% /notice %}}
 
-
 ### Manual Setup
 
 If you do not wish to use Terraform, you can provision the servers manually with the following configurations.
 
 #### Provisioner
-+ Plan: c3.small.x86 (or any plan that supports Layer 2)
-+ OS: Ubuntu 18.04 LTS
-+ After device is provisioned:
+
+- Plan: c3.small.x86 (or any plan that supports Layer 2)
+- OS: Ubuntu 18.04 LTS
+- After device is provisioned:
   - Convert network type to Mixed/Hybrid
   - Attach VLAN to interface eth1 (under Layer 2)
 
 #### Worker
-+ Facility: <same_as_provisioner>
-+ Plan: c3.small.x86 (or any plan that supports Layer 2)
-+ OS: Custom iPXE
+
+- Facility: <same_as_provisioner>
+- Plan: c3.small.x86 (or any plan that supports Layer 2)
+- OS: Custom iPXE
   - IPXE Script URL: https://boot.netboot.xyz
   - Always/Persist PXE: true
-+ After device is provisioned:
+- After device is provisioned:
   - Convert network type to Layer 2 (individual)
   - Attach VLAN to interface eth0
   - Same VLAN as provisioner

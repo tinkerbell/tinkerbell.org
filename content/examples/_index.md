@@ -7,7 +7,8 @@ toc = true
 +++
 
 Here is a list of available workflow examples:
- - [Hello World!](/examples/hello-world)
+
+- [Hello World!](/examples/hello-world)
 
 {{% notice tip %}}
 When a workflow completes, you generally end up at the prompt: `localhost login:`.
