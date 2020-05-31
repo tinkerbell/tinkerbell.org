@@ -134,7 +134,7 @@ a {
 	}
 }
 #body {
-	a.highlight {
+	a.highlight:not(.button) {
 		color:#0082a7;
 		&:after {
 			width: 100%;
