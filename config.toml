@@ -75,21 +75,19 @@ title = "Provisioning & Workflow Engine"
 weight = 10
 
 [[menu.tink]]
-name = "BOOTS"
+name = "Boots"
 url = "https://github.com/tinkerbell/boots"
 title = "DHCP & iPXE Server"
 weight = 20
 
 [[menu.tink]]
-name = "OSIE"
-url = "https://github.com/tinkerbell/osie"
-title = "In-Memory Environment"
+name = "Hegel"
+url = "https://github.com/tinkerbell/hegel"
+title = "Metadata Service"
 weight = 30
 
 [[menu.tink]]
-name = "HEGEL"
-url = "https://github.com/tinkerbell/hegel"
-title = "Metadata Service"
+name = "OSIE"
+url = "https://github.com/tinkerbell/osie"
+title = "OS Install Environment"
 weight = 40
-
-

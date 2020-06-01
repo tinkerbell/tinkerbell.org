@@ -5,6 +5,6 @@ image = "/images/table-art.png"
 hidden = true
 +++
 
-Tinkerbell has four major components: a DHCP server (boots), a workflow engine (tink), an in-memory operating system (OSIE) and a metadata service (hegel).
+Tinkerbell has four major components: a DHCP server (Boots), a metadata service (Hegel), an in-memory operating system installation environment (OSIE) and a workflow engine (Tink).
 The workflow engine is comprised of a server and a CLI, which communicate over gRPC.
 The CLI is used to create a workflow along with its building blocks, templates and targets.
