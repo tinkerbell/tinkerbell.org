@@ -11,6 +11,7 @@ Workflow operations.
 ### Synopsis
 
 Workflow operations:
+
 ```
   create      create a workflow
   data        get workflow data
@@ -29,11 +30,14 @@ Workflow operations:
 
 ### Examples
 
- - Create a workflow using a template and a targeted hardware devices
- ```shell
-  $ tink workflow create -t <template-uuid> -r <targeted_hardware_devices_in_json_format>
-  $ tink workflow create -t edb80a56-b1f2-4502-abf9-17326324192b -r '{"device_1":"mac/IP", "device_2":"mac/IP"}'
- ```
- {{% notice note %}} 
-  The key used in the above command which is *device_1* should be in sync with *worker* field in the *template* and can only contain *letters*, *numbers* and *underscores*. Click [here](/concepts/) to check the template structure.
- {{% /notice %}}
+- Create a workflow using a template and a targeted hardware devices
+
+```shell
+ $ tink workflow create -t <template-uuid> -r <targeted_hardware_devices_in_json_format>
+ $ tink workflow create -t edb80a56-b1f2-4502-abf9-17326324192b -r '{"device_1":"mac/IP", "device_2":"mac/IP"}'
+```
+
+{{% notice note %}}
+The key used in the above command which is _device_1_ should be in sync with _worker_ field in the _template_ and can only contain _letters_, _numbers_ and _underscores_.
+Click [here](/concepts/) to check the template structure.
+{{% /notice %}}

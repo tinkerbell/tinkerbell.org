@@ -5,4 +5,5 @@ image = "../../images/datacenter-art.png"
 hidden = true
 +++
 
-Tinkerbell is a bare metal provisioning engine, built and maintained by the team at <a href="https://www.packet.com/">Packet</a>. Tinkerbell consists of four microservices: boots, OSIE, tink, and hegel.
+Tinkerbell is a bare metal provisioning engine, built and maintained by the team at <a href="https://www.packet.com/">Packet</a>.
+Tinkerbell consists of four microservices: boots, OSIE, tink, and hegel.

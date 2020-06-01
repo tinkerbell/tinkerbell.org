@@ -2,9 +2,9 @@
 title = "Support"
 +++
 
-## Need help with Tinkerbell? 
+## Need help with Tinkerbell?
 
-Reach us out at *hello@tinkerbell.org* 
+Reach us out at _hello@tinkerbell.org_
 
 or
 

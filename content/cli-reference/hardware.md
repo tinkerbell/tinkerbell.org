@@ -11,6 +11,7 @@ Hardware (worker) data operations.
 ### Synopsis
 
 Hardware operations:
+
 ```
   all         Get all known hardware for facility
   id          Get hardware by id
@@ -30,6 +31,7 @@ Hardware operations:
 ### Examples
 
 Consider the following hardware data (saved as data.json) for a worker machine to be part of a workflow:
+
 ```
 {
   "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
@@ -60,23 +62,27 @@ Consider the following hardware data (saved as data.json) for a worker machine t
 }
 ```
 
- - push the data with either of the following:
+- push the data with either of the following:
+
 ```
 $ tink hardware push --file data.json
 $ cat data.json | tink hardware push
 ```
 
- - get hardware data using ID:
+- get hardware data using ID:
+
 ```
 $ tink hardware id ce2e62ed-826f-4485-a39f-a82bb74338e2
 ```
 
- - get hardware data using MAC address:
+- get hardware data using MAC address:
+
 ```
 $ tink hardware mac ec:0d:9a:bf:ff:dc
 ```
 
- - get hardware data using IP address:
+- get hardware data using IP address:
+
 ```
 $ tink hardware ip 192.168.1.5
 ```

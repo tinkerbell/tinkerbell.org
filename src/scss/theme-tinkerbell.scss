@@ -1,9 +1,8 @@
-@import '~foundation-sites/scss/util/util';
-@import './settings';
-@import '~foundation-sites/scss/foundation';
+@import "~foundation-sites/scss/util/util";
+@import "./settings";
+@import "~foundation-sites/scss/foundation";
 @include foundation-everything;
-@import './mixins';
-@import './colors';
-@import './style';
-@import './responsive';
-	
+@import "./mixins";
+@import "./colors";
+@import "./style";
+@import "./responsive";

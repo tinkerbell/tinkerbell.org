@@ -1,0 +1,11 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: lint
+    image: node:lts-alpine
+    commands:
+      - yarn global add prettier@2.0.5
+      - prettier --list-different .
