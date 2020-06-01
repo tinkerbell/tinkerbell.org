@@ -6,4 +6,4 @@ hidden = true
 +++
 
 Tinkerbell is a bare metal provisioning engine, built and maintained by the team at <a href="https://www.packet.com/">Packet</a>.
-Tinkerbell consists of four microservices: Boots, Hegel, OSIE, and Tink.
+Tinkerbell consists of five microservices: Boots, Hegel, OSIE, PBnJ, and Tink.

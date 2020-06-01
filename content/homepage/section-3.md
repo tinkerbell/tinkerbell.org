@@ -1,7 +1,7 @@
 +++
 type = "section-3"
-title = "Four Microservices"
+title = "Five Microservices"
 hidden = true
 +++
 
-There are four microservices that constitute Tinkerbell’s provisioning stack.
+There are five microservices that constitute Tinkerbell’s provisioning stack.

@@ -21,6 +21,10 @@ It collects data from Tinkerbell and transforms it into a JSON format to be cons
 
 Installs operating systems and handles deprovisioning.
 
+### PBnJ
+
+Communicates with BMCs to control power and boot settings.
+
 ### Tink
 
 Service responsible for processing workflows.

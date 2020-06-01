@@ -86,6 +86,7 @@ A provisioner houses the following components:
 - [Tinkerbell](/components/#tinkerbell) (CLI and server)
 - [Boots](/components/#boots)
 - [Hegel](/components/#hegel)
+- [PBnJ](/components/#pbnj)
 - [Image Registry](/components/#image-repository)
 - [Elasticsearch](/components/#elasticsearch)
 - [Fluent Bit](/components/#fluent-bit)

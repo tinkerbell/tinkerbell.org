@@ -91,3 +91,9 @@ name = "OSIE"
 url = "https://github.com/tinkerbell/osie"
 title = "OS Install Environment"
 weight = 40
+
+[[menu.tink]]
+name = "PBnJ"
+url = "https://github.com/tinkerbell/pbnj"
+title = "Power & Boot Control Service"
+weight = 50
