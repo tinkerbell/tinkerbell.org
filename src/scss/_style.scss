@@ -176,12 +176,13 @@ header {
 .box {
   text-align: center;
   background: #fff;
-  padding: 35px 0;
+  padding: 35px 15px;
   // height: 100%;
   border-top: 10px solid $blue2;
   margin-bottom: 30px;
   border-radius: 5px;
   position: relative;
+  height: calc(100% - 30px);
   @include transition;
 
   &:hover {
