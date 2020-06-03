@@ -38,7 +38,7 @@
                 
                 {{ .Scratch.Set "i" 0 }}
                 {{with .Site.Menus.tink}}
-                <div class="cell large-9 pt40">
+                <div class="cell large-10 pt40">
                     <div class="grid-x grid-padding-x">
                           
                           {{ range sort . "Weight"}}
@@ -46,7 +46,7 @@
                             {{ if eq ($.Scratch.Get "i") 1 }}
                             <div class="cell large-12">
                             {{ else }}
-                            <div class="cell large-4">
+                            <div class="cell large-3">
                             {{ end }}
                                
                                 <div class="box">
