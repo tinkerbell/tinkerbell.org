@@ -6,13 +6,11 @@ weight = 20
 toc = true
 +++
 
-
 ### Automated setup using Vagrant
 
 - In this section we are going to create a provisioner and a worker using Vagrant.
 - This guide supports two Vagrant providers - libvirt and VirtualBox.
 - The setup uses a script that by default creates a [Hello World!](/examples/hello-world) workflow which helps in quickly testing the setup.
-
 
 ### Prerequisite
 
@@ -24,7 +22,6 @@ toc = true
 
 - Vagrant is installed.
 - You may download and install Vagrant from the downloads page [here](https://www.vagrantup.com/downloads).
-
 
 ### Steps
 
@@ -57,7 +54,7 @@ curl -O https://raw.githubusercontent.com/tinkerbell/tink/master/deploy/vagrant/
 ```
 
 - Get latest of OSIE. While this is optional, it can be really helpful.
-For more details, please check the environment variables [section](/setup/vagrant/script/#the-environment-variables) on the automation script page.
+  For more details, please check the environment variables [section](/setup/vagrant/script/#the-environment-variables) on the automation script page.
 
 ```
 curl 'https://tinkerbell-oss.s3.amazonaws.com/osie-uploads/latest.tar.gz' -o osie.tar.gz
@@ -72,7 +69,6 @@ vagrant up worker
 
 - When the provisioner is ready, a summary is printed to the console which consists of the Kibana endpoint to check the logs.
 - As the worker starts it will fetch and execute the predefined `Hello World!` workflow.
-
 
 ### Connecting with the servers
 
@@ -99,7 +95,7 @@ docker-compose ps
 ```
 
 - You can create as many workflows as you want for the same worker.
-However, for the worker to participate in those workflow you will need to restart the worker with following command.
+  However, for the worker to participate in those workflow you will need to restart the worker with following command.
 
 ```
 # removes existing instance
@@ -113,4 +109,3 @@ vagrant up worker
 
 - The important sections of the automation script used to bring up the Tinkerbell stack are explained [here](/setup/vagrant/script/).
 - You can customize what happens when the stack is ready by adding your own steps to the script.
-

@@ -6,12 +6,10 @@ weight = 10
 toc = true
 +++
 
-
 - The script is used to automate the Tinkerbell stack setup.
 - It also serves the purpose of quick testing by creating a [Hello World!](/examples/hello-world) workflow.
 - The complete script can be found [here](https://raw.githubusercontent.com/tinkerbell/tink/master/deploy/vagrant/tinkerbell.sh).
 - The sections below explain different important parts of the script.
-
 
 #### Provisioner IP Address
 
@@ -22,7 +20,6 @@ provisioner_ip_address="${1:-10.10.10.2}";
 ```
 
 - If you want to change the provisioner IP, you can set the `provisioner_ip_address = '10.11.12.2'` in Vagrantfile.
-
 
 #### The Environment Variables
 
@@ -46,7 +43,6 @@ provisioner.vm.synced_folder '.', '/vagrant', type: 'rsync'
 - Therefore, we can set the `TB_OSIE_TAR` variable and let the tinkerbell setup [script](https://github.com/tinkerbell/tink/blob/master/setup.sh#L301) know that we have the OSIE tar already.
 - In case you want to recreate the setup from scratch, you can still use the same OSIE tar file and avoid the download during setup.
 
-
 #### Create a Workflow
 
 - Create the hello-world workflow template and get the template ID for later use.
@@ -68,13 +64,13 @@ template_id="$(echo "$template_output" | perl -n -e '/([0-9a-f]{8}-[0-9a-f]{4}-[
 ```
 
 - Push worker hardware data into the database.
-You may choose a different host number for your worker based on your network configuration.
+  You may choose a different host number for your worker based on your network configuration.
 
 ```
 worker_host_number=11
 worker_ip_address="$(echo $provisioner_ip_address | cut -d "." -f 1).$(echo $provisioner_ip_address | cut -d "." -f 2).$(echo $provisioner_ip_address | cut -d "." -f 3).$worker_host_number"
 worker_mac_address="08:00:27:00:00:01"
-  
+
 docker exec -i deploy_tink-cli_1 tink hardware push <<EOF
 {
   "id": "870fe43f-a58e-4f69-af39-0d612a6587c1",
@@ -109,15 +105,13 @@ EOF
 - It is important to note that the value of `worker_mac_address` must be same as what you have in the Vagrantfile.
 - If you want to run multiple workers, you need to ensure that the hardware data (with correct MAC address) for all those workers is present in the database.
 
-
-- Create a workflow using the above created template and hardware.
+* Create a workflow using the above created template and hardware.
 
 ```
 workflow_output="$(docker exec -i deploy_tink-cli_1 tink workflow create -t "$template_id" -r "{\"device_1\": \"$worker_mac_address\"}")"
 workflow_id="$(echo "$workflow_output" | perl -n -e '/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/ && print $1')"
 docker exec -i deploy_tink-cli_1 tink workflow get "$workflow_id"
 ```
-
 
 #### The Summary
 
@@ -144,5 +138,5 @@ kibana: http://$host_ip_address:5601
 
 EOF
 ```
-- You may update the script to provide different essential details as per your need.
 
+- You may update the script to provide different essential details as per your need.
