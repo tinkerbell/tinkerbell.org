@@ -26,3 +26,4 @@ Below are brief descriptions of the roles each of the machines play in the syste
 Now, follow the steps for your environment:
 
 - [Packet](/setup/packet)
+- [Vagrant](/setup/vagrant)
