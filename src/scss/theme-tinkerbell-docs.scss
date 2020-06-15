@@ -154,6 +154,23 @@ a {
     }
   }
 }
+.faq {
+  display: block;
+  padding: 30px;
+  border-bottom: 1px solid #cbcbcb;
+  position: relative;
+  .faq-label {
+    font-weight: 500;
+    .fas {
+      position: absolute;
+      left: 0;
+      top: 34px;
+      &:before {
+        font-size: 16px;
+      }
+    }
+  }
+}
 .contributors-list {
   margin: 0;
   padding: 0;
