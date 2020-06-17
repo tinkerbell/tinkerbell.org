@@ -175,7 +175,7 @@ We need to spin up our first worker now.
 
 Open a new terminal and get inside the `tink/deploy/vagrant`.
 
-For a worker the mac address works as a unique identifier, with Vagrant we are
+For a worker the MAC address works as a unique identifier, with Vagrant we are
 able to set it to fixed value, in this case `080027000001`.
 
 As you did for the provisioner start the worker via vagrant:
