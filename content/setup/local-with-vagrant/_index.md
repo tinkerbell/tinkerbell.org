@@ -154,7 +154,7 @@ Now that we have a template and hardware registered we can trigger the workflow 
 1. A template is used to create workflows. Template are important because you
    can create as many workflows you need from a single template.
 2. A workflow needs a target (a hardware) in vagrant it is the worker and it is
-   identified via mac address.
+   identified via MAC address.
 
 Let's start the workflow where `-t` is the template ID you got when registering
 your template and `-r` contains the variables to replace in the template, in
