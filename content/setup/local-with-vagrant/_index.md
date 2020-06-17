@@ -167,6 +167,8 @@ $ docker exec -i deploy_tink-cli_1 tink workflow create \
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
+> Note: this MAC address it hard coded in the Vagrantfile.
+
 We need to spin up our first worker now.
 
 ## Start a worker
