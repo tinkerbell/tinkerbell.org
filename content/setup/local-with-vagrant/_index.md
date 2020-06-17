@@ -21,41 +21,9 @@ worker ready to handle actions and workflows.
 
 ## Prerequisite
 
-A bunch of information you have to know and tools you have to install in order
-to be up and running with the following tutorial.
-
-### Ubuntu/Debian
-
-1. Check if the CPU virtualization is enabled.
-
-```
-$ grep -o 'vmx\|svm' /proc/cpuinfo
-```
-
-2. You may download and install Vagrant from the downloads page [here](https://www.vagrantup.com/downloads).
-
-3. Install a Vagrant provider of your choice — libvirt or VirtualBox.
-
-3a. For libvirt: install KVM, libvirt, QEMU and other dependencies.
-
-```
-$ sudo apt update && apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools virt-manager
-```
-
-3b. You can download and install VirtualBox and VirtualBox Extension Pack from their downloads page [here](https://www.virtualbox.org/wiki/Downloads).
-
-### macOS
-
-1. You can use brew to install VirtualBox and Vagrant.
-
-```
-$ brew cask install virtualbox
-$ brew cask install vagrant
-```
-
-2. The worker will start with UI enabled, the first time it will ask for
-   VirtualBox permissions around "Input Monitoring". It is expected to just
-   allow them.
+- The host's processor should support virtualization
+- [Vagrant](https://www.vagrantup.com/downloads) is installed
+- Either [VirtualBox](https://www.virtualbox.org/) or [libvirtd](https://libvirt.org/) is installed and configured.
 
 ## Cloning Tinkerbell
 
