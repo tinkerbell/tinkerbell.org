@@ -158,7 +158,7 @@ Now that we have a template and hardware registered we can trigger the workflow 
 
 Let's start the workflow where `-t` is the template ID you got when registering
 your template and `-r` contains the variables to replace in the template, in
-this case only the worker's mac address is required:
+this case only the worker's MAC address is required:
 
 ```
 $ docker exec -i deploy_tink-cli_1 tink workflow create \
