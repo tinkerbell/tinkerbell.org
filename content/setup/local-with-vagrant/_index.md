@@ -19,12 +19,10 @@ bash for provisioning all the required tools and configurations.
 Following this tutorial, you will end up with a provisioner up and running and a
 worker ready to handle actions and workflows.
 
-
 ## Prerequisite
 
 A bunch of information you have to know and tools you have to install in order
 to be up and running with the following tutorial.
-
 
 ### Ubuntu/Debian
 
@@ -163,7 +161,6 @@ When the provisioner is ready, a summary is printed to the console and you can n
 All the following commands have to be executed in the artifacts' directory created above unless stated otherwise.
 
 Connect to the provisioner via ssh, vagrant has an until:
-
 
 ```
 $ vagrant ssh provisioner
