@@ -63,8 +63,9 @@ $ vagrant ssh provisioner
 vagrant@provisioner:~$
 ```
 
-At this point, you are in an Ubuntu box that has a couple of utils installed and
-it is not time to start the services to make it a proper Tinkerbell provisioner
+At this point, you are in an Ubuntu box that has a couple of utils installed.
+
+Let's now start up the Tinkerbell stack with `docker-compose`:
 
 ```
 $ sudo su -l
