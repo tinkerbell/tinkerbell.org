@@ -56,7 +56,7 @@ When the provisioner is ready, a summary is printed to the console and you can n
 
 All the following commands have to be executed in the artifacts' directory created above unless stated otherwise.
 
-Connect to the provisioner via ssh, vagrant has an until:
+Connect to the provisioner via `vagrant ssh`:
 
 ```
 $ vagrant ssh provisioner
