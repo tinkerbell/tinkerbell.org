@@ -6,18 +6,10 @@ weight = 20
 toc = true
 +++
 
-An easy way to try out Tinkerbell locally is via [Vagrant](https://www.vagrantup.com).
+This easiest way to try out Tinkerbell locally is by using [Vagrant](https://www.vagrantup.com).
 
-Vagrant wraps and glues together different technologies to help you write as
-code repetitive environment mixing virtualization or cloud providers such as
-VirtualBox, libvirt, AWS, GCP with provisioning techniques like Puppet, Ansible,
-Bash.
-
-In this context we use VirtualBox or libvirt as a virtualization platform and
-bash for provisioning all the required tools and configurations.
-
-Following this tutorial, you will end up with a provisioner up and running and a
-worker ready to handle actions and workflows.
+This tutorial will show you how to use Vagrant to setup a provisioner and a worker
+ready to handle actions and workflows.
 
 ## Prerequisites
 
@@ -27,9 +19,9 @@ worker ready to handle actions and workflows.
 
 ## Cloning Tinkerbell
 
-1. Clone `tink` and move inside `deploy/vagrant` directory. This folder contains
-   vagrant configuration (Vagrantfile) and the scripts needed to provide workers
-   and provisioners.
+Clone `tink` and move into the `deploy/vagrant` directory. This folder contains
+a Vagrant configuration file (Vagrantfile) and the scripts needed to setup the provisioner
+and the worker.
 
 ```
 $ git clone https://github.com/tinkerbell/tink.git
@@ -50,11 +42,9 @@ Bringing machine 'provisioner' up with 'virtualbox' provider...
               Follow the steps described in https://tinkerbell.org/examples/hello-world/ to say 'Hello World!' with a workflow.
 ```
 
-When the provisioner is ready, a summary is printed to the console and you can now ssh in.
+When the provisioner is ready, you'll see the summary above and you can continue.
 
 ### Connecting to the Provisioner
-
-All the following commands have to be executed in the artifacts' directory created above unless stated otherwise.
 
 Connect to the provisioner via `vagrant ssh`:
 
@@ -68,7 +58,6 @@ At this point, you are in an Ubuntu box that has a couple of utils installed.
 Let's now start up the Tinkerbell stack with `docker-compose`:
 
 ```
-$ sudo su -l
 $ cd /vagrant && source envrc && cd deploy
 $ docker-compose up -d
 ```
@@ -76,8 +65,8 @@ $ docker-compose up -d
 > Note: this is now managed like a standard Docker Compose project. Just make sure
 > to have sourced the `envrc` before issuing `docker-compose commands.`
 
-Those commands give you a fully working provisioner that is ready to receive
-templates and workflow targeting workers. You can check that it is running:
+You now have a fully working provisioner that is ready to receive templates and
+workflows. Check that all the services are running:
 
 ```
 $ docker-compose ps
@@ -95,11 +84,18 @@ deploy_tink-server_1   tink-server                      Up (healthy)   0.0.0.0:4
 
 ### Register the worker's hardware
 
-The provisioner is running we can follow the [example called "Hello
-world"](/examples/hello-world), I will contextualize it for our vagrant setup
+Now that the provisioner is running we can follow the [example called "Hello
+world"](/examples/hello-world). We will run through it for our Vagrant setup
 here.
 
-SSH in the provisioner again and we have to define our hello world template and load it to Tinkerbell:
+Make sure you're in the provisioner VM. If not, SSH back in:
+
+```
+$ vagrant ssh provisioner
+vagrant@provisioner:~$
+```
+
+Now we define our hello world template and load it into Tinkerbell:
 
 ```
 $ cat > hello-world.yml
@@ -117,7 +113,7 @@ $ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./h
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
-Register the worker with Tinkerbell
+Next we register the worker with Tinkerbell:
 
 ```
 $ cat > hardware-data.json
@@ -153,12 +149,13 @@ $ docker exec -i deploy_tink-cli_1 tink hardware push < ./hardware-data.json
 2020/06/17 14:12:45 Hardware data pushed successfully
 ```
 
-Now that we have a template and hardware registered we can trigger the workflow for that particular hardware but first a bit of context on what we just did:
+Now that we have our template and hardware data registered we can trigger the
+workflow for that particular hardware on our worker, but first let's look at what we just did:
 
-1. A template is used to create workflows. Template are important because you
-   can create as many workflows you need from a single template.
-2. A workflow needs a target (a hardware) in vagrant it is the worker and it is
-   identified via MAC address.
+1. A template is used to create workflows. Templates are important because you
+   can create as many workflows as you need from a single template.
+2. A workflow needs a target, defined by the hardware data. In this Vagrant example
+   it is the worker node that we will start shortly, and it is identified by a MAC address.
 
 Let's start the workflow where `-t` is the template ID you got when registering
 your template and `-r` contains the variables to replace in the template, in
@@ -166,32 +163,32 @@ this case only the worker's MAC address is required:
 
 ```
 $ docker exec -i deploy_tink-cli_1 tink workflow create \
-    -t 75ab8483-6f42-42a9-a80d-a9f6196130df \
+    -t <TEMPLATE ID> \
     -r '{"device_1":"08:00:27:00:00:01"}'
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
-> Note: this MAC address it hard coded in the Vagrantfile.
+> Note: this MAC address is hard coded in the Vagrantfile.
 
-We need to spin up our first worker now.
+Now finally we can spin up our worker with Vagrant.
 
 ## Start a worker
-
-Open a new terminal and get inside the `tink/deploy/vagrant`.
 
 For a worker the MAC address works as a unique identifier, with Vagrant we are
 able to set it to fixed value, in this case `080027000001`.
 
-As you did for the provisioner start the worker via vagrant:
+As you did for the provisioner start the worker with Vagrant in a new terminal:
 
 ```
+$ cd deploy/vagrant
 $ vagrant up worker
 ```
 
-If using VirtualBox, the worker shows up in a UI and if everything is right you
-should see at the end of the boot a login to a custom Alpine that Tinkerbell
-netboot. The operating system runs on RAM, the changes won't be persisted across
-reboots. You can login with the username `root` and no password is required.
+If using VirtualBox, the worker shows up in a UI. If you followed all the steps
+correctly, Tinkerbell will netboot a custom AlpineOS and you will see a login screen.
+This OS runs in RAM, so any changes you make won't be persisted between reboots.
+
+You can login with the username `root` and no password is required.
 
 ![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png)
 
