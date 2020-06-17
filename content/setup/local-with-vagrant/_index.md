@@ -178,9 +178,6 @@ $ cd /vagrant && source envrc && cd deploy
 $ docker-compose up -d
 ```
 
-The important sections of the automation script used to bring up the
-Tinkerbell stack are explained [here](/setup/vagrant/script/).
-
 When you are done with these commands you have a fully working provisioner that
 is ready to receive templates and workflow targeting workers. You can check that
 running:
