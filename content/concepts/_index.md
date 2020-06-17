@@ -15,11 +15,13 @@ A _hardware device_ is defined separately and is substituted in a template at th
 A template is a YAML definition which defines the overall workflow.
 It is independent of a worker and therefore fetches the worker values using Go template when a workflow is created.
 A user must write a template based on a valid template format.
-Template can consist of custom variable which can be substituted before execution.
-For example, worker is a targeted hardware is defined separately and is substituted in a template at the time of creating a workflow.
+A template may include custom variables which will be substituted before execution.
+For example, in the below, _worker_ is targeted hardware that is defined separately and is substituted in a template at the time of creating a workflow.
 
-A template is stored as a blob in the database and is parsed later during the creation of a worflow.
+Templates are each stored as blobs in the database; they are later parsed, during the creation of a worflow.
+
 A user can CRUD a template using the CLI (`tink template`).
+
 Here is a sample workflow template:
 
 ```yaml
@@ -56,10 +58,10 @@ tasks:
           - /statedir:/statedir
 ```
 
-A template comprises Tasks, which are executed in a sequential manner.
-A task can consits multiple Actions.
-As can be in the above example, a task supports volumes and environment variables.
-The volumes and environment variables defined for a particular task level are inherited by each action in that particular task.
+A template is comprised of _tasks_, which are executed sequentially, in the order in which they are declared.
+A task may consist of multiple _actions_.
+As shown in the above example, a task supports volumes and environment variables.
+The volumes and environment variables defined for a particular task are inherited by each action in that particular task.
 
 It is important to note that an action can also have its own volumes and environment variables.
 Therefore, any entry at an action will overwrite the value defined at the task level.
@@ -93,16 +95,16 @@ A provisioner houses the following components:
 - [Kibana](/components/#kibana)
 - [NGINX](/components/#nginx)
 
-It is upto you if you would like to divide these components into multiple servers.
+You may divide these components into multiple servers.
 
 ### Worker
 
-A worker is targeted hardware on which workflow needs to run.
+A worker is targeted hardware on which a workflow needs to run.
 
 Any node that has its data being pushed into Tinkerbell can become a part of a workflow.
 A worker can be a part of multiple workflows.
 
-When the node boots, a worker container starts and connects with provisioner to check if there is any task (may be from different workflows) that it can execute.
+When the node boots, a worker container starts and connects with the provisioner to check if there is any task (may be from different workflows) that it can execute.
 After the completion of an action, the worker sends action status to provisioner.
 When all workflows which are related to a worker are complete, a worker can terminate.
 
