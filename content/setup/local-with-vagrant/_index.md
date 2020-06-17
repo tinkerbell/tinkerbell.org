@@ -19,7 +19,7 @@ bash for provisioning all the required tools and configurations.
 Following this tutorial, you will end up with a provisioner up and running and a
 worker ready to handle actions and workflows.
 
-## Prerequisite
+## Prerequisites
 
 - The host's processor should support virtualization
 - [Vagrant](https://www.vagrantup.com/downloads) is installed
