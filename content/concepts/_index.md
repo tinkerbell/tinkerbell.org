@@ -90,9 +90,6 @@ A provisioner houses the following components:
 - [Hegel](/components/#hegel)
 - [PBnJ](/components/#pbnj)
 - [Image Registry](/components/#image-repository)
-- [Elasticsearch](/components/#elasticsearch)
-- [Fluent Bit](/components/#fluent-bit)
-- [Kibana](/components/#kibana)
 - [NGINX](/components/#nginx)
 
 You may divide these components into multiple servers.
