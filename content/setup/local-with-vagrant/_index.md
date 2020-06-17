@@ -44,32 +44,6 @@ Bringing machine 'provisioner' up with 'virtualbox' provider...
 
     ......
 
-    provisioner: 1.3: digest: sha256:4a83e24146c332f4d2a821afd4bdfabc7a72e501a3610170db0359dcc6c44e3d size: 3677
-    provisioner: INFO: tinkerbell stack setup completed successfully on ubuntu server
-    provisioner: NEXT: 1. Enter ./deploy and run: source ../envrc; docker-compose up
-    provisioner:        2. Try executing your fist workflow.
-    provisioner:           Follow the steps described in https://tinkerbell.org/examples/hello-world/ to say 'Hello World!' with a workflow.
-    provisioner: + secure_certs
-    provisioner: + local certdir=/etc/docker/certs.d/192.168.1.1
-    provisioner: + sudo chown root /etc/docker/certs.d/192.168.1.1
-    provisioner: + configure_vagrant_user
-    provisioner: + sudo usermod -aG docker vagrant
-    provisioner: + echo -n 3785862bf9af42b709634d40bd96aa27580382c5b94b695d42676bb201e902d5
-    provisioner: + sudo -iu vagrant docker login --username=admin --password-stdin 192.168.1.1
-    provisioner: WARNING! Your password will be stored unencrypted in /home/vagrant/.docker/config.json.
-    provisioner: Configure a credential helper to remove this warning. See
-    provisioner: https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-
-    Login Succeeded
-    latest: Pulling from tinkerbell/tink-worker
-    Digest: sha256:55c99b7cfafd28244fd3f7adbe46d94ada305f0f28553f95dfd241c168f0439e
-    Status: Image is up to date for quay.io/tinkerbell/tink-worker:latest
-    quay.io/tinkerbell/tink-worker:latest
-    The push refers to repository [192.168.1.1/tink-worker]
-    c83ceae18bd4: Layer already exists
-    a1872780b5d4: Layer already exists
-    3e207b409db3: Layer already exists
-    latest: digest: sha256:55c99b7cfafd28244fd3f7adbe46d94ada305f0f28553f95dfd241c168f0439e size: 949
     INFO: tinkerbell stack setup completed successfully on ubuntu server
     NEXT: 1. Enter ./deploy and run: source ../envrc; docker-compose up
            2. Try executing your fist workflow.
