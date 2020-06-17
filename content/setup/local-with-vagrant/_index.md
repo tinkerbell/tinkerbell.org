@@ -73,6 +73,9 @@ $ cd /vagrant && source envrc && cd deploy
 $ docker-compose up -d
 ```
 
+> Note: this is now managed like a standard Docker Compose project. Just make sure
+> to have sourced the `envrc` before issuing `docker-compose commands.`
+
 Those commands give you a fully working provisioner that is ready to receive
 templates and workflow targeting workers. You can check that it is running:
 
