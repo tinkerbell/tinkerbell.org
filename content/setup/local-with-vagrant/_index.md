@@ -57,7 +57,7 @@ $ brew cask install vagrant
    VirtualBox permissions around "Input Monitoring". It is expected just allow
    them.
 
-## Project foldering
+## Cloning Tinkerbell
 
 1. Clone `tink` and move inside `deploy/vagrant` directory. This folder contains
    vagrant configuration (Vagrantfile) and the scripts needed to provision
@@ -157,9 +157,9 @@ Bringing machine 'provisioner' up with 'virtualbox' provider...
 When the provisioner is ready, a summary is printed to the console and you can
 now ssh in.
 
-### Connecting with the servers
+### Connecting to the Provisioner
 
-All the following commands are to be executed being in the artifacts' directory created
+All the following commands have to be executed being in the artifacts' directory created
 above, unless stated otherwise.
 
 Connect to the provisioner via ssh, vagrant has an until:
@@ -178,7 +178,7 @@ $ cd /vagrant && source envrc && cd deploy
 $ docker-compose up -d
 ```
 
-!TIPS The important sections of the automation script used to bring up the
+The important sections of the automation script used to bring up the
 Tinkerbell stack are explained [here](/setup/vagrant/script/).
 
 When you are done with these commands you have a fully working provisioner that
@@ -199,7 +199,7 @@ deploy_tink-cli_1      /bin/sh -c sleep infinity        Up
 deploy_tink-server_1   tink-server                      Up (healthy)   0.0.0.0:42113->42113/tcp, 0.0.0.0:42114->42114/tcp
 ```
 
-### Configure worker hardware
+### Register the worker's hardware
 
 At this point the provisioner is running and we can follow the [example called
 "Hello world"](/examples/hello-world) but I will contextualize it for our vagrant
@@ -224,7 +224,7 @@ $ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./h
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
-Now we have to register the future worker (hardware) to tinkerbell
+Now we have to register the worker with tinkerbell
 
 ```
 $ cat > hardware-data.json

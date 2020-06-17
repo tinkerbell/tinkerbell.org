@@ -25,5 +25,5 @@ Below are brief descriptions of the roles each of the machines play in the syste
 
 Now, follow the steps for your environment:
 
-- [Local with Vagrant](/setup/vagrant)
+- [Local with Vagrant](/setup/local-with-vagrant)
 - [Packet with Terraform](/setup/packet-with-terraform)
