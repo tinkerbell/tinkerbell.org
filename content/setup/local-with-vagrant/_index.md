@@ -73,7 +73,7 @@ $ docker-compose up -d
 ```
 
 Those commands give you a fully working provisioner that is ready to receive
-templates and workflow targeting workers. You can check that running:
+templates and workflow targeting workers. You can check that it is running:
 
 ```
 $ docker-compose ps
