@@ -21,7 +21,7 @@ worker ready to handle actions and workflows.
 
 ## Prerequisites
 
-- The host's processor should support virtualization
+- [The host's processor should support virtualization](https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/)
 - [Vagrant](https://www.vagrantup.com/downloads) is installed
 - Either [VirtualBox](https://www.virtualbox.org/) or [libvirtd](https://libvirt.org/) is installed and configured.
 
