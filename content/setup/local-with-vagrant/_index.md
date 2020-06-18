@@ -157,9 +157,12 @@ workflow for that particular hardware on our worker, but first let's look at wha
 2. A workflow needs a target, defined by the hardware data. In this Vagrant example
    it is the worker node that we will start shortly, and it is identified by a MAC address.
 
-Let's start the workflow where `-t` is the template ID you got when registering
-your template and `-r` contains the variables to replace in the template, in
-this case only the worker's MAC address is required:
+Let's start the workflow where:
+
+- `-t` is the template ID you got when registering your template. (in this
+  example: `75ab8483-6f42-42a9-a80d-a9f6196130df`)
+- `-r` contains the variables to replace in the template, in
+  this case only the worker's MAC address is required:
 
 ```
 $ docker exec -i deploy_tink-cli_1 tink workflow create \
@@ -191,5 +194,8 @@ This OS runs in RAM, so any changes you make won't be persisted between reboots.
 You can login with the username `root` and no password is required.
 
 ![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png)
+
+> Note: If you have a 4k monitor a few notes about how to make the [UI
+> bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095)
 
 That's it! Let us know what you think about it on [Slack](/community-slack).
