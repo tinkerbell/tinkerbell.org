@@ -98,7 +98,7 @@ vagrant@provisioner:~$
 Now we define our hello world template and load it into Tinkerbell:
 
 ```
-$ cat > hello-world.yml
+$ cat > hello-world.yml  <<EOF
 version: "0.1"
 name: hello_world_workflow
 global_timeout: 600
@@ -109,6 +109,8 @@ tasks:
       - name: "hello_world"
         image: hello-world
         timeout: 60
+EOF
+
 $ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
@@ -116,7 +118,7 @@ Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 Next we register the worker with Tinkerbell:
 
 ```
-$ cat > hardware-data.json
+$ cat > hardware-data.json <<EOF
 {
   "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
   "arch": "x86_64",
@@ -144,6 +146,7 @@ $ cat > hardware-data.json
     }
   ]
 }
+EOF
 
 $ docker exec -i deploy_tink-cli_1 tink hardware push < ./hardware-data.json
 2020/06/17 14:12:45 Hardware data pushed successfully
