@@ -28,33 +28,38 @@ https://api.packet.net/devices/{device_id}
 
 - Here is the minimal hardware data that can get you started with the [Hello World!](/examples/hello-world) example.
 
-```
+```json
 {
-  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
-  "arch": "x86_64",
-  "allow_pxe": true,
-  "allow_workflow": true,
-  "facility_code": "onprem",
-  "ip_addresses": [
-    {
-      "address": "192.168.1.5",
-      "address_family": 4,
-      "enabled": true,
-      "gateway": "192.168.1.1",
-      "management": true,
-      "netmask": "255.255.255.248",
-      "public": false
-    }
-  ],
-  "network_ports": [
-    {
-      "data": {
-        "mac": "ec:0d:9a:bf:ff:dc"
-      },
-      "name": "eth0",
-      "type": "data"
-    }
-  ]
+  "id": "0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94",
+  "metadata": {
+    "facility": {
+      "facility_code": "ewr1",
+      "plan_slug": "c2.medium.x86",
+      "plan_version_slug": ""
+    },
+    "instance": {},
+    "state": ""
+  },
+  "network": {
+    "interfaces": [
+      {
+        "dhcp": {
+          "arch": "x86_64",
+          "ip": {
+            "address": "192.168.1.5",
+            "gateway": "192.168.1.1",
+            "netmask": "255.255.255.248"
+          },
+          "mac": "00:00:00:00:00:00",
+          "uefi": false
+        },
+        "netboot": {
+          "allow_pxe": true,
+          "allow_workflow": true
+        }
+      }
+    ]
+  }
 }
 ```
 
