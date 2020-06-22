@@ -58,8 +58,8 @@ At this point, you are in an Ubuntu box that has a couple of utils installed.
 Let's now start up the Tinkerbell stack with `docker-compose`:
 
 ```
-$ cd /vagrant && source envrc && cd deploy
-$ docker-compose up -d
+vagrant@provisioner:/vagrant/deploy$ cd /vagrant && source envrc && cd deploy
+vagrant@provisioner:/vagrant/deploy$ docker-compose up -d
 ```
 
 > Note: this is now managed like a standard Docker Compose project. Just make sure
@@ -69,7 +69,7 @@ You now have a fully working provisioner that is ready to receive templates and
 workflows. Check that all the services are running:
 
 ```
-$ docker-compose ps
+vagrant@provisioner:/vagrant/deploy$ docker-compose ps
         Name                      Command                  State                             Ports
 -------------------------------------------------------------------------------------------------------------------------
 deploy_boots_1         /boots -dhcp-addr 0.0.0.0: ...   Up
@@ -88,17 +88,24 @@ Now that the provisioner is running we can follow the [example called "Hello
 world"](/examples/hello-world). We will run through it for our Vagrant setup
 here.
 
-Make sure you're in the provisioner VM. If not, SSH back in:
+It is useful to keep a ssh connection that shows logs from the Tinkerbell
+provisioner, because it helps to learn what it is doing. Open a new terminal,
+ssh in the provisioner as we did before and run `docker-compose` to tail logs:
 
 ```
 $ vagrant ssh provisioner
-vagrant@provisioner:~$
+$ cd /vagrant/deploy
+vagrant@provisioner:/vagrant/deploy $ source ../envrc
+vagrant@provisioner:/vagrant/deploy $ docker-compose logs -f tink-server boots nginx
 ```
+
+Later in the tutorial we will check the logs from `tink-server` in order to
+visualize the execution of the workflow.
 
 Now we define our hello world template and load it into Tinkerbell:
 
 ```
-$ cat > hello-world.yml  <<EOF
+vagrant@provisioner:/vagrant/deploy$ cat > hello-world.yml  <<EOF
 version: "0.1"
 name: hello_world_workflow
 global_timeout: 600
@@ -111,14 +118,14 @@ tasks:
         timeout: 60
 EOF
 
-$ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
+vagrant@provisioner:/vagrant/deploy$ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
 Next we register the worker with Tinkerbell:
 
 ```
-$ cat > hardware-data.json <<EOF
+vagrant@provisioner:/vagrant/deploy$ cat > hardware-data.json <<EOF
 {
   "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
   "arch": "x86_64",
@@ -148,8 +155,17 @@ $ cat > hardware-data.json <<EOF
 }
 EOF
 
-$ docker exec -i deploy_tink-cli_1 tink hardware push < ./hardware-data.json
+vagrant@provisioner:/vagrant/deploy$ docker exec -i deploy_tink-cli_1 tink hardware push < ./hardware-data.json
 2020/06/17 14:12:45 Hardware data pushed successfully
+```
+
+As the "Hello World" example suggests, we have to bridge the action from Docker
+Hub to the internal registry:
+
+```
+vagrant@provisioner:/vagrant/deploy$ docker pull hello-world
+vagrant@provisioner:/vagrant/deploy$ docker tag hello-world 192.168.1.1/hello-world
+vagrant@provisioner:/vagrant/deploy$ docker push 192.168.1.1/hello-world
 ```
 
 Now that we have our template and hardware data registered we can trigger the
@@ -168,7 +184,7 @@ Let's start the workflow where:
   this case only the worker's MAC address is required:
 
 ```
-$ docker exec -i deploy_tink-cli_1 tink workflow create \
+vagrant@provisioner:/vagrant/deploy$ docker exec -i deploy_tink-cli_1 tink workflow create \
     -t <TEMPLATE ID> \
     -r '{"device_1":"08:00:27:00:00:01"}'
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
@@ -190,7 +206,7 @@ $ cd deploy/vagrant
 $ vagrant up worker
 ```
 
-If using VirtualBox, the worker shows up in a UI. If you followed all the steps
+I using VirtualBox, the worker shows up in a UI. If you followed all the steps
 correctly, Tinkerbell will netboot a custom AlpineOS and you will see a login screen.
 This OS runs in RAM, so any changes you make won't be persisted between reboots.
 
@@ -200,5 +216,26 @@ You can login with the username `root` and no password is required.
 
 > Note: If you have a 4k monitor a few notes about how to make the [UI
 > bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095)
+
+In the meantime you can get back looking at the terminal where we are watching
+the logs from the Tinkerbell provisioner until you will see the workflow
+running:
+
+```
+tink-server_1  | Received action status: workflow_id:"a8984b09-566d-47ba-b6c5-fbe482d8ad7f" task_name:"hello world" action_name:"hello_world" action_status:ACTION_SUCCESS message:"Finished Execution Successfully" worker_id:"ce2e62ed-826f-4485-a39f-a82bb74338e2"
+tink-server_1  | Current context workflow_id:"a8984b09-566d-47ba-b6c5-fbe482d8ad7f" current_worker:"ce2e62ed-826f-4485-a39f-a82bb74338e2" current_task:"hello world" current_action:"hello_world" current_action_state:ACTION_SUCCESS total_number_of_actions:1
+```
+
+To double check it you can use from the provisioner the tink-cli:
+
+```
+vagrant@provisioner:/vagrant/deploy$ docker exec -i deploy_tink-cli_1 tink workflow events a8984b09-566d-47ba-b6c5-fbe482d8ad7f
++--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
+| WORKER ID                            | TASK NAME   | ACTION NAME | EXECUTION TIME | MESSAGE                         |      ACTION STATUS |
++--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
+| ce2e62ed-826f-4485-a39f-a82bb74338e2 | hello world | hello_world |              0 | Started execution               | ACTION_IN_PROGRESS |
+| ce2e62ed-826f-4485-a39f-a82bb74338e2 | hello world | hello_world |              0 | Finished Execution Successfully |     ACTION_SUCCESS |
++--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
+```
 
 That's it! Let us know what you think about it on [Slack](/community-slack).
