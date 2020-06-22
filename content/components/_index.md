@@ -44,21 +44,6 @@ You can use the same registry to store all of the action images used for a workf
 
 On the other hand, if you want to keep things local, you can also setup a secure private Docker registry to hold all your images locally.
 
-### Fluent Bit
-
-[Fluent Bit](https://fluentbit.io/) is an open source and multi-platform Log Processor and Forwarder.
-It allows you to collect data/logs from different sources, unify and send them to multiple destinations.
-The components write their logs to `stdout` and these logs are then collected by Fluent Bit and pushed to Elasticsearch.
-
-### Elasticsearch
-
-[Elasticsearch](https://www.elastic.co/) is a distributed, open source search and analytics engine for all types of data, including textual, numerical, geospatial, structured, and unstructured.
-Fluent Bit collects the logs from each component and pushes them into Elasticsearch for storage and analysis purposes.
-
-### Kibana
-
-[Kibana](https://www.elastic.co/kibana) lets you visualize your Elasticsearch data and navigate the Elastic Stack so you can do anything from tracking query load to understanding the way requests flow through your apps.
-
 ### NGINX
 
 [NGINX](https://www.nginx.com/) is a web server which can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
