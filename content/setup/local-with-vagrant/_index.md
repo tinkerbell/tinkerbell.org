@@ -220,7 +220,6 @@ You can login with the username `root` and no password is required.
 If you have a 4k monitor a few notes about how to make the [UI bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095)
 {{% /notice %}}
 
-
 In the meantime you can get back looking at the terminal where we are watching
 the logs from the Tinkerbell provisioner until you will see the workflow
 running:
