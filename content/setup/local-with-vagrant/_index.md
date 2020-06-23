@@ -73,7 +73,6 @@ vagrant@provisioner:/vagrant/deploy$ docker-compose ps
         Name                      Command                  State                             Ports
 -------------------------------------------------------------------------------------------------------------------------
 deploy_boots_1         /boots -dhcp-addr 0.0.0.0: ...   Up
-deploy_cacher_1        /cacher                          Up             0.0.0.0:42111->42111/tcp, 0.0.0.0:42112->42112/tcp
 deploy_db_1            docker-entrypoint.sh postgres    Up (healthy)   0.0.0.0:5432->5432/tcp
 deploy_hegel_1         cmd/hegel                        Up
 deploy_nginx_1         /docker-entrypoint.sh ngin ...   Up             192.168.1.2:80->80/tcp
