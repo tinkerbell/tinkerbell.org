@@ -59,7 +59,7 @@ We can now create/define a workflow with the following steps:
 ```
 
 {{% notice note %}}
-To know more about hardware data visit this [hardware-data-page](/setup/packet/hardware-data/)
+To know more about hardware data visit this [hardware-data-page](/setup/packet-with-terraform/hardware-data/)
 {{% /notice %}}
 
 - Create a template:
