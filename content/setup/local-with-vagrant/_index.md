@@ -63,7 +63,7 @@ vagrant@provisioner:/vagrant/deploy$ docker-compose up -d
 ```
 
 {{% notice note %}}
-This is now managed like a standard Docker Compose project. Just make sure to have sourced the `envrc` before issuing `docker-compose commands.`
+This is now managed like a standard Docker Compose project. Just make sure to have sourced the `envrc` before issuing `docker-compose` commands.
 {{% /notice %}}
 
 You now have a fully working provisioner that is ready to receive templates and
@@ -217,7 +217,7 @@ You can login with the username `root` and no password is required.
 ![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png)
 
 {{% notice note %}}
-If you have a 4k monitor a few notes about how to make the [UI bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095)
+If you have a 4k monitor, here are a few notes about how to make the [UI bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095).
 {{% /notice %}}
 
 In the meantime you can get back looking at the terminal where we are watching
