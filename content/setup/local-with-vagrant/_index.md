@@ -219,8 +219,8 @@ You can login with the username `root` and no password is required.
 > Note: If you have a 4k monitor a few notes about how to make the [UI
 > bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095)
 
-In the meantime if you look back at the terminal where you are tailing the logs
-from the Tinkerbell provisioner you will see the workflow running:
+In the meantime, if you look back at the terminal where you are tailing the logs
+from the Tinkerbell provisioner, you will see the workflow running:
 
 ```
 tink-server_1  | Received action status: workflow_id:"a8984b09-566d-47ba-b6c5-fbe482d8ad7f" task_name:"hello world" action_name:"hello_world" action_status:ACTION_SUCCESS message:"Finished Execution Successfully" worker_id:"ce2e62ed-826f-4485-a39f-a82bb74338e2"
