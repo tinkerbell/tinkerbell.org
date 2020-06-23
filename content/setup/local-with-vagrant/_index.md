@@ -37,8 +37,8 @@ Bringing machine 'provisioner' up with 'virtualbox' provider...
     ......
 
     INFO: tinkerbell stack setup completed successfully on ubuntu server
-    NEXT: 1. Enter ./deploy and run: source ../envrc; docker-compose up
-           2. Try executing your fist workflow.
+    NEXT: 1. Enter /vagrant/deploy and run: source ../envrc; docker-compose up -d
+          2. Try executing your fist workflow.
               Follow the steps described in https://tinkerbell.org/examples/hello-world/ to say 'Hello World!' with a workflow.
 ```
 
