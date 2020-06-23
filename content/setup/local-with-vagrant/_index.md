@@ -62,8 +62,9 @@ vagrant@provisioner:/vagrant/deploy$ cd /vagrant && source envrc && cd deploy
 vagrant@provisioner:/vagrant/deploy$ docker-compose up -d
 ```
 
-> Note: this is now managed like a standard Docker Compose project. Just make sure
-> to have sourced the `envrc` before issuing `docker-compose commands.`
+{{% notice note %}}
+This is now managed like a standard Docker Compose project. Just make sure to have sourced the `envrc` before issuing `docker-compose` commands.
+{{% /notice %}}
 
 You now have a fully working provisioner that is ready to receive templates and
 workflows. Check that all the services are running:
@@ -189,7 +190,9 @@ vagrant@provisioner:/vagrant/deploy$ docker exec -i deploy_tink-cli_1 tink workf
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
-> Note: this MAC address is hard coded in the Vagrantfile.
+{{% notice note %}}
+This MAC address is hard coded in the Vagrantfile.
+{{% /notice %}}
 
 Now finally we can spin up our worker with Vagrant.
 
@@ -213,8 +216,9 @@ You can login with the username `root` and no password is required.
 
 ![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png)
 
-> Note: If you have a 4k monitor a few notes about how to make the [UI
-> bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095)
+{{% notice note %}}
+If you have a 4k monitor, here are a few notes about how to make the [UI bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095).
+{{% /notice %}}
 
 In the meantime you can get back looking at the terminal where we are watching
 the logs from the Tinkerbell provisioner until you will see the workflow
