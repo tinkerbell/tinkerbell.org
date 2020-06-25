@@ -1,16 +1,20 @@
 +++
-title = "Concepts"
-date = 2019-01-04T16:16:15+05:30
+title = "How Tinkerbell Works"
+date = 2020-06-25
 draft = false
 weight = 20
 toc = true
 +++
 
-### Hardware
+The purpose of Tinkerbell is to spin up and image multiple servers or machines in a data center or other isolated network environment in a consistent, reusable, and programmatic manner. To accomplish this it uses a set user-defined configuration files: Hardware Data, a Template, a Workflow. In addition, Tinkerbell enables Workers to share and modify any data they need to complete or update their configurations. You create and interact with these files through the `tink-cli`.
 
-A _hardware device_ is defined separately and is substituted in a template at the time of creating a workflow.
+## The Hardware Data
 
-### Template
+Tinkerbell uses hardware data to identify the hardware used in a Workflow. It the contains metadata and details that describe the hardware on a Worker, in including network interfaces, storage disks, and file systems. Hardware data is JSON formatted, and stored on the Provisioner in PostgreSQL.
+
+It is pushed to the database using the `tink ....` command.
+
+## The Template
 
 A template is a YAML definition which defines the overall workflow.
 It is independent of a worker and therefore fetches the worker values using Go template when a workflow is created.
@@ -18,7 +22,7 @@ A user must write a template based on a valid template format.
 A template may include custom variables which will be substituted before execution.
 For example, in the below, _worker_ is targeted hardware that is defined separately and is substituted in a template at the time of creating a workflow.
 
-Templates are each stored as blobs in the database; they are later parsed, during the creation of a worflow.
+Templates are each stored as blobs in the database; they are later parsed, during the creation of a workflow.
 
 A user can CRUD a template using the CLI (`tink template`).
 
@@ -79,36 +83,14 @@ A hardware device can be accessed in template like (refer above template):
 These keys can only contain _letters_, _numbers_ and _underscores_.
 {{% /notice %}}
 
-### Provisioner
 
-The provisioner machine is the main driver for executing a workflow.
-A provisioner houses the following components:
+### Action Images
 
-- [Database](/components/#database) (Postgres)
-- [Tinkerbell](/components/#tinkerbell) (CLI and server)
-- [Boots](/components/#boots)
-- [Hegel](/components/#hegel)
-- [PBnJ](/components/#pbnj)
-- [Image Registry](/components/#image-repository)
-- [NGINX](/components/#nginx)
+## The Workflow
 
-You may divide these components into multiple servers.
+## Ephemeral Data
 
-### Worker
-
-A worker is targeted hardware on which a workflow needs to run.
-
-Any node that has its data being pushed into Tinkerbell can become a part of a workflow.
-A worker can be a part of multiple workflows.
-
-When the node boots, a worker container starts and connects with the provisioner to check if there is any task (may be from different workflows) that it can execute.
-After the completion of an action, the worker sends action status to provisioner.
-When all workflows which are related to a worker are complete, a worker can terminate.
-
-### Ephemeral Data
-
-The workers that are part of a workflow might require to share some data.
-This can take the form of a light JSON like below, or some binary files that other workers might require to complete their action.
+Once a Workflow (or Workflows) have been completed by the Worker, they can continue to send and receive information from the Provisioner in order to share data. This can take the form of a light JSON like below, or some binary files that other workers might require to complete their action.
 For instance, a worker may add the following data:
 
 ```json
@@ -137,4 +119,17 @@ The other worker may retrieve and use this data and eventually add some more:
 }
 ```
 
-![](/images/docs/ephemeral-data.png)
+## The Execution
+
+Step 1. Define the hardware data of the Workers. Create a Template of tasks (action images), to be run on the Worker after it is started and joined to the Tinkerbell stack.
+
+Step 2. Combine the Hardware Data and the Template in to a Workflow.
+
+Step 3. Spin up a Worker. It calls back to the Provisioner, which will push the Workflows associated with that particular Worker's Hardware Data.
+
+Step 4. The Worker executes the tasks (action images) from the Template.
+
+Step 5. As part of the ongoing operations of the Worker it can reach out to the Provisioner, in order to share data to/from it or other Workers.
+
+![Architecture](/images/docs/ephemeral-data.png)
+
