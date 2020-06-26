@@ -11,21 +11,8 @@ toc = true
 
 ### Provisioner
 
-The provisioner machine is the main driver for executing a workflow. The Provisioner houses the following components:
-
-Tinkerbell
-- Boots
-- Hegel
-- PBnJ
-- Tink
-
-Other administrative bits
-- Database (PostgreSQL)
-- Image Registry
-- NGINX
-
-You may divide these components into multiple servers that would then all function as your Provisioner. The Provisioner acts as the DHCP server, keeps track of all the Workflows, and hosts any files and necessary for the Workflows to execute.
+The provisioner machine is the main driver for executing a workflow. The Provisioner houses and runs the [Tinkerbell stack](/compoents), acting as the DHCP server, keeps track of all the Workflows, and hosts any files and necessary for the Workflows to execute. You may divide these components into multiple servers that would then all function as your Provisioner. 
 
 ### Worker
 
-A worker machine is the machine that is being acted on. It asks the provisioner for available Workflows and executes the ones specified for its Hardware Data. Any node that has its data being pushed into Tinkerbell can become a part of a Workflow. A worker can be a part of multiple Workflows.
+A Worker machine is the target machine, identified by its hardware data, that calls back to the Provisioner and executes its specified Workflows. Any machine that has had its Hardware Data pushed into Tinkerbell can become a part of a Workflow. A Worker can be a part of multiple Workflows.
