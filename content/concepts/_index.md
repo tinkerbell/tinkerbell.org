@@ -12,7 +12,7 @@ The purpose of Tinkerbell is to spin up and image multiple servers or machines i
 
 Tinkerbell uses hardware data to identify the hardware used in a Workflow. It the contains metadata and details that describe the hardware on a Worker, in including network interfaces, storage disks, and file systems. Hardware data is JSON formatted, and stored on the Provisioner in PostgreSQL.
 
-Here is a sample workflow template:
+Here is a sample of Hardware Data:
 ```json
 {
   "id": "0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94",
@@ -52,17 +52,13 @@ It is pushed to the database using the `tink hardware push` command.
 
 ## The Template
 
-A template is a YAML definition which defines the overall workflow.
-It is independent of a worker and therefore fetches the worker values using Go template when a workflow is created.
-A user must write a template based on a valid template format.
-A template may include custom variables which will be substituted before execution.
-For example, in the below, _worker_ is targeted hardware that is defined separately and is substituted in a template at the time of creating a workflow.
+A Template is a YAML definition which defines the actions and tasks in the Workflow. It is independent of the Hardware Data which is defined separately and is substituted in a template at the time of creating a Workflow. 
 
-Templates are each stored as blobs in the database; they are later parsed, during the creation of a workflow.
+A template is comprised of _tasks_, which are executed sequentially, in the order in which they are declared. Each task may consist of multiple _actions_. Each task supports its own volumes, workers, and environment variables. The volumes and environment variables defined for a particular task are inherited by each action in that particular task.
 
-A user can CRUD a template using the CLI (`tink template`).
+A template may include custom variables which will be substituted before execution in a Workflow.
 
-Here is a sample workflow template:
+Here is a sample template:
 
 ```yaml
 version: "0.1"
@@ -98,31 +94,26 @@ tasks:
           - /statedir:/statedir
 ```
 
-A template is comprised of _tasks_, which are executed sequentially, in the order in which they are declared.
-A task may consist of multiple _actions_.
-As shown in the above example, a task supports volumes and environment variables.
-The volumes and environment variables defined for a particular task are inherited by each action in that particular task.
-
-It is important to note that an action can also have its own volumes and environment variables.
-Therefore, any entry at an action will overwrite the value defined at the task level.
-For example, in the above template the `MIRROR_HOST` environment variable defined at action `disk-partition` will overwrite the value defined at task level.
-However, the other actions will receive the original value defined at the task level.
-
-A hardware device can be accessed in template like (refer above template):
-
+A hardware device, such as a Worker's Hardware Data, can be accessed in template as:
 ```
 {{.device_1}}
 {{.device_2}}
 ```
-
-{{% notice note %}}
 These keys can only contain _letters_, _numbers_ and _underscores_.
-{{% /notice %}}
 
+Templates are each stored as blobs in the database; they are later parsed during the creation of a workflow. You can CRUD a template using the `tink template` command.
 
 ### Action Images
 
+A template is comprised of _tasks_, which are executed sequentially, in the order in which they are declared. Each task may consist of multiple _actions_. An action's image is the particular image, script, or other process that runs on the Worker as part of executing a Workflow. The timeout for the execution has units in seconds.  
+
+It is important to note that an action can also have its own volumes and environment variables. Any entry at an action will overwrite the value defined at the task level. For example, in the above template the `MIRROR_HOST` environment variable defined at action `disk-partition` will overwrite the value defined at task level. The other actions will receive the original value defined at the task level.
+
 ## The Workflow
+
+A Workflow is the complete set of operations to be run on a Worker, as specified by its Hardware Data and the tasks and actions in the Template. 
+
+Workflows are created with the `tink workflow create` command from the Hardware Data and the Template, that also stores it in the database so the Worker can retrieve it.
 
 ## Ephemeral Data
 
