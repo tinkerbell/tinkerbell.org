@@ -37,8 +37,8 @@ Bringing machine 'provisioner' up with 'virtualbox' provider...
     ......
 
     INFO: tinkerbell stack setup completed successfully on ubuntu server
-    NEXT: 1. Enter ./deploy and run: source ../envrc; docker-compose up
-           2. Try executing your fist workflow.
+    NEXT: 1. Enter /vagrant/deploy and run: source ../envrc; docker-compose up -d
+          2. Try executing your fist workflow.
               Follow the steps described in https://tinkerbell.org/examples/hello-world/ to say 'Hello World!' with a workflow.
 ```
 
@@ -62,8 +62,9 @@ vagrant@provisioner:/vagrant/deploy$ cd /vagrant && source envrc && cd deploy
 vagrant@provisioner:/vagrant/deploy$ docker-compose up -d
 ```
 
-> Note: this is now managed like a standard Docker Compose project. Just make sure
-> to have sourced the `envrc` before issuing `docker-compose commands.`
+{{% notice note %}}
+This is now managed like a standard Docker Compose project. Just make sure to have sourced the `envrc` before issuing `docker-compose` commands.
+{{% /notice %}}
 
 You now have a fully working provisioner that is ready to receive templates and
 workflows. Check that all the services are running:
@@ -73,7 +74,6 @@ vagrant@provisioner:/vagrant/deploy$ docker-compose ps
         Name                      Command                  State                             Ports
 -------------------------------------------------------------------------------------------------------------------------
 deploy_boots_1         /boots -dhcp-addr 0.0.0.0: ...   Up
-deploy_cacher_1        /cacher                          Up             0.0.0.0:42111->42111/tcp, 0.0.0.0:42112->42112/tcp
 deploy_db_1            docker-entrypoint.sh postgres    Up (healthy)   0.0.0.0:5432->5432/tcp
 deploy_hegel_1         cmd/hegel                        Up
 deploy_nginx_1         /docker-entrypoint.sh ngin ...   Up             192.168.1.2:80->80/tcp
@@ -88,8 +88,8 @@ Now that the provisioner is running we can follow the [example called "Hello
 world"](/examples/hello-world). We will run through it for our Vagrant setup
 here.
 
-It is useful to keep a ssh connection that shows logs from the Tinkerbell
-provisioner, because it helps to learn what it is doing. Open a new terminal,
+It is useful to keep a an eye on the logs from the Tinkerbell
+provisioner, because it helps to see what it is doing. Open a new terminal,
 ssh in the provisioner as we did before and run `docker-compose` to tail logs:
 
 ```
@@ -127,31 +127,34 @@ Next we register the worker with Tinkerbell:
 ```
 vagrant@provisioner:/vagrant/deploy$ cat > hardware-data.json <<EOF
 {
-  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
-  "arch": "x86_64",
-  "allow_pxe": true,
-  "allow_workflow": true,
-  "facility_code": "onprem",
-  "ip_addresses": [
-    {
-      "address": "192.168.1.5",
-      "address_family": 4,
-      "enabled": true,
-      "gateway": "192.168.1.1",
-      "management": true,
-      "netmask": "255.255.255.248",
-      "public": false
-    }
-  ],
-  "network_ports": [
-    {
-      "data": {
-        "mac": "08:00:27:00:00:01"
-      },
-      "name": "eth0",
-      "type": "data"
-    }
-  ]
+  "id": "0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94",
+  "metadata": {
+    "facility": {
+      "facility_code": "onprem"
+    },
+    "instance": {},
+    "state": ""
+  },
+  "network": {
+    "interfaces": [
+      {
+        "dhcp": {
+          "arch": "x86_64",
+          "ip": {
+            "address": "192.168.1.5",
+            "gateway": "192.168.1.1",
+            "netmask": "255.255.255.248"
+          },
+          "mac": "08:00:27:00:00:01",
+          "uefi": false
+        },
+        "netboot": {
+          "allow_pxe": true,
+          "allow_workflow": true
+        }
+      }
+    ]
+  }
 }
 EOF
 
@@ -190,7 +193,9 @@ vagrant@provisioner:/vagrant/deploy$ docker exec -i deploy_tink-cli_1 tink workf
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
-> Note: this MAC address is hard coded in the Vagrantfile.
+{{% notice note %}}
+This MAC address is hard coded in the Vagrantfile.
+{{% /notice %}}
 
 Now finally we can spin up our worker with Vagrant.
 
@@ -206,7 +211,7 @@ $ cd deploy/vagrant
 $ vagrant up worker
 ```
 
-I using VirtualBox, the worker shows up in a UI. If you followed all the steps
+If using VirtualBox, the worker shows up in a UI. If you followed all the steps
 correctly, Tinkerbell will netboot a custom AlpineOS and you will see a login screen.
 This OS runs in RAM, so any changes you make won't be persisted between reboots.
 
@@ -214,12 +219,12 @@ You can login with the username `root` and no password is required.
 
 ![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png)
 
-> Note: If you have a 4k monitor a few notes about how to make the [UI
-> bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095)
+{{% notice note %}}
+If you have a 4k monitor, here are a few notes about how to make the [UI bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095).
+{{% /notice %}}
 
-In the meantime you can get back looking at the terminal where we are watching
-the logs from the Tinkerbell provisioner until you will see the workflow
-running:
+In the meantime, if you look back at the terminal where you are tailing the logs
+from the Tinkerbell provisioner, you will see the workflow running:
 
 ```
 tink-server_1  | Received action status: workflow_id:"a8984b09-566d-47ba-b6c5-fbe482d8ad7f" task_name:"hello world" action_name:"hello_world" action_status:ACTION_SUCCESS message:"Finished Execution Successfully" worker_id:"ce2e62ed-826f-4485-a39f-a82bb74338e2"

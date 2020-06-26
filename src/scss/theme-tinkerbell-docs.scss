@@ -154,3 +154,43 @@ a {
     }
   }
 }
+.contributors-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
+  left: -15px;
+  li {
+    width: calc(32% - 15px);
+    margin: 0 15px;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    padding-left: 100px;
+    margin-bottom: 40px;
+    min-height: 85px;
+    img {
+      width: 85px !important;
+      height: auto !important;
+      position: absolute;
+      margin: 0 !important;
+      border: 1px solid #c8c8c8;
+      left: 0;
+      top: 0;
+    }
+    .meta,
+    .contributor {
+      display: block;
+      font-size: 16px;
+    }
+    .contributor {
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    @media screen and (max-width: 63.9375em) {
+      width: calc(100% - 15px);
+    }
+  }
+}
