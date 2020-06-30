@@ -23,7 +23,7 @@ Any! Out of the box, we are working to provide installation workflows for deb an
 {{% /faq%}}
 
 {{%faq "Can Tinkerbell install operating systems using their original, unmodified ISO images?" %}}
-Yes
+Yes.
 {{% /faq%}}
 
 {{%faq "Which server makes and models is Tinkerbell able to install operating systems on?" %}}
@@ -31,7 +31,7 @@ Tinkerbell currently works on any system with IPMI, and has special support for 
 {{% /faq%}}
 
 {{%faq "Is Tinkerbell able to operate remote server power settings (power on; power off)? How about resetting?" %}}
-Yes, via the [PBnJ microservice](/components/#pbnj)
+Yes, via the [PBnJ microservice](/components/#pbnj).
 {{% /faq%}}
 
 {{%faq "Does Tinkerbell use each operating system's native network installer program, or does it install using a different method?" %}}
