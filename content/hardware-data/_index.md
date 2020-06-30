@@ -223,10 +223,3 @@ The following tables explain each property in the above example:
 | network.interfaces[].netboot.osie.kernel | Kernel |
 | network.interfaces[].netboot.osie.initrd | Initrd |
 | network.interfaces[].netboot.osie.base_url | Base URL for the kernel and initrd |
-
-
-
-
-
-
-
