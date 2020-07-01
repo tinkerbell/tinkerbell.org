@@ -1,6 +1,6 @@
 +++
 title = "Hardware Data"
-date = 2020-06-29
+date = 2020-06-30T16:16:15+05:30
 draft = false
 weight = 50
 toc = true
