@@ -6,7 +6,7 @@ weight = 30
 toc = true
 +++
 
-![Architecture](/images/workflow-architecture.png)
+![Architecture](/images/docs/workflow-architecture.png)
 
 ## Provisioner
 
