@@ -30,5 +30,5 @@ New to Tinkerbell or bare metal provisions? This is a great place to start!
   Need a little help getting started? We're here!
 ​
    - Check out the [FAQs](/faq) - When there are questions, we document the answers.
-   - Join our Community Slack
-   - Submit an issue on [Github](https://github.com/tinkerbell/)
+   - Join our [Community Slack](/community-slack).
+   - Submit an issue on [Github](https://github.com/tinkerbell/).
