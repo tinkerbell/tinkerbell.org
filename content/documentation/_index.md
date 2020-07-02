@@ -23,7 +23,7 @@ The workflow engine is comprised of a server and a CLI, which communicate over g
 ​
 New to Tinkerbell or bare metal provisions? This is a great place to start!
 ​
-  - Getting started set up Tinkerbell [locally with vagrant](https://tinkerbell.org/setup/local-with-vagrant/) or on [Packet with Terraform](/setup/packet-with-terraform/)
+  - Getting started set up Tinkerbell [locally with vagrant](/setup/local-with-vagrant/) or on [Packet with Terraform](/setup/packet-with-terraform/)
   - Run [hello world](/examples/hello-world/) to see Tinkerbell in action.
 ​
 ## Get Help
@@ -31,4 +31,4 @@ New to Tinkerbell or bare metal provisions? This is a great place to start!
 ​
    - Check out the [FAQs](/faq) - When there are questions, we document the answers.
    - Join our Community Slack
-   - Submit an issue on [Github](github.com/thinkerberll)
+   - Submit an issue on [Github](https://github.com/tinkerbell/)
