@@ -214,5 +214,5 @@ tink hardware watch <ID or IDs> [--help] [--facility]
 ```
 tink hardware watch 0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94
 >
-2020/07/01 20:22:53 rpc error: code = Unavailable desc = transport is closing
+
 ```
