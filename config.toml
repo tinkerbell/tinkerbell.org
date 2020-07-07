@@ -49,7 +49,7 @@ weight = 60
 
 [[menu.homepage]]
 name = "Documentation"
-url = "/components"
+url = "/documentation"
 weight = 10
 
 [[menu.homepage]]
