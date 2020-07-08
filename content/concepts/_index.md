@@ -79,32 +79,6 @@ A hardware device can be accessed in template like (refer above template):
 These keys can only contain _letters_, _numbers_ and _underscores_.
 {{% /notice %}}
 
-### Provisioner
-
-The provisioner machine is the main driver for executing a workflow.
-A provisioner houses the following components:
-
-- [Database](/components/#database) (Postgres)
-- [Tinkerbell](/components/#tinkerbell) (CLI and server)
-- [Boots](/components/#boots)
-- [Hegel](/components/#hegel)
-- [PBnJ](/components/#pbnj)
-- [Image Registry](/components/#image-repository)
-- [NGINX](/components/#nginx)
-
-You may divide these components into multiple servers.
-
-### Worker
-
-A worker is targeted hardware on which a workflow needs to run.
-
-Any node that has its data being pushed into Tinkerbell can become a part of a workflow.
-A worker can be a part of multiple workflows.
-
-When the node boots, a worker container starts and connects with the provisioner to check if there is any task (may be from different workflows) that it can execute.
-After the completion of an action, the worker sends action status to provisioner.
-When all workflows which are related to a worker are complete, a worker can terminate.
-
 ### Ephemeral Data
 
 The workers that are part of a workflow might require to share some data.
