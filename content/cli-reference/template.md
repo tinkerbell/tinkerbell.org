@@ -18,7 +18,7 @@ toc = true
 
 `tink template --help` - Displays the available commands and usage for `tink template`.
 
-### `tink template create`
+### tink template create
 
 Creates the template from the YAML file, and pushes it to the database. It returns a UUID for the newly created template.
 
@@ -46,7 +46,7 @@ template create --name hello-world < ./hello-world.yml
 Created Template:  b8dbcf07-39dd-4018-903e-1748ecbd1986
 ```
 
-### `tink template delete`
+### tink template delete
 
 Deletes a template from the database. Doesn't return anything.
 
@@ -71,7 +71,7 @@ tink template delete b8dbcf07-39dd-4018-903e-1748ecbd1986
 
 ```
 
-### `tink template get`
+### tink template get
 
 Returns the specified template or templates in YAML format.
 
@@ -105,7 +105,7 @@ tasks:
         timeout: 60
 ```
 
-### `tink template list`
+### tink template list
 
 Lists templates stored in the database in a formatted table.
 
@@ -131,7 +131,7 @@ tink template list
 +--------------------------------------+-------------------+-------------------------------+-------------------------------+
 ```
 
-### `tink template update`
+### tink template update
 
 Updates an existing template with either a new name, or by specifying a new or updated YAML file.
 
