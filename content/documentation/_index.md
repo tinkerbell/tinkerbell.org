@@ -33,7 +33,7 @@ In addition to the microservices, there are three pieces of infrastructure:
 
 - [**PostgreSQL**](https://www.postgresql.org/) - Tinkerbell uses PostgreSQL as its data store. PostgreSQL is a free and open-source relational database management system, and it stores Tinkerbell's hardware data, templates, and workflows.
 
-- [**Image Repository**](https://hub.docker.com/_/registry) - Tinkerbell uses a local image repository to store all of the action images used in a workflow. This is particularly useful for secure environments that don't have access to the internet. You can also choose to use [Quay](https://quay.io/) or [DockerHub](https://hub.docker.com/) as the repository to store images for if your environment does have internet access.
+- [**Image Repository**](https://hub.docker.com/_/registry) - Tinkerbell uses a local image repository to store all of the action images used in a workflow. This is particularly useful for secure environments that don't have access to the internet. You can also choose to use [Quay](https://quay.io/) or [DockerHub](https://hub.docker.com/) as the repository if your environment does have internet access.
 
 - [**NGINX**](https://www.nginx.com/) - NGINX is a web server which can also be used as a reverse proxy, load balancer, mail proxy, and HTTP cache. Tinkerbell uses NGINX to serve the required boot files during workflow execution.
 
