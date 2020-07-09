@@ -20,7 +20,7 @@ toc = true
 
 `tink hardware --help` - Displays the available commands and usage for `tink hardware`.
 
-### `tink hardware delete`
+### tink hardware delete
 
 Deletes the specified hardware data.
 
@@ -45,7 +45,7 @@ tink hardware delete 0eba0bf8-3772-4b4a-ab9f-6ebe93b90a25
 2020/07/01 15:01:04 Hardware data with id 0eba0bf8-3772-4b4a-ab9f-6ebe93b90a25 deleted successfully
 ```
 
-### `tink hardware id`
+### tink hardware id
 
 Returns hardware data for the specified ID or IDs as JSON objects.
 
@@ -70,7 +70,7 @@ tink hardware id 0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94
 {"metadata":{"instance":{},"facility":{"facility_code":"onprem"}},"network":{"interfaces":[{"dhcp":{"mac":"08:00:27:00:00:01","arch":"x86_64","ip":{"address":"192.168.1.5","netmask":"255.255.255.248","gateway":"192.168.1.1"}},"netboot":{"allow_pxe":true,"allow_workflow":true}}]},"id":"0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94"}
 ```
 
-### `tink hardware ip`
+### tink hardware ip
 
 Returns hardware data for the specified IP Address or IP Addresses as JSON objects.
 
@@ -96,7 +96,7 @@ tink hardware ip --details 192.168.1.5
 {"metadata":{"instance":{},"facility":{"facility_code":"onprem"}},"network":{"interfaces":[{"dhcp":{"mac":"08:00:27:00:00:01","arch":"x86_64","ip":{"address":"192.168.1.5","netmask":"255.255.255.248","gateway":"192.168.1.1"}},"netboot":{"allow_pxe":true,"allow_workflow":true}}]},"id":"0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94"}
 ```
 
-### `tink hardware list`
+### tink hardware list
 
 Returns a list of all the hardware data that is currently stored in the database.
 
@@ -122,7 +122,7 @@ tink hardware list
 +--------------------------------------+-------------------+-------------+-----------+
 ```
 
-### `tink hardware mac`
+### tink hardware mac
 
 Returns hardware data for the specified MAC Address or MAC Addresses as JSON objects.
 
@@ -148,7 +148,7 @@ tink hardware mac --details 08:00:27:00:00:01
 {"metadata":{"instance":{},"facility":{"facility_code":"onprem"}},"network":{"interfaces":[{"dhcp":{"mac":"08:00:27:00:00:01","arch":"x86_64","ip":{"address":"192.168.1.5","netmask":"255.255.255.248","gateway":"192.168.1.1"}},"netboot":{"allow_pxe":true,"allow_workflow":true}}]},"id":"0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94"
 ```
 
-### `tink hardware push`
+### tink hardware push
 
 Pushes the JSON-formatted hardware data from the specified file into the database.
 
@@ -198,7 +198,7 @@ tink hardware push < ./data.json
 2020/07/01 20:11:24 Hardware data pushed successfully
 ```
 
-### `tink hardware watch`
+### tink hardware watch
 
 Watch the specified hardware data for changes.
 
