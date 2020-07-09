@@ -15,7 +15,7 @@ No, you can follow our [local development guide](/setup/local-with-vagrant/) to 
 {{% /faq%}}
 
 {{%faq "Can Tinkerbell be used to install OSes without Internet access (where both the Provider and Worker hosts are in an isolated network)?" %}}
-Yes, OS images are served from the [NGINX](/components/#nginx) running on the [provisioner](/architecture/).
+Yes, OS images are served from the [NGINX](/documentation/#whats-powering-tinkerbell) running on the [provisioner](/architecture/).
 {{% /faq%}}
 
 {{%faq "What operating systems is Tinkerbell able to install?" %}}
@@ -31,7 +31,7 @@ Tinkerbell currently works on any system with IPMI, and has special support for 
 {{% /faq%}}
 
 {{%faq "Is Tinkerbell able to operate remote server power settings (power on; power off)? How about resetting?" %}}
-Yes, via the [PBnJ microservice](/components/#pbnj).
+Yes, via the [PBnJ microservice](/documentation/#whats-powering-tinkerbell).
 {{% /faq%}}
 
 {{%faq "Does Tinkerbell use each operating system's native network installer program, or does it install using a different method?" %}}
