@@ -8,4 +8,4 @@ disableToc = "true"
 
 {{%contributors /%}}
 
-Want to help us build something awesome? Join us on [GitHub](github.com/tinkerbell/tinkerbell.org) or [Slack](https://slack.packet.com).
+Want to help us build something awesome? Join us on [GitHub](https://github.com/tinkerbell) or [Slack](https://slack.packet.com).
