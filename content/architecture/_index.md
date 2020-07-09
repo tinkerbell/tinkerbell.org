@@ -10,7 +10,7 @@ toc = true
 
 ## Provisioner
 
-The provisioner machine is the main driver for executing a workflow. The Provisioner houses and runs the [Tinkerbell stack](/components), acts as the DHCP server, keeps track of hardware data, templates, and workflows. You may divide these components into multiple servers that would then all function as your Provisioner.
+The provisioner machine is the main driver for executing a workflow. The Provisioner houses and runs the [Tinkerbell stack](/documentation/#whats-powering-tinkerbell), acts as the DHCP server, keeps track of hardware data, templates, and workflows. You may divide these components into multiple servers that would then all function as your Provisioner.
 
 ## Worker
 
