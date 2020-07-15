@@ -16,7 +16,7 @@ The "Hello World" example uses an example hardware data, template, and workflow 
 
 ## Hardware Data
 
-This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](/hardware-data/#the-minimal-hardware-data) with just your targeted Worker's MAC Address and/or IP Address substituted in.
+This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](/hardware-data/#the-minimal-hardware-data) with your targeted Worker's MAC Address and/or IP Address substituted in.
 
 ## The `hello-world` Action Image
 
@@ -28,11 +28,11 @@ docker tag hello-world <registry-host>/hello-world
 docker push <registry-host>/hello-world
 ```
 
-Again, this image doesn't have any instructions that the Worker will perform, it's just a placeholder for being able to push a workflow out to the Worker when it comes up.
+This image doesn't have any instructions that the Worker will be able to perform, it's just an example to enable pushing a workflow out to the Worker when it comes up.
 
 ## The Template
 
-A template is a YAML file that lays out the series of tasks that you want to perform on the Worker after it boots up. The template for this workflow contains only the one task with single `hello-world` action. The worker field contains a reference to `device_1` which will be substituted with either the MAC Address or the IP Address of your Worker when you run the `tink workflow create` command in the next step.
+A template is a YAML file that lays out the series of tasks that you want to perform on the Worker after it boots up. The template for this workflow contains the one task with single `hello-world` action. The worker field contains a reference to `device_1` which will be substituted with either the MAC Address or the IP Address of your Worker when you run the `tink workflow create` command in the next step.
 
 Save this template as `hello-world.tmpl`.
 
