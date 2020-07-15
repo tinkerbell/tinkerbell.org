@@ -16,7 +16,7 @@ The "Hello World" example uses an example hardware data, template, and workflow 
 
 ## Hardware Data
 
-This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](/hardware-data/#the-minimal-hardware-data) with just your targeted Worker's MAC Address and/or IP Address substituted in. 
+This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](/hardware-data/#the-minimal-hardware-data) with just your targeted Worker's MAC Address and/or IP Address substituted in.
 
 ## The `hello-world` Action Image
 
@@ -49,8 +49,8 @@ tasks:
         timeout: 60
 ```
 
-## The Workflow 
- 
+## The Workflow
+
 If you haven't already, be sure to have
 
 - Pushed the Worker's hardware data to the database with `tink hardware push`.
@@ -65,6 +65,7 @@ tink workflow create -t <template_id> -r '{"device_1": "<MAC address/IP address>
 ## Workflow Execution
 
 You can now boot up or restart your Worker and a few things are going to happen:
+
 - First, the Worker will iPXE boot into an Alpine Linux distribution running in memory
 - Second, the Worker will call back to the Provisioner to check for it's workflow.
 - Third, The Provisioner will push the workflow to the Worker for it to execute.
@@ -80,3 +81,4 @@ tink workflow events <ID>
 | ce2e62ed-826f-4485-a39f-a82bb74338e2 | hello world | hello_world |              0 | Started execution               | ACTION_IN_PROGRESS |
 | ce2e62ed-826f-4485-a39f-a82bb74338e2 | hello world | hello_world |              0 | Finished Execution Successfully |     ACTION_SUCCESS |
 +--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
+```
