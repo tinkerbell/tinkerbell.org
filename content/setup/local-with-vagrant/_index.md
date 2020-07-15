@@ -1,12 +1,20 @@
 +++
-title = "Local Tinkerbell Setup with Vagrant"
+title = "Local Setup with Vagrant"
 date = 2020-07-13
 draft = false
 weight = 20
 toc = true
 +++
 
-If you want to dive in to trying out Tinkerbell, this tutorial sets it up locally using Vagrant. Vagrant manages the Tinkerbell installation for this tutorial's Provisioner, and runs both the Provisioner and Worker on VirtualBox or `libvirtd`. 
+If you want to dive in to trying out Tinkerbell, this tutorial sets it up locally using Vagrant. Vagrant manages the Tinkerbell installation for this tutorial's Provisioner, and runs both the Provisioner and Worker on VirtualBox or `libvirtd`.
+
+It covers some basic aspects of Tinkerbell's functionality: 
+- setting up a Provisioner
+- creating the hardware data for the Worker
+- creating a template with a placeholder action item, using the [hello-world example](/examples/hello-world)
+- and creating a workflow
+
+The last step is to start up the Worker, which will call back to the Provisioner for its workflow.
 
 
 ## Prerequisites
@@ -18,7 +26,7 @@ If you want to dive in to trying out Tinkerbell, this tutorial sets it up locall
 
 ## Getting Tinkerbell
 
-To get Tinkerbell and the accompanying Vagrant configuration, clone `tink`.
+To get Tinkerbell, clone the `tink` repository.
 
 ```
 git clone https://github.com/tinkerbell/tink.git
@@ -41,16 +49,16 @@ vagrant up provisioner
 Bringing machine 'provisioner' up with 'virtualbox' provider...
 ```
 
-The Provisioner is running Ubuntu with a couple of utilities installed. The time it takes to spin up the Provisioner varies with connection speed and resources on your local machine. 
+The Provisioner installs and runs Ubuntu with a couple of additional utilities. The time it takes to spin up the Provisioner varies with connection speed and resources on your local machine. 
 
-A summary appears toward the end indicating that the Provisioner is ready.
+When the Provisioner is ready, you should see the following message:
 
 ```
 INFO: tinkerbell stack setup completed successfully on ubuntu server
 ```
 
 
-## Configuring the Provisioner and Tinkerbell
+## Starting Tinkerbell
 
 Now that the Provisioner's machine is up and running, you can connect and bring up Tinkerbell. SSH into the Provisioner.
 
@@ -86,19 +94,19 @@ deploy_tink-cli_1      /bin/sh -c sleep infinity        Up
 deploy_tink-server_1   tink-server                      Up (healthy)   0.0.0.0:42113->42113/tcp, 0.0.0.0:42114->42114/tcp
 ```
 
-Note: you might want to keep a ssh connection that shows logs from the Provisioner, because it will show what the `tink-server` is doing through the rest of the setup. Open a new terminal, ssh in to the provisioner as you did before, and run `docker-compose logs` to tail logs.
+At this point, you might want to open a ssh connection to show logs from the Provisioner, because it will show what the `tink-server` is doing through the rest of the setup. Open a new terminal, ssh in to the provisioner as you did before, and run `docker-compose logs` to tail logs.
 
 ```
 cd tink/deploy/vagrant
 vagrant ssh provisioner
-cd /vagrant/deploy
-source ../envrc
+cd /vagrant && source envrc && cd deploy
 docker-compose logs -f tink-server boots nginx
 ```
 
 Later in the tutorial you can check the logs from `tink-server` in order to see the execution of the workflow.
 
-The last step for the Provisioner to do at this point is to pull down, tag, and host locally the ["Hello World" docker image](https://hub.docker.com/_/hello-world/).
+The last step for the Provisioner to do at this point is to pull down the image that will be used in the workflow. Tinkerbell uses Docker registry to host images locally, so pull down the ["Hello World" docker image](https://hub.docker.com/_/hello-world/) and push it to the registry.
+
 ```
 docker pull hello-world
 docker tag hello-world 192.168.1.1/hello-world
@@ -110,7 +118,8 @@ docker push 192.168.1.1/hello-world
 
 With the provisioner up and running, it's time to set up the worker's configuration.
 
-First, define the Worker's hardware data, which is used to identify the Worker as the target of a workflow. The hardware data for the Worker in this example is:
+First, define the Worker's hardware data, which is used to identify the Worker as the target of a workflow. Very minimal hardware data is required for this example, but it does at least need to contain the MAC Address of the Worker, which is hardcoded in the Vagrant file, and have the Worker set to allow PXE booting and accept workflows.
+
 ```
 cat > hardware-data.json <<EOF
 {
@@ -146,8 +155,7 @@ cat > hardware-data.json <<EOF
 EOF
 ```
 
-
-Second, push the hardware data to the database with the `tink hardware push` command.
+Then, push the hardware data to the database with the `tink hardware push` command.
 
 ```
 docker exec -i deploy_tink-cli_1 tink hardware push < ./hardware-data.json
@@ -163,7 +171,7 @@ tink-server_1  | {"level":"info","ts":1592936402.3975577,"caller":"grpc-server/h
 
 ## Creating a Template
 
-Next, define the template for the workflow. The template sets out tasks for the Worker to preform sequentially. This template contains a single task with a single action, which is to perform "hello-world". Note that the "hello-world" image doesn't actually contain any instructions. It is just a placeholder in the template so a workflow can be created and pushed to a Worker.
+Next, define the template for the workflow. The template sets out tasks for the Worker to preform sequentially. This template contains a single task with a single action, which is to perform "hello-world". Just as in the [hello-world example](/exmaples/hello-world), the "hello-world" image doesn't contain any instructions that the Worker will perform. It is just a placeholder in the template so a workflow can be created and pushed to the Worker.
 
 ```
 cat > hello-world.yml  <<EOF
@@ -197,7 +205,7 @@ tink-server_1  | {"level":"info","ts":1592934670.2717152,"caller":"grpc-server/t
 
 ## Creating the Workflow
 
-The final step is to deploy both the hardware data and the template as a workflow.
+The next step is to combine both the hardware data and the template to create a workflow.
 - First, the workflow needs to know which template to execute. The Template ID you should use was returned by `tink template create` command executed above.
 - Second, the Workflow needs a target, defined by the hardware data. In this example, the target is identified by a MAC address set in the hardware data for our Worker, so `08:00:27:00:00:01`. (Note: this MAC address is hard coded in the Vagrantfile.)
 
