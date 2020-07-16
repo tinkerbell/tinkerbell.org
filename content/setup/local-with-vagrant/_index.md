@@ -8,7 +8,8 @@ toc = true
 
 If you want to dive in to trying out Tinkerbell, this tutorial sets it up locally using Vagrant. Vagrant manages the Tinkerbell installation for this tutorial's Provisioner, and runs both the Provisioner and Worker on VirtualBox or `libvirtd`.
 
-It covers some basic aspects of Tinkerbell's functionality: 
+It covers some basic aspects of Tinkerbell's functionality:
+
 - setting up a Provisioner
 - creating the hardware data for the Worker
 - creating a template with a placeholder action item, using the [hello-world example](/examples/hello-world)
@@ -16,13 +17,11 @@ It covers some basic aspects of Tinkerbell's functionality:
 
 The last step is to start up the Worker, which will call back to the Provisioner for its workflow.
 
-
 ## Prerequisites
 
 - [The host's processor should support virtualization](https://www.cyberciti.biz/faq/linux-xen-vmware-kvm-intel-vt-amd-v-support/)
 - [Vagrant](https://www.vagrantup.com/downloads) is installed
 - Either [VirtualBox](https://www.virtualbox.org/) or [libvirtd](https://libvirt.org/) is installed.
-
 
 ## Getting Tinkerbell
 
@@ -38,18 +37,17 @@ Move into the `deploy/vagrant` directory. This folder contains a Vagrant configu
 cd tink/deploy/vagrant
 ```
 
-
 ## Start the Provisioner
 
 Since Vagrant is handling the Provisioner's configuration, including installing the Tinkerbell stack, run the command to start it up.
 
 ```
 vagrant up provisioner
-> 
+>
 Bringing machine 'provisioner' up with 'virtualbox' provider...
 ```
 
-The Provisioner installs and runs Ubuntu with a couple of additional utilities. The time it takes to spin up the Provisioner varies with connection speed and resources on your local machine. 
+The Provisioner installs and runs Ubuntu with a couple of additional utilities. The time it takes to spin up the Provisioner varies with connection speed and resources on your local machine.
 
 When the Provisioner is ready, you should see the following message:
 
@@ -57,14 +55,13 @@ When the Provisioner is ready, you should see the following message:
 INFO: tinkerbell stack setup completed successfully on ubuntu server
 ```
 
-
 ## Starting Tinkerbell
 
 Now that the Provisioner's machine is up and running, you can connect and bring up Tinkerbell. SSH into the Provisioner.
 
 ```
 vagrant ssh provisioner
-> 
+>
 vagrant@provisioner:~$
 ```
 
@@ -112,7 +109,6 @@ docker pull hello-world
 docker tag hello-world 192.168.1.1/hello-world
 docker push 192.168.1.1/hello-world
 ```
-
 
 ## Creating the Worker's Hardware Data
 
@@ -168,7 +164,6 @@ If you are following along in the `tink-server` logs, you should see:
 tink-server_1  | {"level":"info","ts":1592936402.3975577,"caller":"grpc-server/hardware.go:37","msg":"data pushed","service":"github.com/tinkerbell/tink","id":"ce2e62ed-826f-4485-a39f-a82bb74338e2"}
 ```
 
-
 ## Creating a Template
 
 Next, define the template for the workflow. The template sets out tasks for the Worker to preform sequentially. This template contains a single task with a single action, which is to perform "hello-world". Just as in the [hello-world example](/exmaples/hello-world), the "hello-world" image doesn't contain any instructions that the Worker will perform. It is just a placeholder in the template so a workflow can be created and pushed to the Worker.
@@ -192,7 +187,7 @@ Create the template and push it to the database with the `tink template create` 
 
 ```
 docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
-> 
+>
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
@@ -202,10 +197,10 @@ The command returns a Template ID, and if you are watching the `tink-server` log
 tink-server_1  | {"level":"info","ts":1592934670.2717152,"caller":"grpc-server/template.go:34","msg":"done creating a new Template","service":"github.com/tinkerbell/tink"}
 ```
 
-
 ## Creating the Workflow
 
 The next step is to combine both the hardware data and the template to create a workflow.
+
 - First, the workflow needs to know which template to execute. The Template ID you should use was returned by `tink template create` command executed above.
 - Second, the Workflow needs a target, defined by the hardware data. In this example, the target is identified by a MAC address set in the hardware data for our Worker, so `08:00:27:00:00:01`. (Note: this MAC address is hard coded in the Vagrantfile.)
 
@@ -215,7 +210,7 @@ Combine these two pieces of information and create the workflow with the `tink w
 docker exec -i deploy_tink-cli_1 tink workflow create \
     -t <TEMPLATE ID> \
     -r '{"device_1":"08:00:27:00:00:01"}'
-> 
+>
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
@@ -224,7 +219,6 @@ The command returns a Workflow ID and if you are watching the logs, you will see
 ```
 tink-server_1  | {"level":"info","ts":1592936829.6773047,"caller":"grpc-server/workflow.go:63","msg":"done creating a new workflow","service":"github.com/tinkerbell/tink"}
 ```
-
 
 ## Start the Worker
 
@@ -235,9 +229,9 @@ cd tink/deploy/vagrant
 vagrant up worker
 ```
 
-If you are using VirtualBox, it will bring up a UI, and after the setup, you will see a login screen. You can login with the username `root` and no password is required. Tinkerbell will netboot a custom AlpineOS that runs in RAM, so any changes you make won't be persisted between reboots. 
+If you are using VirtualBox, it will bring up a UI, and after the setup, you will see a login screen. You can login with the username `root` and no password is required. Tinkerbell will netboot a custom AlpineOS that runs in RAM, so any changes you make won't be persisted between reboots.
 
-![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png) 
+![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png)
 
 > Note: If you have a high-resolution monitor, here are a few notes about how to make the [UI bigger](https://github.com/tinkerbell/tinkerbell.org/pull/76#discussion_r442151095).
 
@@ -260,7 +254,6 @@ docker exec -i deploy_tink-cli_1 tink workflow events a8984b09-566d-47ba-b6c5-fb
 | ce2e62ed-826f-4485-a39f-a82bb74338e2 | hello world | hello_world |              0 | Finished Execution Successfully |     ACTION_SUCCESS |
 +--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
 ```
-
 
 ## Summary
 
