@@ -18,11 +18,11 @@ The provisioner machine is the main driver for executing a workflow. The Provisi
 
 The Tinkerbell stack has been tested on Ubuntu 16.04 and CentOS 7.
 
-**Resources**
+**Minimum Resources**
 
 - CPU - 2vCPUs
 - RAM - 4 GB
-- Disk - 20 GB
+- Disk - 20 GB, this includes the OS
 
 **Network**
 
