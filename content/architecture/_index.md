@@ -26,7 +26,7 @@ The Tinkerbell stack has been tested on Ubuntu 16.04 and CentOS 7.
 
 **Network**
 
-L2 networking is required for the ability to run a DHCP server (in this case Boots).
+L2 networking is required for the ability to run a DHCP server (in this case, Boots).
 
 ## Worker
 
@@ -38,5 +38,5 @@ There are some very basic requirements that a Worker machine must meet in order 
 
 - They must be able to boot from network using iPXE.
 - 4 GB of RAM for OSIE boot and operation.
-    
+
 There are no Disk requirements for a Worker since OSIE runs an in-memory operating system. Your disk requirements will be determined by the OS you are going to install and other use-case considerations.
