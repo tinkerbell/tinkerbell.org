@@ -2,7 +2,7 @@
 title = "Architecture"
 date = 2020-07-22
 draft = false
-weight = 30
+weight = 10
 toc = true
 +++
 
