@@ -82,3 +82,5 @@ tink workflow events <ID>
 | ce2e62ed-826f-4485-a39f-a82bb74338e2 | hello world | hello_world |              0 | Finished Execution Successfully |     ACTION_SUCCESS |
 +--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
 ```
+
+If you reboot the Worker at this point, it will again PXE boot, since no alternate operating system was installed as part of the `hello-world` workflow.
