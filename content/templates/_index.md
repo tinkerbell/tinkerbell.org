@@ -1,5 +1,5 @@
 +++
-title = "The Template"
+title = "Templates"
 date = 2020-08-03
 draft = false
 weight = 25
