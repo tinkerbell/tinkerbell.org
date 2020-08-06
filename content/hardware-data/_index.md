@@ -2,7 +2,7 @@
 title = "Hardware Data"
 date = 2019-01-04T16:16:15+05:30
 draft = false
-weight = 50
+weight = 20
 toc = true
 +++
 
