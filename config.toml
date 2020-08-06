@@ -4,8 +4,26 @@ languageCode = "en-us"
 theme = "hugo-theme-learn"
 Paginate = 4
 
+[outputFormats]
+  [outputFormats.sitemap-community]
+    baseName = "sitemap-community"
+    mediaType = "application/xml"
+    protocol = "xml://"
+  [outputFormats.sitemap-docs]
+    baseName = "sitemap-docs"
+    mediaType = "application/xml"
+    protocol = "xml://"
+  [outputFormats.sitemap-examples]
+    baseName = "sitemap-examples"
+    mediaType = "application/xml"
+    protocol = "xml://"
+  [outputFormats.sitemap-terms]
+    baseName = "sitemap-terms"
+    mediaType = "application/xml"
+    protocol = "xml://"
+
 [outputs]
-home = [ "HTML", "RSS", "JSON"]
+home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-docs", "sitemap-examples", "sitemap-terms"]
 
 [params]
  author = "Packet" # add your company name
@@ -25,7 +43,7 @@ home = [ "HTML", "RSS", "JSON"]
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"
-url = "/community-slack/"
+url = "/community/slack/"
 weight = 10
 
 [[menu.shortcuts]]
@@ -36,12 +54,12 @@ weight = 20
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-fw fa-file-contract '></i> License"
-url = "/license"
+url = "/terms/license"
 weight = 40
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-fw fa-question-circle'></i> Support"
-url = "/support"
+url = "/community/support"
 weight = 50
 
 [[menu.shortcuts]]
@@ -51,7 +69,7 @@ weight = 60
 
 [[menu.homepage]]
 name = "Documentation"
-url = "/documentation"
+url = "/docs"
 weight = 10
 
 [[menu.homepage]]
@@ -61,7 +79,7 @@ weight = 20
 
 [[menu.homepage]]
 name = "Slack Channel"
-url = "/community-slack/"
+url = "/community/slack"
 weight = 30
 
 [[menu.homepage]]
