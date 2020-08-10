@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Site.Title }}</title>
+
     {{ hugo.Generator }}
     {{ partial "meta.html" . }}
     {{ partial "favicon.html" . }}
     
-    <title>{{ if .IsHome }} {{ .Title }} {{ else }} {{ .Title }} - {{ .Site.Title }} {{ end }}</title>
-
     {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
     
     <link href="https://cloud.typography.com/6193438/7900212/css/fonts.css" rel="stylesheet" />
