@@ -14,10 +14,8 @@
   </div>
 
     <div class="highlightable">
-   
-
     <ul class="topics">
-
+        <li data-nav-id="/docs/" title="Documentation" class="dd-item  {{if eq .File.Dir "docs/"}}active{{end}}"><a href="/docs/">Documentation</a></li>
         {{if eq .Site.Params.ordersectionsby "title"}}  
           {{range .Site.Home.Sections.ByTitle}}
           {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
@@ -102,7 +100,6 @@
  {{with .sect }}
   {{if and .IsSection ((not .Params.hidden) or $.showhidden)}}
     {{safeHTML .Params.head}}
-    
     {{ if eq .LinkTitle "Documentation" }}
         {{ $numberOfPages := (add (len .Pages) (len .Sections)) }}
           {{ if ne $numberOfPages 0 }}
