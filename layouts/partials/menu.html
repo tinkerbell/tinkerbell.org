@@ -1,6 +1,7 @@
 <nav id="sidebar" class="{{if $.Site.Params.showVisitedLinks }}showVisitedLinks{{end}}">
 
 {{ $currentNode := . }}
+
 {{ $currentURL := .URL }}
 {{ $showvisitedlinks := .Site.Params.showVisitedLinks }}
   <div id="header-wrapper">
@@ -14,7 +15,7 @@
 
     <div class="highlightable">
     <ul class="topics">
-
+        <li data-nav-id="/docs/" title="Documentation" class="dd-item  {{if eq .File.Dir "docs/"}}active{{end}}"><a href="/docs/">Documentation</a></li>
         {{if eq .Site.Params.ordersectionsby "title"}}  
           {{range .Site.Home.Sections.ByTitle}}
           {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks}}
@@ -93,55 +94,83 @@
 {{ define "section-tree-nav" }}
 {{ $showvisitedlinks := .showvisitedlinks }}
 {{ $currentNode := .currentnode }}
+{{ $currentPage := . }}
 {{ $currentFileUniqueID := "" }}
 {{ with $currentNode.File }}{{ $currentFileUniqueID = .UniqueID }}{{ end }}
- {{with .sect}}
+ {{with .sect }}
   {{if and .IsSection ((not .Params.hidden) or $.showhidden)}}
     {{safeHTML .Params.head}}
-    {{ if ne .LinkTitle "Homepages" }}
-    <li data-nav-id="{{.RelPermalink}}" title="{{.Title}}" class="dd-item 
-        {{if .IsAncestor $currentNode }}parent{{end}}
-        {{if eq .File.UniqueID $currentFileUniqueID}}active{{end}}
-        {{if .Params.alwaysopen}}parent{{end}}
-        ">
-      
-      
-      <a href="{{.RelPermalink}}">
-          {{safeHTML .Params.Pre}}{{or .Params.menuTitle .LinkTitle .Title}}{{safeHTML .Params.Post}}
-          {{ if $showvisitedlinks}}
-            <i class="fas fa-check read-icon"></i>
+    {{ if eq .LinkTitle "Documentation" }}
+        {{ $numberOfPages := (add (len .Pages) (len .Sections)) }}
+          {{ if ne $numberOfPages 0 }}
+            
+              {{ $currentNode.Scratch.Set "pages" .Pages }}
+                
+              {{ if .Sections}}
+                {{ $currentNode.Scratch.Set "pages" (.Pages | union .Sections) }}
+              {{end}}
+              {{ $pages := ($currentNode.Scratch.Get "pages") }}
+              
+              {{if eq .Site.Params.ordersectionsby "title"}}  
+                {{ range $pages.ByTitle }}
+                  {{ if and .Params.hidden (not $.showhidden) }} 
+                  {{else}}
+                  {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks }}
+                  {{end}}
+                {{ end }}
+              {{else}}
+                {{ range $pages.ByWeight }}
+                  {{ if and .Params.hidden (not $.showhidden) }} 
+                  {{else}}
+                  {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks }}
+                  {{end}}
+                {{ end }}
+              {{end}}
           {{ end }}
-      </a>
-      
-
-      {{ $numberOfPages := (add (len .Pages) (len .Sections)) }}
-      {{ if ne $numberOfPages 0 }}
-        <ul>
-          {{ $currentNode.Scratch.Set "pages" .Pages }}
-          {{ if .Sections}}
-            {{ $currentNode.Scratch.Set "pages" (.Pages | union .Sections) }}
-          {{end}}
-          {{ $pages := ($currentNode.Scratch.Get "pages") }}
-          
-        {{if eq .Site.Params.ordersectionsby "title"}}  
-          {{ range $pages.ByTitle }}
-            {{ if and .Params.hidden (not $.showhidden) }} 
-            {{else}}
-            {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks }}
-            {{end}}
+    {{ else }}
+      {{ if and (ne .LinkTitle "Homepages") (ne .LinkTitle "Terms")  (ne .LinkTitle "Communities") }}
+        <li data-nav-id="{{.RelPermalink}}" title="{{.Title}}" class="dd-item 
+            {{if .IsAncestor $currentNode }}parent{{end}}
+            {{if eq .File.UniqueID $currentFileUniqueID}}active{{end}}
+            {{if .Params.alwaysopen}}parent{{end}}
+            ">
+            <a href="{{.RelPermalink}}">
+                {{safeHTML .Params.Pre}}{{or .Params.menuTitle .LinkTitle .Title}}{{safeHTML .Params.Post}}
+                {{ if $showvisitedlinks}}
+                  <i class="fas fa-check read-icon"></i>
+                {{ end }}
+            </a>
+          {{ $numberOfPages := (add (len .Pages) (len .Sections)) }}
+          {{ if ne $numberOfPages 0 }}
+            <ul>
+              {{ $currentNode.Scratch.Set "pages" .Pages }}
+                
+              {{ if .Sections}}
+                {{ $currentNode.Scratch.Set "pages" (.Pages | union .Sections) }}
+              {{end}}
+              {{ $pages := ($currentNode.Scratch.Get "pages") }}
+              
+              {{if eq .Site.Params.ordersectionsby "title"}}  
+                {{ range $pages.ByTitle }}
+                  {{ if and .Params.hidden (not $.showhidden) }} 
+                  {{else}}
+                  {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks }}
+                  {{end}}
+                {{ end }}
+              {{else}}
+                {{ range $pages.ByWeight }}
+                  {{ if and .Params.hidden (not $.showhidden) }} 
+                  {{else}}
+                  {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks }}
+                  {{end}}
+                {{ end }}
+              {{end}}
+            </ul>
           {{ end }}
-        {{else}}
-          {{ range $pages.ByWeight }}
-            {{ if and .Params.hidden (not $.showhidden) }} 
-            {{else}}
-            {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "showvisitedlinks" $showvisitedlinks }}
-            {{end}}
-          {{ end }}
-        {{end}}
-        </ul>
+        </li>
       {{ end }}
-    </li>
     {{ end }}
+
   {{else}}
     {{ if not .Params.Hidden }}
       <li data-nav-id="{{.RelPermalink}}" title="{{.Title}}" class="dd-item {{if eq .File.UniqueID $currentFileUniqueID}}active{{end}}">
@@ -149,8 +178,8 @@
         {{safeHTML .Params.Pre}}{{or .Params.menuTitle .LinkTitle .Title}}{{safeHTML .Params.Post}}
         {{ if $showvisitedlinks}}<i class="fas fa-check read-icon"></i>{{end}}
         </a>
-    </li>
-     {{ end }}
+      </li>
+    {{ end }}
   {{end}}
  {{ end }}
 {{ end }}

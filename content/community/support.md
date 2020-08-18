@@ -1,5 +1,6 @@
 +++
 title = "Support"
+disableToc = "true"
 +++
 
 ## Need help with Tinkerbell?

@@ -13,7 +13,7 @@ Everything you need to know about Tinkerbell and its major component microservic
 
 Tinkerbell is an open-source, bare metal provisioning engine, built and maintained by the team at Packet.
 
-- Interested in collaborating? Join our growing community of [Contributors](/contributors) on [GitHub](https://github.com/tinkerbell) or [Slack](https://slack.packet.com)
+- Interested in collaborating? Join our growing community of [Contributors](/community/contributors) on [GitHub](https://github.com/tinkerbell) or [Slack](https://slack.packet.com)
 
 ## What's Powering Tinkerbell?
 
@@ -49,5 +49,5 @@ New to Tinkerbell or bare metal provisioning? This is a great place to start!
 Need a little help getting started? We're here!
 
 - Check out the [FAQs](/faq) - When there are questions, we document the answers.
-- Join our [Community Slack](/community-slack).
+- Join our [Community Slack](/community/slack).
 - Submit an issue on [Github](https://github.com/tinkerbell/).
