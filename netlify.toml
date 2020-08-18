@@ -41,7 +41,7 @@ HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
   from = "/concepts"
-  to = "/docs/concepts"
+  to = "/docs"
   status = 301
 
 [[redirects]]
@@ -77,6 +77,11 @@ HUGO_ENABLEGITINFO = "true"
 [[redirects]]
   from = "/hardware-data"
   to = "/docs/hardware-data"
+  status = 301
+
+[[redirects]]
+  from = "/templates"
+  to = "/docs/templates"
   status = 301
 
 [[redirects]]
