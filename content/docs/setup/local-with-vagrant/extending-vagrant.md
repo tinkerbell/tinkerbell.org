@@ -20,7 +20,7 @@ Set the environment variables of the two network interfaces:
 
 ```
 export main=<public_ip_iface>
-export vagrant=<tinkerbell_ip_iface> 
+export vagrant=<tinkerbell_ip_iface>
 ```
 
 Enable Internet forwarding on the tink server. (Note: This is not permanent, you would need to edit `/etc/sysctl` to make it permanent.)
@@ -55,6 +55,7 @@ If you are developing on Tinkerbell, it might be handy to know that the Vagrant 
 The requirements for the tests are the same as the Vagrant setup itself, along with Go installed on your local machine.
 
 To run the tests, run the `go test` command, pointed at the `test/_vagrant` directory.
+
 ```
 go test ./test/_vagrant/...
 ```
