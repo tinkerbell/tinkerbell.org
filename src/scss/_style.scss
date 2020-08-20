@@ -76,40 +76,6 @@ header {
   }
 }
 
-.nav {
-  text-align: right;
-
-  a {
-    color: #fff;
-    font-size: rem-calc(18);
-  }
-
-  ul {
-    @include reset-list;
-    display: flex;
-    justify-content: flex-end;
-
-    li {
-      margin: 0 32px;
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      a {
-        display: inline-block;
-        font-size: rem-calc(18);
-        font-weight: 500;
-        border-bottom: 1px solid $blue1;
-
-        &:hover {
-          border-bottom: 1px solid #fff;
-        }
-      }
-    }
-  }
-}
-
 #nav-footer {
   ul {
     li {

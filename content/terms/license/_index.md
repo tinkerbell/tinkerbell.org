@@ -1,6 +1,5 @@
 +++
 title = "License"
-hidden = true
 +++
 
 ```
