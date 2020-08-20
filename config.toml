@@ -68,6 +68,11 @@ url = "https://twitter.com/tinkerbell_oss"
 weight = 60
 
 [[menu.homepage]]
+name = "FAQ's"
+url = "/faq"
+weight = 1
+
+[[menu.homepage]]
 name = "Documentation"
 url = "/docs"
 weight = 10
