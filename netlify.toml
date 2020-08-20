@@ -128,3 +128,18 @@ HUGO_ENABLEGITINFO = "true"
   from = "/license"
   to = "/terms/license"
   status = 301
+
+[[redirects]]
+  from = "/docs/setup/packet-with-terraform"
+  to = "/docs/setup/terraform"
+  status = 301
+
+[[redirects]]
+  from = "/setup/packet-with-terraform/provisioner"
+  to = "/docs/setup/terraform/provisioner"
+  status = 301
+
+[[redirects]]
+  from = "/setup/packet-with-terraform/hardware-data"
+  to = "/docs/setup/terraform/hardware-data"
+  status = 301

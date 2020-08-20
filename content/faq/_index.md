@@ -1,6 +1,6 @@
 +++
 title = "Frequently Asked Questions"
-menuTitle= "FAQ"
+menuTitle= "FAQ's"
 disableToc = "true"
 date = 2019-05-05T16:16:15+05:30
 weight = 120
