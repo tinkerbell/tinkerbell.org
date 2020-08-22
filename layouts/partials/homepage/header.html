@@ -15,7 +15,7 @@
     
     {{ $css := resources.Get "css/theme-tinkerbell.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}">
-
+    <link href="{{"css/fontawesome-all.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
     {{ partial "ga.html" . }}
   </head>
   <body class="" data-url="{{ .RelPermalink }}">

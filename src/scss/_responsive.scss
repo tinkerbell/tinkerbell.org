@@ -21,32 +21,49 @@
   }
 
   #nav-main {
-    .logo {
-      margin-bottom: 30px;
-    }
+    padding-top: 20px;
   }
 
   .nav {
+    .nav-top {
+      overflow-y: auto;
+      white-space: nowrap;
+      width: 100%;
+    }
+
     ul {
       display: block;
-      text-align: left;
-
+      align-items: left;
       li {
-        margin: 0;
+        margin: 0 10px;
+        display: inline;
+        &:first-child {
+          margin-left: 0;
+        }
+        a {
+          font-size: rem-calc(14);
+        }
+      }
+    }
+
+    .logo {
+      margin-bottom: 20px;
+      svg {
+        height: 40px;
       }
     }
   }
 
   #nav-footer {
-    padding-bottom: 60px;
+    padding-bottom: 0;
 
     &.nav {
       ul {
-        justify-content: flex-start;
-        display: flex;
-
+        text-align: left;
+        display: block;
         li {
-          margin-right: 10px;
+          display: block;
+          margin-left: 0;
         }
       }
     }

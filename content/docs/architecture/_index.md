@@ -4,6 +4,7 @@ date = 2020-07-22
 draft = false
 weight = 10
 toc = true
+parent = "docs"
 +++
 
 ![Architecture](/images/docs/workflow-architecture.png)
