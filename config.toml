@@ -68,26 +68,43 @@ url = "https://twitter.com/tinkerbell_oss"
 weight = 60
 
 [[menu.homepage]]
+identifier = "faq"
 name = "FAQ's"
-url = "/faq"
+url = "/faq/"
 weight = 1
 
 [[menu.homepage]]
-name = "Documentation"
-url = "/docs"
+identifier = "docs"
+name = "Docs"
+url = "/docs/"
 weight = 10
 
 [[menu.homepage]]
+identifier = "examples"
+name = "Examples"
+url = "/examples/"
+weight = 15
+
+[[menu.homepage]]
+identifier = "community"
+name = "Community"
+url = "/community/"
+weight = 20
+
+[[menu.homepage]]
+pre = "<i class='fab fa-fw fa-github'></i>"
 name = "GitHub"
 url = "https://github.com/tinkerbell/"
 weight = 20
 
 [[menu.homepage]]
+pre = "<i class='fab fa-fw fa-slack'></i>"
 name = "Slack Channel"
-url = "/community/slack"
+url = "/community/slack/"
 weight = 30
 
 [[menu.homepage]]
+pre = "<i class='fab fa-fw fa-twitter'></i>"
 name = "Twitter"
 url = "https://twitter.com/tinkerbell_oss"
 weight = 40

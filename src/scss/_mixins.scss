@@ -1,5 +1,6 @@
 @mixin box-shadow() {
-  box-shadow: 0 10px 20px -10px rgba(30, 45, 62, 0.21), 0 5px 30px -5px rgba(31, 44, 60, 0.1);
+  // box-shadow: 0 10px 20px -10px rgba(30, 45, 62, 0.1), 0 5px 30px -5px rgba(31, 44, 60, 0.1);
+  box-shadow: 0 0 10px -10px rgba(30, 45, 62, 0.1), 0 5px 20px -5px rgba(31, 44, 60, 0.1);
 }
 
 @mixin box-sizing($box-model) {
