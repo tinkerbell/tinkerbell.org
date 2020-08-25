@@ -374,3 +374,74 @@ body.sidebar-hidden {
 .text-left {
   text-align: left;
 }
+#footer-wrapper {
+  color: #3e3e3e;
+  padding-top: 20px;
+  * {
+    font-size: 12px;
+  }
+  a {
+    display: inline-block;
+  }
+  @include breakpoint(medium down) {
+    p {
+      display: block;
+    }
+    .packet-logo {
+      margin-left: 0;
+    }
+  }
+}
+.packet-logo {
+  width: 66px;
+  height: auto;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 10px;
+}
+#nav-footer {
+  ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    @include reset-list;
+    li {
+      line-height: 1;
+      @include reset-list;
+      margin: 0;
+      padding: 0 7px;
+      position: relative;
+      a {
+        line-height: 1;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 1px;
+        height: 100%;
+        border-right: 1px solid #000;
+      }
+      &:last-child {
+        padding-right: 0;
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  @include breakpoint(medium down) {
+    ul {
+      margin-top: 30px;
+      display: block;
+      li {
+        margin-bottom: 7px;
+        padding-left: 0;
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+}

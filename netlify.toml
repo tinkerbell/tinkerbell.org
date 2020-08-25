@@ -143,3 +143,23 @@ HUGO_ENABLEGITINFO = "true"
   from = "/setup/packet-with-terraform/hardware-data"
   to = "/docs/setup/terraform/hardware-data"
   status = 301
+
+[[redirects]]
+  from = "/cli"
+  to = "/docs/cli"
+  status = 301
+
+[[redirects]]
+  from = "/cli/hardware"
+  to = "/docs/cli/hardware"
+  status = 301
+
+[[redirects]]
+  from = "/cli/template"
+  to = "/docs/cli/template"
+  status = 301
+
+[[redirects]]
+  from = "/cli/workflow"
+  to = "/docs/cli/workflow"
+  status = 301
