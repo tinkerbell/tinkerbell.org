@@ -56,7 +56,7 @@ You can view the events and the state of a workflow during or after its executio
 
 Ephemeral data is data that is shared between Workers as they execute workflows. Ephemeral data is stored in `/workflow/<workflow_id>`.
 
-Initially the directory is empty; you populate with it by having a [template's actions (scripts, etc)](/docs/templates) write to it. 
+Initially the directory is empty; you populate with it by having a [template's actions (scripts, etc)](/docs/templates) write to it.
 
 As the workflow progresses, subsequent actions on a Worker can read any ephemeral data that's been created by previous actions on other Workers as well as update that file with any changes. After the workflow finishes, any future actions on additional Workers will be able to read from that directory and see the updates.
 
