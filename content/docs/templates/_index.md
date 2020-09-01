@@ -6,7 +6,7 @@ weight = 25
 toc = true
 +++
 
-A Template is a YAML file that defines the tasks in a Workflow.
+A Template is a YAML file that defines the source of a Workflow by declaring one or more _tasks_.
 The tasks are executed sequentially, in the order in which they are declared.
 
 Each task consists of a single or multiple _actions_.
