@@ -1,52 +1,30 @@
 +++
-title = "Osie"
+title = "OSIE"
 hidden = true
-date = 2020-07-06
+date = 2020-09-01
 draft = false
-weight = 01
+weight = 03
 toc = false
 +++
 
-As part of the [boots](/docs/services/boots) documentation you will learn how
-netboot works very briefly. But one of the step when a server boots is the
-operating system. I am not speaking about the one you will use at the end like:
-Ubuntu, CoreOS, CentOS. At this phase, when a server does not have an operating
-system yet we need to have an environment capable of running the right actions
-required to install our operating system.
+When a Worker first starts in a Tinkerbell environment, it network boots and contacts the Provisioner where [Boots](/docs/services/boots) handles its DHCP settings and provides iPXE support. As part of this process Tinkerbell sets up the Worker with an in-memory operating system called OSIE and is based on [Alpine](https://alpinelinux.org).
 
-Typically this environment is an in memory operating system and the one we
-developed is based on [Alpine](https://alpinelinux.org) and it is called osie.
+OSIE is downloaded to the Worker via iPXE. Usually, this will happen when a Worker network boots and an operating system is not installed, otherwise the bootloader will boot from the disk which contains your operating system.
 
-## Why Alpine
+## Alpine and OSIE
 
-Alpine is famous to be small (~130MB of storage) and easy to customize.
-The boot process is minimal and it does not require much configuration.
+Alpine is famous to be small (~130MB of storage) and easy to customize. The boot process is minimal and it does not require much configuration. OSIE builds on that to provide an environment capable of running the right actions required to configure your Worker and  install a persistent operating system.
 
-## Alpine vs Osie
+OSIE gets compiled to a initial ramdisk and a kernel. The initial ramdisk contains Docker and it starts the [`tink-worker`](/docs/services/tink) as a docker container. The `tink-worker` is the application that gets and manage workflows. Usually one of the first workflows it generates is the one that installs an operating system.
 
-Osie as you see it today is a bit "too fat"! Packet uses it internally and we
-are in the process of moving a lot of the customisation out of osie as part of
-external workflows, now that tinkerbell gives us that concept.
+Currently, the OSIE of today is a bit "too fat"! We are in the process of moving a lot of the customization out of OSIE and into workflows.
 
-Anyway, osie gets compiled to a init ramdisk and a kernel. The init ramdisk
-contains Docker and it starts the [`tink-worker`](/docs/services/tink) as a
-docker container.
+## When You See OSIE
 
-The `tink-worker` is the application that gets and manage workflows. Usually one
-of the first workflows it generates is the one that persist an operating system.
+If you follow the [Vagrant Setup](/docs/setup/locally-with-vagrant) tutorial you encounter OSIE at the section "Start the Worker".
 
-## When you use it
+At that time the Worker has netbooted and Boots has pushed OSIE to the Worker, the workflow has started, and the Worker does not have an operating system yet.
 
-Osie is downloaded from your worker via iPXE if the workers enters the netboot
-phase. Usually it happens when an operating system is not installed, otherwise
-the bootloader will boot from HD that contains your operating system.
+![Screenshot from the Worker](/images/vagrant-setup-vbox-worker.png)
 
-If you followed the [Vagrant Setup](/docs/locally-with-vagrant) tutorial you
-used `osie` already at the section "Start the Worker".
-
-At that time no workflow is executed yet and the worker does not have an
-operating system yet.
-
-![Screenshot from the worker](/images/vagrant-setup-vbox-worker.png)
-
-`Welcome to Alpine Linux 4.7` comes from osie.
+The `Welcome to Alpine Linux 4.7` message comes from OSIE.
