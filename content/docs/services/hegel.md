@@ -1,45 +1,37 @@
 +++
 title = "Hegel"
 hidden = true
-date = 2020-07-06
+date = 2020-08-31
 draft = false
-weight = 01
+weight = 02
 toc = false
 +++
 
 GitHub repository: [tinkerbell/hegel](https://github.com/tinkerbell/hegel).
 
-## Data is power
+Hegel is Tinkerbell's metadata store, supporting storage and retrieval of metadata over gRPC and HTTP. It also provides a compatible layer with the AWS EC2 metadata format.
 
-Every cloud provider is capable of exposing metadata to servers that you can
-query as part of your automation usually via HTTP:
+Metadata is user-defined as part of the hardware data that makes up a workflow.
 
-* [AWS: Instance metadata and user data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
-* [GCP: Storing and retrieving instance metadata](https://cloud.google.com/compute/docs/storing-retrieving-metadata)
-* [Packet: Metadata](https://www.packet.com/developers/docs/servers/key-features/metadata/)
+## Using Hegel
 
-Hegel provides gRPC and HTTP support. Plus a compatible layer with the AWS EC2
-metadata format.
-
-The metadata can be used from a Tinkerbell workflow as well.
-
-## Where metadata comes from
-
-If you are asking yourself where metadata are coming from, you have to look at
-yourself to the answer. Metadata are set as part of the hardware registration.
-
-## Familiarize with hegel
-
-I am using the [Vagrant Setup](/docs/local-with-vagrant) as the environment of
-reference.
-
-Hegel runs as part of the provisioner virtual machine with the IP:
-`192.168.1.2`. When the worker starts and you logged in
-[osie](/docs/services/osie) using the password `root` you can access the
-metadata for your server via `cURL`:
+You can access Hegel in a Tinkerbell setup at the Provisioner's IP address `/metadata`. You can use cURL to retrieve the metadata it stores.
 
 ```
-$ curl -s 192.168.1.2/metadata | jq .
+curl <provisioner_ip>/metadata
+```
+
+You can also retrieve a AWS EC2 compatible format uses from `/meta-data`.
+
+```
+$ curl <provisioner_ip>/<date>/meta-data
+```
+
+For example, if you are using the [Vagrant Setup](/docs/local-with-vagrant), Hegel runs as part of the Provisioner virtual machine with the IP: `192.168.1.2`. When the Worker starts and if you have logged in to [osie](/docs/services/osie) using the password `root` you can access the metadata for your server via `cURL`:
+
+```
+curl -s 192.168.1.2/metadata | jq .
+>
 {
     "facility": {
         "facility_code": "onprem"
@@ -49,11 +41,17 @@ $ curl -s 192.168.1.2/metadata | jq .
 }
 ```
 
-If you look at the `hardware-data.json` that we used during the Vagrant Setup
-you will find the `facility_code=onprem` as well. That's where the metadata
-comes from.  You can use the same format AWS EC2 uses, to get the meta-data
-index:
+Or in AWS EC2 format:
+```
+curl -s 192.168.1.2/2009-04-04/meta-data
+```
 
-```
-$ curl -s 192.168.1.2/2009-04-04/meta-data
-```
+If you look at the `hardware-data.json` that we used during the Vagrant setup you will find the `facility_code=onprem` as well.
+
+## Other Resources
+
+Every cloud provider is capable of exposing metadata to servers that you can query as part of your automation, usually via HTTP. Some examples:
+
+* [AWS: Instance metadata and user data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
+* [GCP: Storing and retrieving instance metadata](https://cloud.google.com/compute/docs/storing-retrieving-metadata)
+* [Packet: Metadata](https://www.packet.com/developers/docs/servers/key-features/metadata/)
