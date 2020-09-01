@@ -9,6 +9,10 @@ toc = true
 A Template is a YAML file that defines the tasks in a Workflow.
 The tasks are executed sequentially, in the order in which they are declared.
 
+Each task consists of a single or multiple _actions_.
+Each action has contains an image to be executed as part of a workflow, identified by the `image` field.
+You can create any script, app, or other set of instructions to be an action image by containerizing it and pushing it into either the local Docker registry included in the Tinkerbell stack or an external image repository.
+
 Here is a sample template:
 
 ```yaml
@@ -44,10 +48,6 @@ tasks:
         volumes:
           - /statedir:/statedir
 ```
-
-Each task consists of a single or multiple _actions_.
-Each action has contains an image to be executed as part of a workflow, identified by the `image` field.
-You can create any script, app, or other set of instructions to be an action image by containerizing it and pushing it into either the local Docker registry included in the Tinkerbell stack or an external image repository.
 
 The `volumes` field contains the volume mappings between the host machine and the docker container where your images are running.
 
