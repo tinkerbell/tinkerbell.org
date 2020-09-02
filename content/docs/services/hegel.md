@@ -41,6 +41,7 @@ curl -s 192.168.1.2/metadata | jq .
 ```
 
 Or in AWS EC2 format:
+
 ```
 curl -s 192.168.1.2/2009-04-04/meta-data
 ```
@@ -51,6 +52,6 @@ If you look at the `hardware-data.json` that we used during the Vagrant setup yo
 
 Every cloud provider is capable of exposing metadata to servers that you can query as part of your automation, usually via HTTP. Some examples:
 
-* [AWS: Instance metadata and user data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
-* [GCP: Storing and retrieving instance metadata](https://cloud.google.com/compute/docs/storing-retrieving-metadata)
-* [Packet: Metadata](https://www.packet.com/developers/docs/servers/key-features/metadata/)
+- [AWS: Instance metadata and user data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
+- [GCP: Storing and retrieving instance metadata](https://cloud.google.com/compute/docs/storing-retrieving-metadata)
+- [Packet: Metadata](https://www.packet.com/developers/docs/servers/key-features/metadata/)

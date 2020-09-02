@@ -27,9 +27,9 @@ We relay on Docker a lot for both code distribution but and workflow execution. 
 
 There is a repository for every tool:
 
-* [tink-cli](https://quay.io/repository/tinkerbell/tink-cli?tab=tags)
-* [tink-worker](https://quay.io/repository/tinkerbell/tink-worker?tab=tags)
-* [tink-server](https://quay.io/repository/tinkerbell/tink?tab=tags)
+- [tink-cli](https://quay.io/repository/tinkerbell/tink-cli?tab=tags)
+- [tink-worker](https://quay.io/repository/tinkerbell/tink-worker?tab=tags)
+- [tink-server](https://quay.io/repository/tinkerbell/tink?tab=tags)
 
 The tags are composed as: `sha-<gitsha>`, where `gitsha` is the first 7 characters of a git commit. Only master commits are pushed to quay.io.
 
@@ -57,7 +57,7 @@ go run cmd/tink-server/main.go
 
 One use case of the binaries, is if you want to run the `tink-cli` binary on the Provisioner, outside the `tink-server` container. This simplifies the CLI command usage.
 
-Prerequisites: 
+Prerequisites:
 
 - A bit of familiarity with `go build`, and Go has to be installed.
 - A Provisioner up and running Tinkerbell (works with the Vagrant setup, for example)

@@ -10,11 +10,11 @@ When a Worker first starts in a Tinkerbell environment, it network boots and con
 
 OSIE is downloaded to the Worker via iPXE. Usually, this will happen when a Worker network boots and an operating system is not installed, otherwise the bootloader will boot from the disk which contains your operating system.
 
-OSIE can built, run, and tested outside of the Tinkerbell stack. Take a look at the code in its GitHub repository: [tinkerbell/osie](https://github.com/tinkerbell/osie). 
+OSIE can built, run, and tested outside of the Tinkerbell stack. Take a look at the code in its GitHub repository: [tinkerbell/osie](https://github.com/tinkerbell/osie).
 
 ## Alpine and OSIE
 
-Alpine is known to be small (~130MB of storage) and easy to customize. The boot process is minimal and it does not require much configuration. OSIE builds on that to provide an environment capable of running the right actions required to configure your Worker and  install a persistent operating system.
+Alpine is known to be small (~130MB of storage) and easy to customize. The boot process is minimal and it does not require much configuration. OSIE builds on that to provide an environment capable of running the right actions required to configure your Worker and install a persistent operating system.
 
 OSIE gets compiled to a initial ramdisk and a kernel. The initial ramdisk contains Docker and it starts the [`tink-worker`](/docs/services/tink) as a docker container. The `tink-worker` is the application that gets and manage workflows. Usually one of the first workflows it generates is the one that installs an operating system.
 
