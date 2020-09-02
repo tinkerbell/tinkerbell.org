@@ -1,6 +1,5 @@
 +++
 title = "Hegel"
-hidden = true
 date = 2020-08-31
 draft = false
 weight = 02

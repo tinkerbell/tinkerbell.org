@@ -1,6 +1,5 @@
 +++
 title = "OSIE"
-hidden = true
 date = 2020-09-01
 draft = false
 weight = 03
