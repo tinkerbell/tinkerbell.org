@@ -1,6 +1,6 @@
 +++
 title = "Workflows"
-date = 2020-08-28
+date = 2020-09-01
 draft = false
 weight = 30
 toc = true
@@ -44,7 +44,7 @@ In addition, you can list all the workflows stored in the database with [`tink w
 
 ## Workflow Execution
 
-On the first boot, the Worker is PXE booted, asks Boots for it's IP address, and loads into OSIE. It then asks the `tink-server` for workflows that match its MAC or IP address. Those workflows are then executed onto the Worker.
+On the first boot, the Worker is PXE booted, asks Boots for it's IP address, and loads OSIE. OSIE provides and runs the `tink-worker` container and asks the `tink-server` for workflows that match its MAC or IP address. `tink-worker` then executes those workflows.
 
 ![Architecture](/images/docs/ephemeral-data.png)
 
@@ -54,13 +54,13 @@ You can view the events and the state of a workflow during or after its executio
 
 ## Ephemeral Data
 
-Ephemeral data is data that is shared between Workers as they execute workflows. Ephemeral data is stored in `/workflow/<workflow_id>`.
+Ephemeral data is data that is shared between Workers as they execute workflows. Ephemeral data is stored at `/workflow/<workflow_id>` in each tink-worker.
 
-Initially the directory is empty; you populate with it by having a [template's actions (scripts, etc)](/docs/templates) write to it.
+Initially the directory is empty; you populate with it by having a [template's actions (scripts, etc)](/docs/templates) write to it. Then, the content in `/workflow/<workflow_id>` is pushed back to the database and from the database, pushed out to the other Workers.
 
-As the workflow progresses, subsequent actions on a Worker can read any ephemeral data that's been created by previous actions on other Workers as well as update that file with any changes. After the workflow finishes, any future actions on additional Workers will be able to read from that directory and see the updates.
+As the workflow progresses, subsequent actions on a Worker can read any ephemeral data that's been created by previous actions on other Workers, as well as update that file with any changes. Ephemeral data is only preserved through the life of a single workflow. Each workflow that executes gets an empty file.
 
-The data can take the form of a light JSON like below, or some binary files that other workers might require to complete their action. There is a 10 MB limit for ephemeral data, because it gets pushed to and from the tink-server and workers with every action, so it needs to be pretty light.
+The data can take the form of a light JSON like below, or some binary files that other workers might require to complete their action. There is a 10 MB limit for ephemeral data, because it gets pushed to and from the tink-server and tink-worker with every action, so it needs to be pretty light.
 
 For instance, a Worker may write the following data:
 
