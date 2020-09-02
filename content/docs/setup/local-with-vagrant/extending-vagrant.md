@@ -59,3 +59,27 @@ To run the tests, run the `go test` command, pointed at the `test/_vagrant` dire
 ```
 go test ./test/_vagrant/...
 ```
+
+## Reusing osie.tar.gz
+
+While playing with Tinkerbell locally, it becomes a pain to download `osie.tar.gz` as part of the provisioner setup each time you recreate the stack.
+However, we can skip the download and resuse existing `osie.tar.gz` by setting the `TB_OSIE_TAR` environment variable.
+Check [setup.sh](https://github.com/tinkerbell/tink/blob/master/setup.sh#L259) for reference.
+
+Download Osie before starting the setup
+
+```
+curl  https://tinkerbell-oss.s3.amazonaws.com/osie-uploads/latest.tar.gz -o osie.tar.gz
+```
+
+Move the downloaded file to `tink/deploy/vagrant/`.
+Now, set the environment variable in `tink/deploy/vagrant/scripts/tinkerbell.sh` before it executes `setup.sh`.
+
+```
+...
+export TB_OSIE_TAR='/vagrant/deploy/vagrant/osie.tar.gz'
+./setup.sh
+...
+```
+
+Start the vagrant setup.
