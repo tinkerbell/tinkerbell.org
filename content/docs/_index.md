@@ -13,21 +13,23 @@ Everything you need to know about Tinkerbell and its major component microservic
 
 Tinkerbell is an open-source, bare metal provisioning engine, built and maintained by the team at Packet.
 
+The answer it answer is: "How to make an shiny new server available for us in an automatic fashion?"
+
 - Interested in collaborating? Join our growing community of [Contributors](/community/contributors) on [GitHub](https://github.com/tinkerbell) or [Slack](https://slack.packet.com)
 
 ## What's Powering Tinkerbell?
 
-The Tinkerbell stack consists of five microservices, or components:
+The Tinkerbell stack consists of five microservices, and a grpc API:
 
-- [**Boots**](https://github.com/tinkerbell/boots) - Boots is Tinkerbell's DHCP server. It handles DHCP requests, hands out IPs, and serves up iPXE. It uses the Tinkerbell client to pull and push hardware data. It only responds to a predefined set of MAC addresses so it can be deployed in an existing network without interfering with existing DHCP infrastructure.
+- [**Tink**](services/tink) - Tink is the Tinkerbell server and CLI. It communicates over gRPC, and is responsible for processing workflows. The CLI is used to create workflows and their building blocks, templates and hardware data.
 
-- [**Hegel**](https://github.com/tinkerbell/hegel) - Hegel is the metadata service used by Tinkerbell and OSIE. It collects data from both and transforms it into a JSON format to be consumed as metadata.
+- [**Boots**](services/boots) - Boots is Tinkerbell's DHCP server. It handles DHCP requests, hands out IPs, and serves up [iPXE](https://ipxe.org/). It uses the Tinkerbell client to pull and push hardware data. It only responds to a predefined set of MAC addresses so it can be deployed in an existing network without interfering with existing DHCP infrastructure.
 
-- [**OSIE**](https://github.com/tinkerbell/osie) - OSIE is an in-memory installation environment for bare metal. It installs operating systems and handles deprovisioning.
+- [**Hegel**](services/hegel) - Hegel is the metadata service used by Tinkerbell and OSIE. It collects data from both and transforms it into a JSON format to be consumed as metadata.
+
+- [**OSIE**](services/osie) - OSIE is an in-memory installation environment for bare metal. It installs operating systems and handles deprovisioning.
 
 - [**PBnJ**](https://github.com/tinkerbell/pbnj) - PBnJ is a microservice that can communicate with baseboard management controllers (BMCs) to control power and boot settings.
-
-- [**Tink**](https://github.com/tinkerbell/tink) - Tink is the Tinkerbell server and CLI. It communicates over gRPC, and is responsible for processing workflows. The CLI is used to create workflows and their building blocks, templates and hardware data.
 
 In addition to the microservices, there are three pieces of infrastructure:
 
