@@ -16,20 +16,23 @@ Metadata is user-defined as part of the hardware data that makes up a workflow.
 
 You can access Hegel in a Tinkerbell setup at the Provisioner's IP address `/metadata`. You can use cURL to retrieve the metadata it stores.
 
+Hegel by default exposes an `HTTP` API on port `50061`. You can interact with it
+via cURL
+
 ```
-curl <provisioner_ip>/metadata
+curl <hegel_ip>:50061/metadata
 ```
 
 You can also retrieve a AWS EC2 compatible format uses from `/meta-data`.
 
 ```
-$ curl <provisioner_ip>/<date>/meta-data
+$ curl <hegel_ip>:50061/<date>/meta-data
 ```
 
 For example, if you are using the [Vagrant Setup](/docs/local-with-vagrant), Hegel runs as part of the Provisioner virtual machine with the IP: `192.168.1.2`. When the Worker starts and if you have logged in to [osie](/docs/services/osie) using the password `root` you can access the metadata for your server via `cURL`:
 
 ```
-curl -s 192.168.1.2/metadata | jq .
+curl -s 192.168.1.2:50061/metadata | jq .
 >
 {
     "facility": {
@@ -43,7 +46,7 @@ curl -s 192.168.1.2/metadata | jq .
 Or in AWS EC2 format:
 
 ```
-curl -s 192.168.1.2/2009-04-04/meta-data
+curl -s 192.168.1.2:50061/2009-04-04/meta-data
 ```
 
 If you look at the `hardware-data.json` that we used during the Vagrant setup you will find the `facility_code=onprem` as well.
