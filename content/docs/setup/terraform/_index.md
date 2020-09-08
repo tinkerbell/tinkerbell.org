@@ -1,32 +1,32 @@
 +++
-title = "Packet with Terraform"
-date = 2019-01-04T16:16:15+05:30
+title = "Packet Setup with Terraform"
+date = 2020-09-08
 draft = false
 weight = 30
 toc = true
 +++
 
-## Intro
+This setup uses the Packet Terraform provider to create two Packet servers, _tf-provisioner_ and _tf-worker_, that are attached to the same VLAN. Then uses the `hello-world` example workflow as an introduction to Tinkerbell. _tf-provisioner_ is will be setup as the Provisioner, running `tink-server`, `boots`, `nginx to serve osie`, `hegel` and Postgres. _tf-worker_ will be setup as the Worker, able to execute workflows.
 
-Using Terraform (with the Packet provider), create two servers _tf-provisioner_ and _tf-worker_ attached to the same VLAN.
+## Prerequisites
 
-The provisioner runs: `tink-server`, `boots`, `nginx to serve osie`, `hegel` and
-Postgres.
+This guide assumes that you already have:
 
-First thins to do is to close the tink repository because it contains the
-Terraform file required to spin up the environment:
+- [A Packet account](https://app.packet.net/login).
+- Your Packet API Key and Project ID. The Terraform provider needs to have both to create servers in your account. Make sure the API token is a user API token (created/accessed under _API keys_ in your personal settings).
+- [SSH Keys](https://www.packet.com/developers/docs/servers/key-features/ssh-keys/) need to be set up on Packet for the machine where you are running Terraform. Terraform uses your `ssh-agent` to connect to the Provisioner when needed. Double check that the right keys are set.
+- [Terraform](https://www.terraform.io/downloads.html) and the [Packet Terraform provider](https://registry.terraform.io/providers/packethost/packet/latest/docs) installed on your local machine.
+
+## Using Terraform
+
+The first thing to do is to clone the `tink` repository because it contains the Terraform file required to spin up the environment.
 
 ```
 git clone https://github.com/tinkerbell/tink.git
 cd tink/deploy/terraform
 ```
 
-This terraform module requires a couple of inputs, the mandatory one are the
-`packet_api_token` and the `project_id`. You can pass those to `terraform`
-command line tool via file, or inline with the flag `-var
-"project_id=235-23452-245-345"`.
-
-By default terraform load the `terraform.ftvars` when present. You can create one `terraform.tfvars` that looks like this:
+The Packet Terraform module requires a couple of inputs, the mandatory ones are the `packet_api_token` and the `project_id`. You can define them in a `terraform.ftvars` file. By default, Terraform will load the file when present. You can create one `terraform.tfvars` that looks like this:
 
 ```
 $ cat terraform.tfvars
@@ -34,17 +34,14 @@ packet_api_token = "awegaga4gs4g"
 project_id = "235-23452-245-345"
 ```
 
-Make sure the API token is a user API token (created/accessed under _API keys_ in your personal settings)
+Otherwise, you can pass the inputs to the `terraform` command through a file, or in-line with the flag `-var "project_id=235-23452-245-345"`.
 
-Terraform uses your `ssh-agent` to connect to the provisioner when needed.
-Double check that the right keys are set.
-
-Run the following commands:
+Once you have your variables set, run the Terraform commands:
 
 ```
 $ terraform init --upgrade
 $ terraform apply
-
+>
 Apply complete! Resources: 5 added, 0 changed, 1 destroyed.
 
 Outputs:
@@ -59,26 +56,35 @@ worker_sos = [
 ]
 ```
 
-{{% notice note %}}
-As an output, it returns the IP address of the provisioner and MAC address of the worker machine.
+As an output, the `terraform apply` command returns the IP address of the Provisioner, the MAC address of the Worker, and an address for the SOS console of the Worker which will help you to follow what the Worker is doing.
 
-The Worker SOS console helps you to follow what a worker is doing. You can ssh
-in in and there is a section down this page about it.
-{{% /notice %}}
+### Troubleshooting Server Creation
 
-## Setup the provisioner
+When creating servers on Packet, you might get an error similar to:
 
-Login via ssh into the provisioner and you will find yourself in a copy of the
-tink repository:
+```
+> Error: The facility sjc1 has no provisionable c3.small.x86 servers matching your criteria.
+```
+
+This error notifies you that the facility you are using (by default sjc1) does not have devices available for `c3.small.x86`. You can change your device setting to a different `device_type` in `terraform.tfvars` (be sure that layer2 networking is supported for the new `device_type`), or you can change facility with the variable `facility` set to a different one.
+
+You can check availability of device type in a particular facility through the Packet CLI using the `capacity get` command.
+
+```
+$ packet capacity get
+```
+
+You are looking for a facility that has a `normal` level of `c3.small.x84`.
+
+## Setting Up the Provisioner
+
+SSH into the Provisioner and you will find yourself in a copy of the `tink` repository:
 
 ```
 $ ssh -t root@$(terraform output provisioner_ip) "cd /root/tink && bash"
 ```
 
-You have to generate the `envrc`, a file that contains input
-variable that will be used during the `setup` phase. The `envrc` gives us the
-opportunity to create an idempotent workflow and for you is a way to configure
-the `setup.sh` script. For example changing the [osie](/docs/services/osie) version.
+You have to generate the `envrc`, a file that contains input variable that will be used during the `setup` phase. The `envrc` gives us the opportunity to create an idempotent workflow and for you is a way to configure the `setup.sh` script. For example changing the [osie](/docs/services/osie) version.
 
 ```
 $ ./generate-envrc.sh enp1s0f1 > envrc
@@ -302,23 +308,7 @@ $ terraform destroy
 
 ## FAQ
 
-> Error: The facility sjc1 has no provisionable c3.small.x86 servers matching
-> your criteria.
 
-This error notifies you that the facility you are using (by default sjc1) does
-not have devices available for `c3.small.x86`. You can change your device
-setting a different `device_type` in `terraform.tfvars` (be sure that layer2 is
-supported for the new device_type) or you can change facility with the variable
-`facility` set to a different one.
-
-In order to check availability of device type in a particular facility you can
-use the packet-cli:
-
-```
-$ packet capacity get
-```
-
-You are looking for a facility that has a `normal` lavel of `c3.small.x84`.
 
 > Error: timeout - last error: SSH authentication failed
 > (root@136.144.56.237:22): ssh: handshake failed: ssh: unable to authenticate,
