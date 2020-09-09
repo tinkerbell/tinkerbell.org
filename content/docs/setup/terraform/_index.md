@@ -29,7 +29,7 @@ cd tink/deploy/terraform
 The Packet Terraform module requires a couple of inputs, the mandatory ones are the `packet_api_token` and the `project_id`. You can define them in a `terraform.ftvars` file. By default, Terraform will load the file when present. You can create one `terraform.tfvars` that looks like this:
 
 ```
-$ cat terraform.tfvars
+cat terraform.tfvars
 packet_api_token = "awegaga4gs4g"
 project_id = "235-23452-245-345"
 ```
@@ -39,8 +39,8 @@ Otherwise, you can pass the inputs to the `terraform` command through a file, or
 Once you have your variables set, run the Terraform commands:
 
 ```
-$ terraform init --upgrade
-$ terraform apply
+terraform init --upgrade
+terraform apply
 >
 Apply complete! Resources: 5 added, 0 changed, 1 destroyed.
 
@@ -58,7 +58,7 @@ worker_sos = [
 
 As an output, the `terraform apply` command returns the IP address of the Provisioner, the MAC address of the Worker, and an address for the SOS console of the Worker which will help you to follow what the Worker is doing.
 
-### Troubleshooting Server Creation
+### Troubleshooting - Server Creation
 
 When creating servers on Packet, you might get an error similar to:
 
@@ -71,28 +71,59 @@ This error notifies you that the facility you are using (by default sjc1) does n
 You can check availability of device type in a particular facility through the Packet CLI using the `capacity get` command.
 
 ```
-$ packet capacity get
+packet capacity get
 ```
 
 You are looking for a facility that has a `normal` level of `c3.small.x84`.
+
+### Troubleshooting - SSH Error
+
+```
+> Error: timeout - last error: SSH authentication failed
+> (root@136.144.56.237:22): ssh: handshake failed: ssh: unable to authenticate,
+> attempted methods [none publickey], no supported methods remain
+```
+
+Terraform uses the Terraform [file](https://www.terraform.io/docs/provisioners/file.html) function to copy
+the `tink` directory from your local environment to the Provisioner. You can get this error if your local `ssh-agent` properly You should start the agent and add the `private_key` that you use to SSH into the Provisioner.
+
+```
+$ ssh-agent
+$ ssh-add ~/.ssh/id_rsa
+```
+
+Then rerun `terraform apply`. You don't need to run `terraform destroy`, as Terraform can be reapplied over and over, detecting which parts have already been completed.
+
+### Troubleshooting - File Error
+
+```
+> Error: Upload failed: scp: /root/tink/deploy: Not a directory
+```
+
+Sometimes the `/root/tink` directory is only partially copied onto the the Provisioner. You can SSH onto the Provisioner, remove the partially copied directory, and rerun the Terraform to copy it again.
 
 ## Setting Up the Provisioner
 
 SSH into the Provisioner and you will find yourself in a copy of the `tink` repository:
 
 ```
-$ ssh -t root@$(terraform output provisioner_ip) "cd /root/tink && bash"
+ssh -t root@$(terraform output provisioner_ip) "cd /root/tink && bash"
 ```
 
-You have to generate the `envrc`, a file that contains input variable that will be used during the `setup` phase. The `envrc` gives us the opportunity to create an idempotent workflow and for you is a way to configure the `setup.sh` script. For example changing the [osie](/docs/services/osie) version.
+You have to define and set Tinkerbell's environment. Use the `generate-envrc.sh` script to generate the `envrc` file. Using and setting `envrc` creates an idempotent workflow and you can use it to configure the `setup.sh` script. For example changing the [OSIE](/docs/services/osie) version. 
 
 ```
-$ ./generate-envrc.sh enp1s0f1 > envrc
-$ source ./envrc
-$ ./setup.sh
+./generate-envrc.sh enp1s0f1 > envrc
+source ./envrc
 ```
 
-This script will use the `envrc` to boot:
+Then, you run the `setup.sh` script.
+
+```
+./setup.sh
+```
+
+`setup.sh` uses the `envrc` to install and configure:
 
 * [tink-server](/docs/services/tink)
 * [hegel](/docs/services/hegel)
@@ -101,19 +132,20 @@ This script will use the `envrc` to boot:
 * nginx to serve [osie](/docs/services/osie)
 * A docker registry.
 
-All those daemons will run with docker-compose and you can find the definition
-of it in `tink/deploy/docker-compose.yaml`. Let's start them all:
+## Running Tinkerbell
+
+The services in Tinkerbell are containerized, and the daemons will run with `docker-compose`. You can find the definitions in `tink/deploy/docker-compose.yaml`. Start all services:
 
 ```
-$ cd ./deploy
-$ docker-compose up -d
+cd ./deploy
+docker-compose up -d
 ```
 
-In order to check if all the services are up and running you can use
-docker-compose as well, the output should look similar to this one:
+To check if all the services are up and running you can use docker-compose as well. The output should look similar to:
 
 ```
-$ docker-compose ps
+docker-compose ps
+>
         Name                      Command               State                         Ports
 ------------------------------------------------------------------------------------------------------------------
 deploy_boots_1         /boots -dhcp-addr 0.0.0.0: ...   Up
@@ -125,26 +157,20 @@ deploy_tink-cli_1      /bin/sh -c sleep infinity        Up
 deploy_tink-server_1   tink-server                      Up      0.0.0.0:42113->42113/tcp, 0.0.0.0:42114->42114/tcp
 ```
 
-The workers do not have access to internet, to run the Example Workflow
-successfully we have to proxy a docker image called `hello-world` from Docker
-Hub to the internal registry.
+You now have a Provisioner up and running on Packet. The next steps take you through creating a workflow and pushing it to the Worker using the `hello-world` workflow example. If you want to use the example, you need to pull the `hello-world` image from from Docker Hub to the internal registry.
 
 ```
-$ docker pull hello-world
-$ docker tag hello-world 192.168.1.1/hello-world
-$ docker push 192.168.1.1/hello-world
+docker pull hello-world
+docker tag hello-world 192.168.1.1/hello-world
+docker push 192.168.1.1/hello-world
 ```
 
-## Register the worker
+## Registering the Worker
 
-As part of the `terraform apply` output we get the MAC address for the worker.
-It is now time to register it to Tinkerbell. 
-
-Terraform generates for us a file that contains the JSON describing the worker
-just created:
+As part of the `terraform apply` output you get the MAC address for the worker and it generates a file that contains the JSON describing it. Now time to register it with Tinkerbell. 
 
 ```
-$ cat /root/tink/deploy/hardware-data-0.json
+cat /root/tink/deploy/hardware-data-0.json
 {
   "id": "0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94",
   "metadata": {
@@ -183,27 +209,19 @@ $ cat /root/tink/deploy/hardware-data-0.json
 The mac address is the same we get from the Terraform output
 {{% /notice %}}
 
-Now we can push that definition to tink-server:
+Now we can push the hardware data to `tink-server`:
 
 ```
-$ docker exec -i deploy_tink-cli_1 tink hardware push < /root/tink/deploy/hardware-data-0.json
-> 2020/06/17 14:12:45 Hardware data pushed successfully
+docker exec -i deploy_tink-cli_1 tink hardware push < /root/tink/deploy/hardware-data-0.json
+>
+2020/06/17 14:12:45 Hardware data pushed successfully
 ```
 
-{{% notice note %}}
-Ideally the worker should keep booting until a provisioner is ready to serve
-Osie, but if it does not happen you manually reboot the worker via Packet API or
-Packet UI. Remember to use the SOS console to check what the worker is doing.
-{{% /notice %}}
+A note on the Worker at this point. Ideally the worker should be kept from booting until the Provisioner is ready to serve it OSIE, but on Packet that probably doesn't happen. Now that the Worker's hardware data is registered with Tinkerbell, you should manually reboot the worker through the Packet [CLI](https://github.com/packethost/packet-cli/blob/master/docs/packet_device_reboot.md), [API](https://www.packet.com/developers/api/devices/#devices-performAction), or Packet UI. Remember to use the SOS console to check what the Worker is doing.
 
-## Create a template
+## Creating a Template
 
-Next, define the template for the workflow. The template sets out tasks for the
-Worker to preform sequentially. This template contains a single task with a
-single action, which is to perform [“hello-world”](/docs/examples/hello-world). Just as in the hello-world
-example, the “hello-world” image doesn’t contain any instructions that the
-Worker will perform. It is just a placeholder in the template so a workflow can
-be created and pushed to the Worker.
+Next, define the template for the workflow. The template sets out tasks for the Worker to preform sequentially. This template contains a single task with a single action, which is to perform [“hello-world”](/docs/examples/hello-world). Just as in the hello-world example, the `hello-world` image doesn’t contain any instructions that the Worker will perform. It is just a placeholder in the template so a workflow can be created and pushed to the Worker.
 
 ```
 cat > hello-world.yml  <<EOF
@@ -220,7 +238,7 @@ tasks:
 EOF
 ```
 
-Create the template and push it to the database with the `tink template create` command.
+Create the template and push it to the `tink-server` with the `tink template create` command.
 
 ```
 $ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
@@ -228,14 +246,14 @@ $ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./h
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
-{{% notice note %}}
-TIP: export the the template ID as a bash variable for future use:
 
+TIP: export the the template ID as a bash variable for future use.
+
+```
 $ export TEMPLATE_ID=75ab8483-6f42-42a9-a80d-a9f6196130df
+```
 
-{{% /notice %}}
-
-## Create a workflow
+## Creating a Workflow
 
 The next step is to combine both the hardware data and the template to create a workflow.
 
@@ -252,12 +270,11 @@ $ docker exec -i deploy_tink-cli_1 tink workflow create \
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
-{{% notice note %}}
-TIP: export the the workflow ID as a bash variable:
+TIP: export the the workflow ID as a bash variable.
 
+```
 $ export WORKFLOW_ID=a8984b09-566d-47ba-b6c5-fbe482d8ad7f
-
-{{% /notice %}}
+```
 
 The command returns a Workflow ID and if you are watching the logs, you will see:
 
@@ -265,15 +282,18 @@ The command returns a Workflow ID and if you are watching the logs, you will see
 tink-server_1  | {"level":"info","ts":1592936829.6773047,"caller":"grpc-server/workflow.go:63","msg":"done creating a new workflow","service":"github.com/tinkerbell/tink"}
 ```
 
-## Check workflow status
+## Checking Workflow Status
 
-You can not ssh into the worker but you can use the CLI from the provisioner to
-validate if the workflow completed correctly using the `tink workflow events`
-command (an event to show up can take ~5 minutes, check the SOS console for the
-worker to see what it is doing):
+You can not SSH directly into the Worker but you can use the `SOS` or `Out of bond` console provided by Packet to follow what happens in the Worker during the workflow. You can SSH into the SOS console with: 
 
 ```
-$ docker exec -i deploy_tink-cli_1 tink workflow events $WORKFLOW_ID
+ssh $(terraform output -json worker_sos | jq -r '.[0]')
+```
+
+You can also use the CLI from the provisioner to validate if the workflow completed correctly using the `tink workflow events` command. Note that an event can take ~5 minutes to show up.
+
+```
+docker exec -i deploy_tink-cli_1 tink workflow events $WORKFLOW_ID
 >
 +--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
 | WORKER ID                            | TASK NAME   | ACTION NAME | EXECUTION TIME | MESSAGE                         |      ACTION STATUS |
@@ -283,53 +303,10 @@ $ docker exec -i deploy_tink-cli_1 tink workflow events $WORKFLOW_ID
 +--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
 ```
 
----
-
-The `SOS` or `Out of bond` console provided by Packet is a very nice way to
-follow what happens in the `worker` when the provisioner starts. My suggestion
-is to ssh in the SOS console and watch it as well. The `SOS` or `Out of bond`
-console provided by Packet is a very nice way to follow what happens in the
-`worker` when the provisioner starts. My suggestion is to ssh in the SOS console
-and watch it as well.
-
-You can the command to ssh in:
-
-```
-ssh $(terraform output -json worker_sos | jq -r '.[0]')
-```
-
 ## Cleanup
 
 You can terminate worker and provisioner with the terraform destroy command:
 
 ```
-$ terraform destroy
+terraform destroy
 ```
-
-## FAQ
-
-
-
-> Error: timeout - last error: SSH authentication failed
-> (root@136.144.56.237:22): ssh: handshake failed: ssh: unable to authenticate,
-> attempted meth ods [none publickey], no supported methods remain
-
-We use the Terraform
-[file](https://www.terraform.io/docs/provisioners/file.html) function to copy
-the `tink` directory from you local environment to the provisioner. Probably you
-did not configured the `ssh-agent` properly. You should start the agent and add
-the `private_key` that you use to ssh into the provisioner:
-
-```
-$ ssh-agent
-$ ssh-add ~/.ssh/id_rsa
-```
-
-You don't need to run `terraform destroy`, this resources can be reapplied over
-and over, you can attempt a fix and re-run `terraform apply`.
-
-> Error: Upload failed: scp: /root//tink/deploy: Not a directory
-
-This error happened to me when I did a few `terraform apply` one after each
-other. The `/root/tink` directory in the provisioner was half way copied. I
-removed it from the provisioner and I left terraform to copy it again.
