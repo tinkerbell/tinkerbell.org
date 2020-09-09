@@ -110,7 +110,7 @@ SSH into the Provisioner and you will find yourself in a copy of the `tink` repo
 ssh -t root@$(terraform output provisioner_ip) "cd /root/tink && bash"
 ```
 
-You have to define and set Tinkerbell's environment. Use the `generate-envrc.sh` script to generate the `envrc` file. Using and setting `envrc` creates an idempotent workflow and you can use it to configure the `setup.sh` script. For example changing the [OSIE](/docs/services/osie) version. 
+You have to define and set Tinkerbell's environment. Use the `generate-envrc.sh` script to generate the `envrc` file. Using and setting `envrc` creates an idempotent workflow and you can use it to configure the `setup.sh` script. For example changing the [OSIE](/docs/services/osie) version.
 
 ```
 ./generate-envrc.sh enp1s0f1 > envrc
@@ -125,12 +125,12 @@ Then, you run the `setup.sh` script.
 
 `setup.sh` uses the `envrc` to install and configure:
 
-* [tink-server](/docs/services/tink)
-* [hegel](/docs/services/hegel)
-* [boots](/docs/services/boots)
-* postgres
-* nginx to serve [osie](/docs/services/osie)
-* A docker registry.
+- [tink-server](/docs/services/tink)
+- [hegel](/docs/services/hegel)
+- [boots](/docs/services/boots)
+- postgres
+- nginx to serve [OSIE](/docs/services/osie)
+- A docker registry.
 
 ## Running Tinkerbell
 
@@ -167,7 +167,7 @@ docker push 192.168.1.1/hello-world
 
 ## Registering the Worker
 
-As part of the `terraform apply` output you get the MAC address for the worker and it generates a file that contains the JSON describing it. Now time to register it with Tinkerbell. 
+As part of the `terraform apply` output you get the MAC address for the worker and it generates a file that contains the JSON describing it. Now time to register it with Tinkerbell.
 
 ```
 cat /root/tink/deploy/hardware-data-0.json
@@ -246,8 +246,9 @@ $ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./h
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
-
+{{% notice note %}}
 TIP: export the the template ID as a bash variable for future use.
+{{% /notice %}}
 
 ```
 $ export TEMPLATE_ID=75ab8483-6f42-42a9-a80d-a9f6196130df
@@ -270,7 +271,9 @@ $ docker exec -i deploy_tink-cli_1 tink workflow create \
 Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
+{{% notice note %}}
 TIP: export the the workflow ID as a bash variable.
+{{% /notice %}}
 
 ```
 $ export WORKFLOW_ID=a8984b09-566d-47ba-b6c5-fbe482d8ad7f
@@ -284,13 +287,17 @@ tink-server_1  | {"level":"info","ts":1592936829.6773047,"caller":"grpc-server/w
 
 ## Checking Workflow Status
 
-You can not SSH directly into the Worker but you can use the `SOS` or `Out of bond` console provided by Packet to follow what happens in the Worker during the workflow. You can SSH into the SOS console with: 
+You can not SSH directly into the Worker but you can use the `SOS` or `Out of bond` console provided by Packet to follow what happens in the Worker during the workflow. You can SSH into the SOS console with:
 
 ```
 ssh $(terraform output -json worker_sos | jq -r '.[0]')
 ```
 
-You can also use the CLI from the provisioner to validate if the workflow completed correctly using the `tink workflow events` command. Note that an event can take ~5 minutes to show up.
+You can also use the CLI from the provisioner to validate if the workflow completed correctly using the `tink workflow events` command.
+
+{{% notice note %}}
+Note that an event can take ~5 minutes to show up.
+{{% /notice %}}
 
 ```
 docker exec -i deploy_tink-cli_1 tink workflow events $WORKFLOW_ID
@@ -305,7 +312,7 @@ docker exec -i deploy_tink-cli_1 tink workflow events $WORKFLOW_ID
 
 ## Cleanup
 
-You can terminate worker and provisioner with the terraform destroy command:
+You can terminate worker and provisioner with the `terraform destroy` command:
 
 ```
 terraform destroy
