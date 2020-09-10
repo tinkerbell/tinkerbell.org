@@ -23,7 +23,7 @@ The first thing to do is to clone the `sandbox` repository because it contains t
 
 ```
 git clone https://github.com/tinkerbell/sandbox.git
-cd tink/deploy/terraform
+cd sandbox/deploy/terraform
 ```
 
 The Packet Terraform module requires a couple of inputs, the mandatory ones are the `packet_api_token` and the `project_id`. You can define them in a `terraform.ftvars` file. By default, Terraform will load the file when present. You can create one `terraform.tfvars` that looks like this:
