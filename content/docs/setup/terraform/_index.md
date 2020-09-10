@@ -19,10 +19,10 @@ This guide assumes that you already have:
 
 ## Using Terraform
 
-The first thing to do is to clone the `tink` repository because it contains the Terraform file required to spin up the environment.
+The first thing to do is to clone the `sandbox` repository because it contains the Terraform file required to spin up the environment.
 
 ```
-git clone https://github.com/tinkerbell/tink.git
+git clone https://github.com/tinkerbell/sandbox.git
 cd tink/deploy/terraform
 ```
 
