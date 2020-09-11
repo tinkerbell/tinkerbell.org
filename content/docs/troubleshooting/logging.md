@@ -38,10 +38,10 @@ As part of the implementation, we desired to keep all tink services consistent w
 These parameters are pushed into Tinkerbell ecosystem via below environment variables from the host.
 
 ```
-LOG_DRIVER               # Defines the type of log driver like syslog or fluentd, journald etc
-LOG_SERVER_ADDRESS_TYPE  # Defines the type of log server-address type like syslog-address or fluentd-address etc
-LOG_SERVER_ADDRESS       # Defines the IP address of log server
-LOG_TAG                  # Defines the tag which will be marked on the Tinkerbell containers
+LOG_DRIVER                   # Defines the type of log driver like syslog or fluentd, journald etc
+LOG_OPT_SERVER_ADDRESS_TYPE  # Defines the type of log server-address type like syslog-address or fluentd-address etc
+LOG_OPT_SERVER_ADDRESS       # Defines the IP address of log server
+LOG_OPT_TAG                  # Defines the tag which will be marked on the Tinkerbell containers
 ```
 
 As of now, we are supporting `server_address` and `tag` log-opts but in next releases, we will support other log-opts as well. Moreover, we would also like to understand the use case of other log-opts before adding them, specifically how they can improve the centralized logging as a feature.
@@ -54,10 +54,10 @@ Once the host-level configuration are completed we can start the Tinkerbell dock
   .
   .
   logging:
-    driver: ${LOG_DRIVER}
+    driver: ${LOG_OPT_DRIVER}
     options:
-      <log-address-type>: ${LOG_SERVER_ADDRESS}
-      tag: ${LOG_TAG}
+      <log-address-type>: ${LOG_OPT_SERVER_ADDRESS}
+      tag: ${LOG_OPT_TAG}
 ```
 
 ## Default logging configuration
@@ -68,9 +68,9 @@ All the containers configured as below, and running across the nodes will push l
 
 ```
 export LOG_DRIVER=syslog
-export LOG_SERVER_ADDRESS_TYPE=syslog-address
-export LOG_SERVER_ADDRESS=tcp://192.168.1.1:514
-export LOG_TAG=Tinkerbell/{{.Name}}
+export LOG_OPT_SERVER_ADDRESS_TYPE=syslog-address
+export LOG_OPT_SERVER_ADDRESS=tcp://192.168.1.1:514
+export LOG_OPT_TAG=Tinkerbell/{{.Name}}
 ```
 
 Below are the configuration files for the `rsyslog` service and be located under `tink` repo.
@@ -153,9 +153,9 @@ As we mentioned, centralizing the logs by leveraging the docker services and env
 
   ```
   export LOG_DRIVER=fluentd
-  export LOG_SERVER_ADDRESS_TYPE=fluentd-address
-  export LOG_SERVER_ADDRESS=192.168.1.1:24224
-  export LOG_TAG=Tinkerbell/{{.Name}}
+  export LOG_OPT_SERVER_ADDRESS_TYPE=fluentd-address
+  export LOG_OPT_SERVER_ADDRESS=192.168.1.1:24224
+  export LOG_OPT_TAG=Tinkerbell/{{.Name}}
   ```
 
 - Now from another tab, start the Tinkerbell services using [fluentd docker-compose file](docker_compose_fluentd.yml) with command `docker-compose -f docker_compose_fluentd.yml up -d`
