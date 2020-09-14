@@ -30,7 +30,7 @@ Centralized logging only captures docker or microservices logs. It leverages the
 For the docker container configuration, we have used below logging parameters
 
 - `log-driver`: `syslog`
-- `server-address`: `tcp://<log_server_address_ip>:514`
+- `log-server-address`: `tcp://<log_server_address_ip>:514`
 - `tag`: `container_name/{{.Name}}`
 
 As part of the implementation, we desired to keep all tink services consistent with logging configurations and successively they should also execute the action containers with the same configuration. To achieve it, we defined the environment variables for each parameter of the configuration. These environment variables are pushed to the container of all the tink services from the host when they are started. This also facilitated to bring the feature of `Plug and Play` where the user can easily change the configuration and it will remain consistent across the services and nodes for Tinkerbell services. These parameters can be located inside `tink` repo at `generate-envrc.sh` under `logging details` subheading. User can update logging configuration by changing the values in this file and use the new `envrc`.
@@ -39,14 +39,13 @@ These parameters are pushed into Tinkerbell ecosystem via below environment vari
 
 ```
 LOG_DRIVER                   # Defines the type of log driver like syslog or fluentd, journald etc
-LOG_OPT_SERVER_ADDRESS_TYPE  # Defines the type of log server-address type like syslog-address or fluentd-address etc
 LOG_OPT_SERVER_ADDRESS       # Defines the IP address of log server
 LOG_OPT_TAG                  # Defines the tag which will be marked on the Tinkerbell containers
 ```
 
 As of now, we are supporting `server_address` and `tag` log-opts but in next releases, we will support other log-opts as well. Moreover, we would also like to understand the use case of other log-opts before adding them, specifically how they can improve the centralized logging as a feature.
 
-Once the host-level configuration are completed we can start the Tinkerbell docker services using docker-compose. In the respective docker-compose file these configurations are reflected via variables as shown below. Please note, `log-address-type` is a key in the docker-compose file. So, as of now, it is required to manually change the value as per the type of log-driver. (See [Default logging configuration](#defualt-logging-configuration) and [Plug & Play](#plug-and-play) for more reference.)
+Once the host-level configuration are completed we can start the Tinkerbell docker services using docker-compose. In the respective docker-compose file these configurations are reflected via variables as shown below. Please note, `log-server-address-type` is a key in the docker-compose file. So, as of now, it is required to manually change the value as per the type of log-driver in the compose file. While for the Tinkerbell worker and action containers, value for this parameter does not require manual intervention. These containers are managed by Tinkerbell provisioner services, which start these containers with log-server-address-type as the concatenated string of value of variable LOG_DRIVER with the string `-address`. (See [Default logging configuration](#defualt-logging-configuration) and [Plug & Play](#plug-and-play) for more reference.)
 
 ```
 <some-tink-service>:
@@ -56,7 +55,7 @@ Once the host-level configuration are completed we can start the Tinkerbell dock
   logging:
     driver: ${LOG_OPT_DRIVER}
     options:
-      <log-address-type>: ${LOG_OPT_SERVER_ADDRESS}
+      <log-server-address-type>: ${LOG_OPT_SERVER_ADDRESS}
       tag: ${LOG_OPT_TAG}
 ```
 
@@ -64,11 +63,10 @@ Once the host-level configuration are completed we can start the Tinkerbell dock
 
 For the default configuration, we have leveraged `syslog` driver with `rsyslog` linux package. Log driver for the same is [`syslog`](https://docs.docker.com/config/containers/logging/syslog/). Before implementing, we compared it with other services like `journald`, `fluentd`, [others](https://docs.docker.com/config/containers/logging/dual-logging/) and in the end `syslog` with `rsyslog` came out as the favourable choice. It is easy to understand and use, plus it is present in all the Linux distros which Tinkerbell is using.
 
-All the containers configured as below, and running across the nodes will push log messages to the Tinkerbell provisioner IP on the standard `syslog` port of 514\. `rsyslog` is configured to capture log messages using the tag and redirect them to separate file in a folder. The name of the folder will be the hostname of the node on which container would be running. Along with that, log rotation support is also added.
+All the containers configured as below, and running across the nodes will push log messages to the Tinkerbell provisioner IP on the standard `syslog` port of 514\. `log-server-address-type` for this driver would be `syslog-address`. Also, `rsyslog` is configured to capture log messages using the tag and redirect them to separate file in a folder. The name of the folder will be the hostname of the node on which container would be running. Along with that, log rotation support is also added.
 
 ```
 export LOG_DRIVER=syslog
-export LOG_OPT_SERVER_ADDRESS_TYPE=syslog-address
 export LOG_OPT_SERVER_ADDRESS=tcp://192.168.1.1:514
 export LOG_OPT_TAG=Tinkerbell/{{.Name}}
 ```
@@ -149,11 +147,10 @@ As we mentioned, centralizing the logs by leveraging the docker services and env
   2020-09-09 15:22:18 +0000 [info]: listening fluent socket on 0.0.0.0:24224
   ```
 
-- Update the environment variables as below.
+- Update the environment variables as below. `log-server-address-type` for this driver would be `fluentd-address`.
 
   ```
   export LOG_DRIVER=fluentd
-  export LOG_OPT_SERVER_ADDRESS_TYPE=fluentd-address
   export LOG_OPT_SERVER_ADDRESS=192.168.1.1:24224
   export LOG_OPT_TAG=Tinkerbell/{{.Name}}
   ```
