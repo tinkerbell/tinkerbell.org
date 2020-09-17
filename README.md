@@ -1,9 +1,13 @@
+![](https://img.shields.io/badge/Stability-Maintained-green.svg)
+
 # Tinkerbell
 
 For complete documentation visit [tinkerbell.org](https://tinkerbell.org/)
 
 Tinkerbell is a bare metal provisioning engine.
 It’s built and maintained with love by the team at Packet.
+
+This repository is [Maintained](https://github.com/packethost/standards/blob/master/maintained-statement.md) meaning that this software is supported by Packet and its community - available to use in production environments.
 
 ## Contributing
 
