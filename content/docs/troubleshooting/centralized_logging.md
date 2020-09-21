@@ -1,4 +1,4 @@
-# Logging framework of Tinkerbell
+# Using Centralized Logging framework of Tinkerbell
 
 ## Overview
 
@@ -16,7 +16,7 @@ Tinkerbell as of today is a composition of following microservices
 
 Logging is crucial for any product or feature to ensure debugging and bug-free implementation. Logs of these services can be obtained using `docker logs <service name>`. For tink-worker and action containers, the steps are same and many times it would happen that service containers have exited once the execution is completed leaving the user with an overhead of first searching the dead container `docker ps -a` to check the logs of that container. Also, logs are segregated across the nodes. So, the user will have to jump across the nodes to check the logs of the respective container or microservice. With the advent of more feature on these services microservices `docker logs` will become laborious to use from the console.
 
-Logging framework of Tinkerbell tries to solve these problems. This feature adds the support of
+Centralized Logging framework of Tinkerbell tries to solve these problems and this feature can be created on the top of existing logging functionalities. This feature adds the support of
 
 - Log aggregation of these microservices to a log server.
 - Logs redirection to a file, thus NO dependency on `docker logs`. If the user wants they can create a logging container and mount log directory.
@@ -38,6 +38,7 @@ As part of the implementation, we desired to keep all tink services consistent w
 These parameters are pushed into Tinkerbell ecosystem via below environment variables from the host.
 
 ```
+CENTRALIZED_LOGGING          # Defines the state of centralized logging for Tinkerbell.
 LOG_DRIVER                   # Defines the type of log driver like syslog or fluentd, journald etc
 LOG_OPT_SERVER_ADDRESS       # Defines the IP address of log server
 LOG_OPT_TAG                  # Defines the tag which will be marked on the Tinkerbell containers
@@ -59,13 +60,14 @@ Once the host-level configuration are completed we can start the Tinkerbell dock
       tag: ${LOG_OPT_TAG}
 ```
 
-## Default logging configuration
+## Default centralized logging configuration
 
 For the default configuration, we have leveraged `syslog` driver with `rsyslog` linux package. Log driver for the same is [`syslog`](https://docs.docker.com/config/containers/logging/syslog/). Before implementing, we compared it with other services like `journald`, `fluentd`, [others](https://docs.docker.com/config/containers/logging/dual-logging/) and in the end `syslog` with `rsyslog` came out as the favourable choice. It is easy to understand and use, plus it is present in all the Linux distros which Tinkerbell is using.
 
 All the containers configured as below, and running across the nodes will push log messages to the Tinkerbell provisioner IP on the standard `syslog` port of 514\. `log-server-address-type` for this driver would be `syslog-address`. Also, `rsyslog` is configured to capture log messages using the tag and redirect them to separate file in a folder. The name of the folder will be the hostname of the node on which container would be running. Along with that, log rotation support is also added.
 
 ```
+export CENTRALIZED_LOGGING=enable
 export LOG_DRIVER=syslog
 export LOG_OPT_SERVER_ADDRESS=tcp://192.168.1.1:514
 export LOG_OPT_TAG=Tinkerbell/{{.Name}}
@@ -150,6 +152,7 @@ As we mentioned, centralizing the logs by leveraging the docker services and env
 - Update the environment variables as below. `log-server-address-type` for this driver would be `fluentd-address`.
 
   ```
+  export CENTRALIZED_LOGGING=enable
   export LOG_DRIVER=fluentd
   export LOG_OPT_SERVER_ADDRESS=192.168.1.1:24224
   export LOG_OPT_TAG=Tinkerbell/{{.Name}}
