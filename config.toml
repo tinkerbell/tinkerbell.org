@@ -76,7 +76,7 @@ weight = 1
 [[menu.homepage]]
 identifier = "docs"
 name = "Docs"
-url = "/docs/"
+url = "https://docs.tinkerbell.org/"
 weight = 10
 
 [[menu.homepage]]
