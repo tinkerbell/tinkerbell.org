@@ -37,23 +37,25 @@ The tags are composed as: `sha-<gitsha>`, where `gitsha` is the first 7 characte
 
 Tinkerbell uses the standard Golang toolchain. You can clone the tink repository:
 
-```
+```sh
 git clone git@github.com:tinkerbell/tink
 ```
 
 All the binaries are inside `cmd/tink-*`. Based on what you need, you can run `go build`. For example if you would like to compile the CLI, run:
 
-```
+```sh
 go build cmd/tink-cli/main.go
 ```
 
 You can also use `go run` if you want to run code without having to compile a binary:
 
-```
+```sh
 go run cmd/tink-server/main.go
 ```
 
-## Building and Running `tink-cli`
+## tink-cli
+
+### Building and Running `tink-cli`
 
 One use case of the binaries, is if you want to run the `tink-cli` binary on the Provisioner, outside the `tink-server` container. This simplifies the CLI command usage.
 
@@ -64,34 +66,34 @@ Prerequisites:
 
 SSH into the Provisioner and Navigate to the directory where you have cloned the tink repository.
 
-```
+```sh
 ssh
 cd tink
 ```
 
 Now let's compile the binary with:
 
-```
-$ go build -o tink cmd/tink-cli/main.go
+```sh
+go build -o tink cmd/tink-cli/main.go
 ```
 
-All the traffic between Tinkerbell services is encrypted via TLS, so before running any `tink` commands there are two environment variables that authenticate the CLI to the `tink-server`. The `tink-server` entry point is 127.0.0.1 and exposes ports 42113 and 42114.
+All traffic between Tinkerbell services is encrypted via TLS, so before running any `tink` commands there are two environment variables that authenticate the CLI to the `tink-server`. The `tink-server` listens on 127.0.0.1 and exposes ports 42113 and 42114.
 
 - `TINKERBELL_CERT_URL=http://127.0.0.1:42114/cert`
 - `TINKERBELL_GRPC_AUTHORITY=127.0.0.1:42113`
 
-NOTE: In a real environment every person that as access to the host and ports can authenticate and use `tink-server`.
+NOTE: In a real environment every person that has access to the host and ports can authenticate and use `tink-server`.
 
 You can export them as environment variables or you can run them in-line as part of the `tink` command.
 
-```
-$ export TINKERBELL_GRPC_AUTHORITY=127.0.0.1:42113
-$ export TINKERBELL_CERT_URL=http://127.0.0.1:42114/cert
+```sh
+export TINKERBELL_GRPC_AUTHORITY=127.0.0.1:42113
+export TINKERBELL_CERT_URL=http://127.0.0.1:42114/cert
 ```
 
 Now you can run `tink` commands without `docker-exec`.
 
-```
+```sh
 $ tink hardware list
 >
 +----+-------------+------------+----------+
@@ -102,7 +104,7 @@ $ tink hardware list
 
 You can also test by making some hardware data.
 
-```
+```sh
 $ cat > hardware-data.json <<EOF
 {
   "id": "ce2e62ed-826f-4485-a39f-a82bb74338e2",
@@ -138,4 +140,42 @@ EOF
 tink hardware push < ./hardware-data.json
 >
 2020/08/31 10:20:20 Hardware data pushed successfully
+```
+
+## tink-worker
+
+The `tink-worker` runs the configured actions for a worker. To do this, the
+worker must connect to the Tink server and the image registry server.
+
+Several configuration parameters are required for this to be successful.  These
+parameters may be configured through environment variables, command line
+arguments, or a with a tink-worker.yaml (or tink-worker.json) file. This
+configuration file can be located in either the current working directory or
+`/etc/tinkerbell/`, only the first matching file will be used.
+
+### Tink Worker Options
+
+All of the worker options below are required unless a default value is
+indicated.  Additionally, `TINKERBELL_CERT_URL` must be configured in the
+environment.
+
+Each option can be configured in the configuration by using the full given
+argument name as the configuration key. Options whose help text includes an
+environment variable name (eg. `DOCKER_REGISTRY`) can be configured with the
+named environment variable.
+
+Settings are first read from the configuration file, then from the environment,
+and finally from the command line arguments.
+
+```sh
+$ tink-worker --help
+  -r, --docker-registry string     Sets the Docker registry (DOCKER_REGISTRY)
+  -h, --help                       help for tink-worker
+  -i, --id string                  Sets the worker id (ID)
+      --max-file-size int          Maximum file size in bytes (MAX_FILE_SIZE) (default 10485760)
+      --max-retry int              Maximum number of retries to attempt (MAX_RETRY) (default 3)
+  -p, --registry-password string   Sets the registry-password (REGISTRY_PASSWORD)
+  -u, --registry-username string   Sets the registry username (REGISTRY_USERNAME)
+      --retry-interval duration    Retry interval in seconds (RETRY_INTERVAL) (default 3ns)
+      --timeout duration           Max duration to wait for worker to complete (TIMEOUT) (default 1h0m0s)
 ```
