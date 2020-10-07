@@ -113,7 +113,7 @@ weight = 40
 pre = "<i class='fab fa-fw fa-youtube'></i>"
 name = "Youtube"
 url = "https://www.youtube.com/channel/UCTzWInTQPvzH21KHS8jrq7A"
-weight = 40
+weight = 20
 
 [[menu.tink]]
 name = "Tink"
