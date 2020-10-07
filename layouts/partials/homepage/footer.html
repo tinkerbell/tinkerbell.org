@@ -51,9 +51,15 @@
                     {{with .Site.Menus.homepage}}
                     <ul>
                           {{ range sort . "Weight"}}
-                              <li> 
-                                  <a href="{{.URL | absLangURL }}">{{.Pre}}</a>{{.Post}}
-                              </li>
+                              {{if isset .Params "Pre"}}
+                                <li> 
+                                    <a href="{{.URL | absLangURL }}">{{safeHTML .Name}}</a>{{.Post}}
+                                </li>
+                              {{else}}
+                                <li> 
+                                    <a href="{{.URL | absLangURL }}">{{.Pre}}</a>{{.Post}}
+                                </li>
+                              {{end}}
                           {{end}}
                     </ul>
                     {{end}}
