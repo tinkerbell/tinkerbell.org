@@ -21,14 +21,14 @@ This guide assumes that you already have:
 
 The first thing to do is to clone the `sandbox` repository because it contains the Terraform file required to spin up the environment.
 
-```
+```sh
 git clone https://github.com/tinkerbell/sandbox.git
 cd sandbox/deploy/terraform
 ```
 
 The Packet Terraform module requires a couple of inputs, the mandatory ones are the `packet_api_token` and the `project_id`. You can define them in a `terraform.ftvars` file. By default, Terraform will load the file when present. You can create one `terraform.tfvars` that looks like this:
 
-```
+```sh
 cat terraform.tfvars
 packet_api_token = "awegaga4gs4g"
 project_id = "235-23452-245-345"
@@ -38,7 +38,7 @@ Otherwise, you can pass the inputs to the `terraform` command through a file, or
 
 Once you have your variables set, run the Terraform commands:
 
-```
+```sh
 terraform init --upgrade
 terraform apply
 >
@@ -70,7 +70,7 @@ This error notifies you that the facility you are using (by default sjc1) does n
 
 You can check availability of device type in a particular facility through the Packet CLI using the `capacity get` command.
 
-```
+```sh
 packet capacity get
 ```
 
@@ -87,7 +87,7 @@ You are looking for a facility that has a `normal` level of `c3.small.x84`.
 Terraform uses the Terraform [file](https://www.terraform.io/docs/provisioners/file.html) function to copy
 the `tink` directory from your local environment to the Provisioner. You can get this error if your local `ssh-agent` properly You should start the agent and add the `private_key` that you use to SSH into the Provisioner.
 
-```
+```sh
 ssh-agent
 ssh-add ~/.ssh/id_rsa
 ```
@@ -106,20 +106,20 @@ Sometimes the `/root/tink` directory is only partially copied onto the the Provi
 
 SSH into the Provisioner and you will find yourself in a copy of the `tink` repository:
 
-```
+```sh
 ssh -t root@$(terraform output provisioner_ip) "cd /root/tink && bash"
 ```
 
 You have to define and set Tinkerbell's environment. Use the `generate-envrc.sh` script to generate the `.env` file. Using and setting `.env` creates an idempotent workflow and you can use it to configure the `setup.sh` script. For example changing the [OSIE](/docs/services/osie) version.
 
-```
+```sh
 ./generate-envrc.sh enp1s0f1 > .env
 source .env
 ```
 
 Then, you run the `setup.sh` script.
 
-```
+```sh
 ./setup.sh
 ```
 
@@ -136,14 +136,14 @@ Then, you run the `setup.sh` script.
 
 The services in Tinkerbell are containerized, and the daemons will run with `docker-compose`. You can find the definitions in `tink/deploy/docker-compose.yaml`. Start all services:
 
-```
+```sh
 cd ./deploy
 docker-compose up -d
 ```
 
 To check if all the services are up and running you can use docker-compose as well. The output should look similar to:
 
-```
+```sh
 docker-compose ps
 >
         Name                      Command               State                         Ports
@@ -159,7 +159,7 @@ deploy_tink-server_1   tink-server                      Up      0.0.0.0:42113->4
 
 You now have a Provisioner up and running on Packet. The next steps take you through creating a workflow and pushing it to the Worker using the `hello-world` workflow example. If you want to use the example, you need to pull the `hello-world` image from from Docker Hub to the internal registry.
 
-```
+```sh
 docker pull hello-world
 docker tag hello-world 192.168.1.1/hello-world
 docker push 192.168.1.1/hello-world
@@ -169,7 +169,7 @@ docker push 192.168.1.1/hello-world
 
 As part of the `terraform apply` output you get the MAC address for the worker and it generates a file that contains the JSON describing it. Now time to register it with Tinkerbell.
 
-```
+```sh
 cat /root/tink/deploy/hardware-data-0.json
 {
   "id": "0eba0bf8-3772-4b4a-ab9f-6ebe93b90a94",
@@ -211,7 +211,7 @@ The mac address is the same we get from the Terraform output
 
 Now we can push the hardware data to `tink-server`:
 
-```
+```sh
 docker exec -i deploy_tink-cli_1 tink hardware push < /root/tink/deploy/hardware-data-0.json
 >
 2020/06/17 14:12:45 Hardware data pushed successfully
@@ -223,7 +223,7 @@ A note on the Worker at this point. Ideally the worker should be kept from booti
 
 Next, define the template for the workflow. The template sets out tasks for the Worker to preform sequentially. This template contains a single task with a single action, which is to perform [“hello-world”](/docs/examples/hello-world). Just as in the hello-world example, the `hello-world` image doesn’t contain any instructions that the Worker will perform. It is just a placeholder in the template so a workflow can be created and pushed to the Worker.
 
-```
+```sh
 cat > hello-world.yml  <<EOF
 version: "0.1"
 name: hello_world_workflow
@@ -240,7 +240,7 @@ EOF
 
 Create the template and push it to the `tink-server` with the `tink template create` command.
 
-```
+```sh
 docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
 
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
@@ -250,7 +250,7 @@ Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 TIP: export the the template ID as a bash variable for future use.
 {{% /notice %}}
 
-```
+```sh
 export TEMPLATE_ID=75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
@@ -263,7 +263,7 @@ The next step is to combine both the hardware data and the template to create a 
 
 Combine these two pieces of information and create the workflow with the `tink workflow create` command.
 
-```
+```sh
 docker exec -i deploy_tink-cli_1 tink workflow create \
     -t $TEMPLATE_ID \
     -r '{"device_1":'$(jq .network.interfaces[0].dhcp.mac hardware-data-0.json)'}'
@@ -275,7 +275,7 @@ Created Workflow:  a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 TIP: export the the workflow ID as a bash variable.
 {{% /notice %}}
 
-```
+```sh
 export WORKFLOW_ID=a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
