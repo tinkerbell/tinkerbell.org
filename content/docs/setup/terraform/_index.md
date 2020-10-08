@@ -88,8 +88,8 @@ Terraform uses the Terraform [file](https://www.terraform.io/docs/provisioners/f
 the `tink` directory from your local environment to the Provisioner. You can get this error if your local `ssh-agent` properly You should start the agent and add the `private_key` that you use to SSH into the Provisioner.
 
 ```
-$ ssh-agent
-$ ssh-add ~/.ssh/id_rsa
+ssh-agent
+ssh-add ~/.ssh/id_rsa
 ```
 
 Then rerun `terraform apply`. You don't need to run `terraform destroy`, as Terraform can be reapplied over and over, detecting which parts have already been completed.
@@ -241,7 +241,7 @@ EOF
 Create the template and push it to the `tink-server` with the `tink template create` command.
 
 ```
-$ docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
+docker exec -i deploy_tink-cli_1 tink template create --name hello-world < ./hello-world.yml
 
 Created Template:  75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
@@ -251,7 +251,7 @@ TIP: export the the template ID as a bash variable for future use.
 {{% /notice %}}
 
 ```
-$ export TEMPLATE_ID=75ab8483-6f42-42a9-a80d-a9f6196130df
+export TEMPLATE_ID=75ab8483-6f42-42a9-a80d-a9f6196130df
 ```
 
 ## Creating a Workflow
@@ -264,7 +264,7 @@ The next step is to combine both the hardware data and the template to create a 
 Combine these two pieces of information and create the workflow with the `tink workflow create` command.
 
 ```
-$ docker exec -i deploy_tink-cli_1 tink workflow create \
+docker exec -i deploy_tink-cli_1 tink workflow create \
     -t $TEMPLATE_ID \
     -r '{"device_1":'$(jq .network.interfaces[0].dhcp.mac hardware-data-0.json)'}'
 
@@ -276,7 +276,7 @@ TIP: export the the workflow ID as a bash variable.
 {{% /notice %}}
 
 ```
-$ export WORKFLOW_ID=a8984b09-566d-47ba-b6c5-fbe482d8ad7f
+export WORKFLOW_ID=a8984b09-566d-47ba-b6c5-fbe482d8ad7f
 ```
 
 The command returns a Workflow ID and if you are watching the logs, you will see:
