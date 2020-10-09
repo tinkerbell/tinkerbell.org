@@ -27,7 +27,7 @@ These are the folks who have built Tinkerbell with a shared passion for automati
 
 - Slack: [https://slack.equinixmetal.com/](https://slack.equinixmetal.com/) We have an active Slack channel in the Equinx Metal™ community workspace to talk all things Tinkerbell.
 - Contribute: [contributor guide](https://tinkerbell.org/terms/contributor-guide/) We&#39;re always looking for people with a passion for bare metal to work with us. Read over our contributor guide and jump right in.
-- Proposal: [[https://github.com/tinkerbell/proposals](https://github.com/tinkerbell/proposals)] Contribute to what we&#39;re building with a proposal. We use proposals to help publically guide the conversation about deciding on new features or pieces of code. Submit your thoughts.
+- Proposal: [https://github.com/tinkerbell/proposals](https://github.com/tinkerbell/proposals)] Contribute to what we&#39;re building with a proposal. We use proposals to help publically guide the conversation about deciding on new features or pieces of code. Submit your thoughts.
 
 ## Keep In Touch
 
