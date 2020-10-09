@@ -18,10 +18,10 @@ Looking to get started with Tinkerbell? Here is the best way to do that
 - GitHub: [https://github.com/tinkerbell/](https://github.com/tinkerbell/) See the repo for Tinkerbell and all of the components that build it. Need a bug squashed or have a feature idea? Add them here.
 
 ## Meet Our Community
+
 These are the folks who have built Tinkerbell with a shared passion for automating and simplifying bare metal provisioning.
 
 - Contributors: [https://tinkerbell.org/community/contributors](/https://tinkerbell.org/community/contributors/)
-
 
 ## Join us:
 
