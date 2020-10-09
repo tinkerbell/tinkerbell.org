@@ -14,7 +14,7 @@ Welcome to the Tinkerbell community. Learn how to join the community, find help,
 
 Looking to get started with Tinkerbell? Here is the best way to do that
 
-- [Documentation](https://tinkerbell.org/docs/): Read the docs to see how to get Tinkerbell up and running.
+- [Documentation](https://docs.tinkerbell.org/): Read the docs to see how to get Tinkerbell up and running.
 - [GitHub](https://github.com/tinkerbell/): See the repo for Tinkerbell and all of the components that build it. Need a bug squashed or have a feature idea? Add them here.
 
 ## Meet Our Community
