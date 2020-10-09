@@ -32,6 +32,9 @@ These are the folks who have built Tinkerbell with a shared passion for automati
 ## Keep In Touch
 
 - Twitter - [@tinkerbell_oss](https://twitter.com/tinkerbell_oss)
+
   Follow us on Twitter for news, updates, and stories from the community [@tinkerbell_oss](https://twitter.com/tinkerbell_oss)
-- YouTube - [https://www.youtube.com/channel/UCTzWInTQPvzH21KHS8jrq7A/](https://www.youtube.com/channel/UCTzWInTQPvzH21KHS8jrq7A/)
+
+- [YouTube](https://www.youtube.com/channel/UCTzWInTQPvzH21KHS8jrq7A/)
+
   Our YouTube channel is a place to go to see recordings of our weekly contributors' meetings, talks, demos, and workshops about Tinkerbell and bare metal automation.
