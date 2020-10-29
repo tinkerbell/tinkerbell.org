@@ -26,8 +26,8 @@ Paginate = 4
 home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-docs", "sitemap-examples", "sitemap-terms"]
 
 [params]
- author = "Packet" # add your company name
- description = "Tinkerbell is an open-source bare metal provisioning engine, built for a cloud native world and maintained by the team at Packet."
+ author = "Equinix Metal" # add your company name
+ description = "Tinkerbell is an open-source bare metal provisioning engine, built for a cloud native world and maintained by the team at Equinix Metal."
  github = "https://github.com/tinkerbell" # add your github profile name
  email = "hello@tinkerbell.org"
  showVisitedLinks = false
@@ -39,7 +39,7 @@ home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-docs", "sitemap-ex
  sitename = "Tinkerbell.org"
  twitter = "@tinkerbell_oss"
  ogtitle = "Flexible automation for bare metal"
- ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed by Packet, an Equinix company."
+ ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed by Equinix Metal."
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"

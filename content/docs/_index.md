@@ -11,11 +11,11 @@ Everything you need to know about Tinkerbell and its major component microservic
 
 ## What is Tinkerbell?
 
-Tinkerbell is an open-source, bare metal provisioning engine, built and maintained by the team at Packet.
+Tinkerbell is an open-source, bare metal provisioning engine, built and maintained by the team at Equinix Metal.
 
 The answer it answer is: "How to make an shiny new server available for us in an automatic fashion?"
 
-- Interested in collaborating? Join our growing community of [Contributors](/community/contributors) on [GitHub](https://github.com/tinkerbell) or [Slack](https://slack.packet.com)
+- Interested in collaborating? Join our growing community of [Contributors](/community/contributors) on [GitHub](https://github.com/tinkerbell) or [Slack](https://slack.equinixmetal.com)
 
 ## What's Powering Tinkerbell?
 

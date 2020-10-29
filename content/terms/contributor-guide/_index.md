@@ -18,7 +18,7 @@ Tinkerbell is a bare metal provisioning engine and consists of five components: 
 
 ## How To Get Involved
 
-We are grateful for our contributors and want this to be as easy and open as possible. We have a #tinkerbell [Slack channel](https://slack.packet.com) in the Packet community and it's the best place to keep up-to-date with all of the Tinkerbell projects.
+We are grateful for our contributors and want this to be as easy and open as possible. We have a #tinkerbell [Slack channel](https://slack.equinixmetal.com) in the Equinix Metal community and it's the best place to keep up-to-date with all of the Tinkerbell projects.
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
