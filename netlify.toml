@@ -163,3 +163,78 @@ HUGO_ENABLEGITINFO = "true"
   from = "/cli/workflow"
   to = "/docs/cli/workflow"
   status = 301
+
+[[redirects]]
+  from = "/docs/#whats-powering-tinkerbell"
+  to = "https://docs.tinkerbell.org/#whats-powering-tinkerbell"
+  status = 301
+
+[[redirects]]
+  from = "/docs"
+  to = "https://docs.tinkerbell.org"
+  status = 301
+
+[[redirects]]
+  from = "/docs/architecture"
+  to = "https://docs.tinkerbell.org/about/architecture/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/setup/local-with-vagrant"
+  to = "https://docs.tinkerbell.org/setup/local-vagrant/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/setup/packet-with-terraform"
+  to = "https://docs.tinkerbell.org/setup/packet-terraform/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/setup/packet-with-terraform/provisioner"
+  to = "https://docs.tinkerbell.org/setup/packet-terraform/#setting-up-the-provisioner"
+  status = 301
+
+[[redirects]]
+  from = "/docs/hardware-data"
+  to = "https://docs.tinkerbell.org/about/hardware-data/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/templates"
+  to = "https://docs.tinkerbell.org/about/templates/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/troubleshooting"
+  to = "https://docs.tinkerbell.org/troubleshooting/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/setup/terraform"
+  to = "https://docs.tinkerbell.org/setup/packet-terraform/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/setup/terraform/provisioner"
+  to = "https://docs.tinkerbell.org/setup/packet-terraform/#setting-up-the-provisioner"
+  status = 301
+
+[[redirects]]
+  from = "/docs/cli"
+  to = "https://docs.tinkerbell.org/cli-reference/hardware/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/cli/hardware"
+  to = "https://docs.tinkerbell.org/cli-reference/hardware/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/cli/template"
+  to = "https://docs.tinkerbell.org/cli-reference/template/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/cli/workflow"
+  to = "https://docs.tinkerbell.org/cli-reference/workflow/"
+  status = 301
