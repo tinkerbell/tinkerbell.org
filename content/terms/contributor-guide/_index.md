@@ -41,8 +41,8 @@ Pull requests are the best way to propose changes to the codebase. We use GitHub
 - Ensure the test suite passes.
 - Issue that pull request!
 
-Any contributions you make will be under the MIT Software License
-In short, when you submit code changes, your submissions are understood to be under the same MIT License that covers the project. Feel free to contact the maintainers if that's a concern.
+Any contributions you make will be under the Apache Software License
+In short, when you submit code changes, your submissions are understood to be under the same Apache License that covers the project. Feel free to contact the maintainers if that's a concern.
 
 ### Write Thorough Commit Messages
 
