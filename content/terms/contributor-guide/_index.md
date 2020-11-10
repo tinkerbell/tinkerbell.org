@@ -76,11 +76,11 @@ When you commit, you are accepting our DCO:
 > (c) The contribution was provided directly to me by some other person who certified (a), (b) or (c) and I have not modified it.
 >
 > (d) I understand and agree that this project and the contribution are public and that a record of the contribution (including all personal information I submit with it, including my sign-off) is maintained indefinitely and may be redistributed consistent with this project or the open source license(s) involved.
->
-> - When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`
-> - The commit subject-line should start with an uppercase letter
-> - The commit subject-line should not exceed 72 characters in length
-> - The commit subject-line should not end with punctuation (., etc)
+
+- When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`
+- The commit subject-line should start with an uppercase letter
+- The commit subject-line should not exceed 72 characters in length
+- The commit subject-line should not end with punctuation (., etc)
 
 Note: please do not use the GitHub suggestions feature, since it will not allow your commits to be signed-off.
 
