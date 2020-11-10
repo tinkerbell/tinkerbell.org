@@ -2,16 +2,16 @@
 title = "Frequently Asked Questions"
 menuTitle= "FAQ's"
 disableToc = "true"
-date = 2019-05-05T16:16:15+05:30
+date = 2020-10-28
 weight = 120
 sidebar = "false"
 +++
 
-{{%faq "Does Tinkerbell work outside of Packet's hosting service?" %}}
-Yes, it will work outside of Packet. Our default setup script should work on any install of Ubuntu and CentOS.
+{{%faq "Does Tinkerbell work outside of Equinix Metal's hosting service?" %}}
+Yes, it will work outside of Equinix Metal. Our default setup script should work on any install of Ubuntu and CentOS.
 {{% /faq%}}
 
-{{%faq "Does using Tinkerbell rely on having a Packet account?" %}}
+{{%faq "Does using Tinkerbell rely on having a Equinix Metal account?" %}}
 No, you can follow our [local development guide](/setup/local-with-vagrant/) to run Tinkerbell on your local machine.
 {{% /faq%}}
 

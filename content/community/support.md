@@ -9,4 +9,4 @@ Reach us out at _hello@tinkerbell.org_
 
 or
 
-Join our Slack workspace [slack.packet.com](https://slack.packet.com/)
+Join our Slack workspace, #tinkerbell in [Equinix Metal Community Slack](https://slack.equinixmetal.com)
