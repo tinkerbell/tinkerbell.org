@@ -131,4 +131,4 @@ Have an idea to propose or something you'd like us all to discuss? Great, we hav
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under its Apache License, adhere to the Developer Certificate of Origin, and adhere to our code of condense.
+By contributing, you agree that your contributions will be licensed under its Apache License, adhere to the Developer Certificate of Origin, and adhere to our code of conduct.
