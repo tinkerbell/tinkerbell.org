@@ -69,7 +69,7 @@ vagrant@provisioner:~$
 Tinkerbell is going to be running from a container, so navigate to the `vagrant` directory, set the environment, and start the Tinkerbell stack with `docker-compose`.
 
 ```
-cd /vagrant && source .env && cd deploy
+cd /vagrant && source .envrc && cd deploy
 docker-compose up -d
 ```
 
@@ -97,7 +97,7 @@ At this point, you might want to open a ssh connection to show logs from the Pro
 ```
 cd tink/deploy/vagrant
 vagrant ssh provisioner
-cd /vagrant && source .env && cd deploy
+cd /vagrant && source .envrc && cd deploy
 docker-compose logs -f tink-server boots nginx
 ```
 
