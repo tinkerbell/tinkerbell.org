@@ -41,8 +41,8 @@ Pull requests are the best way to propose changes to the codebase. We use GitHub
 - Ensure the test suite passes.
 - Issue that pull request!
 
-Any contributions you make will be under the MIT Software License
-In short, when you submit code changes, your submissions are understood to be under the same MIT License that covers the project. Feel free to contact the maintainers if that's a concern.
+Any contributions you make will be under the Apache Software License
+In short, when you submit code changes, your submissions are understood to be under the same Apache License that covers the project. Feel free to contact the maintainers if that's a concern.
 
 ### Write Thorough Commit Messages
 
@@ -76,11 +76,11 @@ When you commit, you are accepting our DCO:
 > (c) The contribution was provided directly to me by some other person who certified (a), (b) or (c) and I have not modified it.
 >
 > (d) I understand and agree that this project and the contribution are public and that a record of the contribution (including all personal information I submit with it, including my sign-off) is maintained indefinitely and may be redistributed consistent with this project or the open source license(s) involved.
->
-> - When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`
-> - The commit subject-line should start with an uppercase letter
-> - The commit subject-line should not exceed 72 characters in length
-> - The commit subject-line should not end with punctuation (., etc)
+
+- When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`
+- The commit subject-line should start with an uppercase letter
+- The commit subject-line should not exceed 72 characters in length
+- The commit subject-line should not end with punctuation (., etc)
 
 Note: please do not use the GitHub suggestions feature, since it will not allow your commits to be signed-off.
 
@@ -131,4 +131,4 @@ Have an idea to propose or something you'd like us all to discuss? Great, we hav
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under its Apache License, adhere to the Developer Certificate of Origin, and adhere to our code of condense.
+By contributing, you agree that your contributions will be licensed under its Apache License, adhere to the Developer Certificate of Origin, and adhere to our code of conduct.
