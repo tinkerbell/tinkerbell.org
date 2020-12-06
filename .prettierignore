@@ -3,5 +3,6 @@ layouts/_default/
 layouts/index.html
 layouts/partials/
 static/css/theme-mine.css
+static/googleac50482fde271f32.html
 themes
 webpack.mix.js
