@@ -9,10 +9,6 @@ Paginate = 4
     baseName = "sitemap-community"
     mediaType = "application/xml"
     protocol = "xml://"
-  [outputFormats.sitemap-docs]
-    baseName = "sitemap-docs"
-    mediaType = "application/xml"
-    protocol = "xml://"
   [outputFormats.sitemap-examples]
     baseName = "sitemap-examples"
     mediaType = "application/xml"
