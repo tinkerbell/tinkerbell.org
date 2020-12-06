@@ -30,86 +30,6 @@ HUGO_VERSION = "0.69.2"
 HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
-  from = "/components"
-  to = "/docs/#whats-powering-tinkerbell"
-  status = 301
-
-[[redirects]]
-  from = "/documentation"
-  to = "/docs"
-  status = 301
-
-[[redirects]]
-  from = "/concepts"
-  to = "/docs"
-  status = 301
-
-[[redirects]]
-  from = "/architecture"
-  to = "/docs/architecture"
-  status = 301
-
-[[redirects]]
-  from = "/setup"
-  to = "/docs/setup"
-  status = 301
-
-[[redirects]]
-  from = "/setup/local-with-vagrant"
-  to = "/docs/setup/local-with-vagrant"
-  status = 301
-
-[[redirects]]
-  from = "/setup/packet-with-terraform"
-  to = "/docs/setup/packet-with-terraform"
-  status = 301
-
-[[redirects]]
-  from = "/setup/packet-with-terraform/provisioner"
-  to = "/docs/setup/packet-with-terraform/provisioner"
-  status = 301
-
-[[redirects]]
-  from = "/setup/packet-with-terraform/hardware-data"
-  to = "/docs/setup/packet-with-terraform/hardware-data"
-  status = 301
-
-[[redirects]]
-  from = "/hardware-data"
-  to = "/docs/hardware-data"
-  status = 301
-
-[[redirects]]
-  from = "/templates"
-  to = "/docs/templates"
-  status = 301
-
-[[redirects]]
-  from = "/troubleshooting"
-  to = "/docs/troubleshooting"
-  status = 301
-
-[[redirects]]
-  from = "/cli-reference"
-  to = "/cli"
-  status = 301
-
-[[redirects]]
-  from = "/cli-reference/hardware"
-  to = "/cli/hardware"
-  status = 301
-
-[[redirects]]
-  from = "/cli-reference/template"
-  to = "/cli/template"
-  status = 301
-
-[[redirects]]
-  from = "/cli-reference/workflow"
-  to = "/cli/workflow"
-  status = 301
-
-[[redirects]]
   from = "/contributors"
   to = "/community/contributors"
   status = 301
@@ -127,41 +47,6 @@ HUGO_ENABLEGITINFO = "true"
 [[redirects]]
   from = "/license"
   to = "/terms/license"
-  status = 301
-
-[[redirects]]
-  from = "/docs/setup/packet-with-terraform"
-  to = "/docs/setup/terraform"
-  status = 301
-
-[[redirects]]
-  from = "/setup/packet-with-terraform/provisioner"
-  to = "/docs/setup/terraform/provisioner"
-  status = 301
-
-[[redirects]]
-  from = "/setup/packet-with-terraform/hardware-data"
-  to = "/docs/setup/terraform/hardware-data"
-  status = 301
-
-[[redirects]]
-  from = "/cli"
-  to = "/docs/cli"
-  status = 301
-
-[[redirects]]
-  from = "/cli/hardware"
-  to = "/docs/cli/hardware"
-  status = 301
-
-[[redirects]]
-  from = "/cli/template"
-  to = "/docs/cli/template"
-  status = 301
-
-[[redirects]]
-  from = "/cli/workflow"
-  to = "/docs/cli/workflow"
   status = 301
 
 [[redirects]]
