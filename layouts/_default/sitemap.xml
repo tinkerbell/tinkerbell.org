@@ -4,4 +4,5 @@
     <sitemap><loc>{{.Site.BaseURL}}sitemap-examples.xml</loc></sitemap>
     <sitemap><loc>{{.Site.BaseURL}}sitemap-community.xml</loc></sitemap>
     <sitemap><loc>{{.Site.BaseURL}}sitemap-terms.xml</loc></sitemap>
+    <sitemap><loc>{{.Site.BaseURL}}sitemap-faq.xml</loc></sitemap>
 </sitemapindex>

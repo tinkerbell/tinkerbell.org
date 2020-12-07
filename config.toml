@@ -17,9 +17,13 @@ Paginate = 4
     baseName = "sitemap-terms"
     mediaType = "application/xml"
     protocol = "xml://"
+  [outputFormats.sitemap-faq]
+    baseName = "sitemap-faq"
+    mediaType = "application/xml"
+    protocol = "xml://"
 
 [outputs]
-home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-examples", "sitemap-terms"]
+home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-examples", "sitemap-terms", "sitemap-faq"]
 
 [params]
  author = "Equinix Metal" # add your company name
