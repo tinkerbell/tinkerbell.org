@@ -16,7 +16,7 @@ No, you can follow our [local development guide](https://docs.tinkerbell.org/set
 {{% /faq%}}
 
 {{%faq "Can Tinkerbell be used to install OSes without Internet access (where both the Provider and Worker hosts are in an isolated network)?" %}}
-Yes, OS images are served from the [NGINX](https://docs.tinkerbell.org/#whats-powering-tinkerbell) running on the [provisioner](https://docs.tinkerbell.org/about/architecture/).
+Yes, OS images are served from the NGINX running on the [provisioner](https://docs.tinkerbell.org/architecture/).
 {{% /faq%}}
 
 {{%faq "What operating systems is Tinkerbell able to install?" %}}
