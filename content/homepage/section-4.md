@@ -12,4 +12,4 @@ Sed posuere consectetur est at lobortis.
 Nullam quis risus eget urna mollis ornare vel eu leo.
 Curabitur blandit tempus porttitor.
 
-[Get Started](https://docs.tinkerbell.org/setup/local-vagrant/).
+[Get Started](/setup/).
