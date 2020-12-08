@@ -2,9 +2,7 @@ assets/css/
 layouts/_default/
 layouts/index.html
 layouts/partials/
-layouts/shortcodes/
 static/css/theme-mine.css
 static/googleac50482fde271f32.html
 themes
 webpack.mix.js
-src/scss/
