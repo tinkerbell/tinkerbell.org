@@ -61,7 +61,7 @@ HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
   from = "/docs/architecture"
-  to = "https://docs.tinkerbell.org/about/architecture/"
+  to = "https://docs.tinkerbell.org/architecture/"
   status = 301
 
 [[redirects]]
@@ -81,12 +81,12 @@ HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
   from = "/docs/hardware-data"
-  to = "https://docs.tinkerbell.org/about/hardware-data/"
+  to = "https://docs.tinkerbell.org/hardware-data/"
   status = 301
 
 [[redirects]]
   from = "/docs/templates"
-  to = "https://docs.tinkerbell.org/about/templates/"
+  to = "https://docs.tinkerbell.org/templates/"
   status = 301
 
 [[redirects]]
@@ -122,4 +122,9 @@ HUGO_ENABLEGITINFO = "true"
 [[redirects]]
   from = "/docs/cli/workflow"
   to = "https://docs.tinkerbell.org/cli-reference/workflow/"
+  status = 301
+
+[[redirects]]
+  from = "/setup"
+  to = "https://docs.tinkerbell.org/setup/local-vagrant/"
   status = 301
