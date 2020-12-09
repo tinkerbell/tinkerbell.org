@@ -16,7 +16,7 @@ The "Hello World" example uses an example hardware data, template, and workflow 
 
 ## Hardware Data
 
-This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](/hardware-data/#the-minimal-hardware-data) with your targeted Worker's MAC Address and/or IP Address substituted in.
+This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](https://docs.tinkerbell.org/hardware-data/) with your targeted Worker's MAC Address and/or IP Address substituted in.
 
 ## The `hello-world` Action Image
 
