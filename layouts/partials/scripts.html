@@ -9,7 +9,7 @@
 <link href="{{"css/theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
 <link href="{{"css/hugo-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6193438/7338612/css/fonts.css">
+<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6193438/6190832/css/fonts.css">
 
 {{ $css := resources.Get "css/theme-tinkerbell-docs.css" | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
