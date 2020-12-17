@@ -42,11 +42,6 @@ home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-examples", "sitema
  ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed by Equinix Metal."
 
 [[menu.shortcuts]]
-name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"
-url = "/community/slack/"
-weight = 10
-
-[[menu.shortcuts]]
 name = "<i class='fab fa-fw fa-github'></i> GitHub"
 identifier = "ds"
 url = "https://github.com/tinkerbell/"
@@ -96,12 +91,6 @@ pre = "<i class='fab fa-fw fa-github'></i>"
 name = "GitHub"
 url = "https://github.com/tinkerbell/"
 weight = 20
-
-[[menu.homepage]]
-pre = "<i class='fab fa-fw fa-slack'></i>"
-name = "Slack Channel"
-url = "/community/slack/"
-weight = 30
 
 [[menu.homepage]]
 pre = "<i class='fab fa-fw fa-twitter'></i>"

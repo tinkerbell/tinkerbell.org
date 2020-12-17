@@ -128,3 +128,13 @@ HUGO_ENABLEGITINFO = "true"
   from = "/setup"
   to = "https://docs.tinkerbell.org/setup/local-vagrant/"
   status = 301
+
+[[redirects]]
+  from = "/community/slack"
+  to = "/community/contact"
+  status = 301
+
+[[redirects]]
+  from = "/community/support"
+  to = "/community/contact"
+  status = 301

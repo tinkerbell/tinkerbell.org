@@ -11,7 +11,7 @@
     
     {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
     
-    <link href="https://cloud.typography.com/6193438/7900212/css/fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6193438/7338612/css/fonts.css">
     
     {{ $css := resources.Get "css/theme-tinkerbell.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}">
