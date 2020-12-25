@@ -13,7 +13,7 @@ let mix = require('laravel-mix');
 
 mix.options({
 	processCssUrls: false,
-	publicPath: 'assets/'
+	publicPath: 'static/'
 })
 
 mix
