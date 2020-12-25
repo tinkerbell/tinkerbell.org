@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6193438/6190832/css/fonts.css">
 
-{{ $css := resources.Get "css/theme-tinkerbell-docs.css" | minify | fingerprint }}
-<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{ $docCss := resources.Get "css/theme-tinkerbell-docs.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $docCss.Permalink }}">
 
 <script src="{{"js/jquery-3.3.1.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>

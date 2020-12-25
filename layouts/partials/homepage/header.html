@@ -14,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6193438/6190832/css/fonts.css">
     
     {{ $css := resources.Get "css/theme-tinkerbell.css" | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+    <link rel="stylesheet" href="{{ $css.Permalink }}">
+
     <link href="{{"css/fontawesome-all.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
     {{ partial "ga.html" . }}
   </head>
