@@ -445,3 +445,26 @@ body.sidebar-hidden {
     }
   }
 }
+
+#right-footer {
+  .author {
+    text-align: right;
+    p {
+      font-size: 15px;
+    }
+  }
+  @include breakpoint(medium down) {
+    .author {
+      text-align: left;
+    }
+  }
+}
+
+@media print, screen and (max-width: 63.99875em) {
+    .logo-footer svg {
+        display: inline-block;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        margin-left: 0;
+    }
+}
