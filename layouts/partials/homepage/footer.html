@@ -47,24 +47,19 @@
                     </svg>
                 </a>
             </div>
-            <div class="cell large-6">
-                <nav id="nav-footer" class="nav">
-                    {{with .Site.Menus.homepage}}
+            <div class="cell large-6" id="right-footer">
+                <nav id="nav-footer">
                     <ul>
-                        {{ range sort . "Weight"}}
-                        {{ if .Pre }}
-                        <li>
-                            <a href="{{.URL | absLangURL }}">{{.Pre}}</a>
-                        </li>
-                        {{else}}
-                        <li>
-                            <a href="{{.URL | absLangURL }}">{{safeHTML .Name}}</a>
-                        </li>
-                        {{end}}
-                        {{end}}
+                      {{ range .Site.Menus.footer }}
+                          <li><a href="{{.URL | absLangURL }}" title="{{safeHTML .Title}}">{{safeHTML .Name}}</a></li>
+                      {{end}}
                     </ul>
-                    {{end}}
                 </nav>
+                <div class="author">
+                    <p>
+                        © 2021 The Tinkerbell Authors
+                    </p>
+                </div>
             </div>
         </section>
     </div>
