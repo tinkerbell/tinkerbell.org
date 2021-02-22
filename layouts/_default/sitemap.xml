@@ -1,7 +1,8 @@
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>" | safeHTML }}
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <sitemap><loc>{{.Site.BaseURL}}sitemap-docs.xml</loc></sitemap>
+    <sitemap><loc>https://docs.tinkerbell.org/sitemap.xml</loc></sitemap>
     <sitemap><loc>{{.Site.BaseURL}}sitemap-examples.xml</loc></sitemap>
     <sitemap><loc>{{.Site.BaseURL}}sitemap-community.xml</loc></sitemap>
     <sitemap><loc>{{.Site.BaseURL}}sitemap-terms.xml</loc></sitemap>
+    <sitemap><loc>{{.Site.BaseURL}}sitemap-faq.xml</loc></sitemap>
 </sitemapindex>

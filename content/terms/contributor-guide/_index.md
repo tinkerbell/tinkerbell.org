@@ -10,9 +10,10 @@ Tinkerbell is a bare metal provisioning engine and consists of five components: 
 
 |                          Project Name                          |                                  Description                                  |
 | :------------------------------------------------------------: | :---------------------------------------------------------------------------: |
+|           [tink](https://github.com/tinkerbell/tink)           |                          Tinkerbell Workflow Engine                           |
 |          [boots](https://github.com/tinkerbell/boots)          |                      DHCP and iPXE server for Tinkerbell                      |
 |          [hegel](https://github.com/tinkerbell/hegel)          |                   gRPC/http metadata service for Tinkerbell                   |
-|           [tink](https://github.com/tinkerbell/osie)           |               In-memory installation environment for bare metal               |
+|           [osie](https://github.com/tinkerbell/osie)           |               In-memory installation environment for bare metal               |
 |           [pbnj](https://github.com/tinkerbell/pbnj)           | Microservice that communicates with our bmcs, ipmi to control power, boot etc |
 | [tinkerbell.org](https://github.com/tinkerbell/tinkerbell.org) |                 The code behind our website, docs and guides                  |
 

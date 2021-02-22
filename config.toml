@@ -9,10 +9,6 @@ Paginate = 4
     baseName = "sitemap-community"
     mediaType = "application/xml"
     protocol = "xml://"
-  [outputFormats.sitemap-docs]
-    baseName = "sitemap-docs"
-    mediaType = "application/xml"
-    protocol = "xml://"
   [outputFormats.sitemap-examples]
     baseName = "sitemap-examples"
     mediaType = "application/xml"
@@ -21,9 +17,13 @@ Paginate = 4
     baseName = "sitemap-terms"
     mediaType = "application/xml"
     protocol = "xml://"
+  [outputFormats.sitemap-faq]
+    baseName = "sitemap-faq"
+    mediaType = "application/xml"
+    protocol = "xml://"
 
 [outputs]
-home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-docs", "sitemap-examples", "sitemap-terms"]
+home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-examples", "sitemap-terms", "sitemap-faq"]
 
 [params]
  author = "Equinix Metal" # add your company name
@@ -41,9 +41,9 @@ home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-docs", "sitemap-ex
  ogtitle = "Flexible automation for bare metal"
  ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed by Equinix Metal."
 
-[[menu.shortcuts]]
-name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"
-url = "/community/slack/"
+[[menu.shortcuts]] 
+name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"  
+url = "/community/contact/" 
 weight = 10
 
 [[menu.shortcuts]]
@@ -97,10 +97,10 @@ name = "GitHub"
 url = "https://github.com/tinkerbell/"
 weight = 20
 
-[[menu.homepage]]
-pre = "<i class='fab fa-fw fa-slack'></i>"
-name = "Slack Channel"
-url = "/community/slack/"
+[[menu.homepage]] 
+pre = "<i class='fab fa-fw fa-slack'></i>"  
+name = "Slack Channel"  
+url = "/community/contact/" 
 weight = 30
 
 [[menu.homepage]]
