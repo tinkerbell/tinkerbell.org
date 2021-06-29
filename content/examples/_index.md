@@ -10,6 +10,7 @@ Here is a list of available workflow examples:
 
 - [Hello World!](/examples/hello-world)
 - [Netboot.xyz](/examples/netboot-xyz)
+- [Flatcar Container Linux](/examples/flatcar-container-linux)
 
 {{% notice tip %}}
 When a workflow completes, you generally end up at the prompt: `localhost login:`.
