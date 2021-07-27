@@ -7,7 +7,7 @@ Hello Contributors!  Thx for your interest! We're so glad you're here.
   - feature requests: [https://github.com/tinkerbell/tinkerbell.org/issues](https://github.com/tinkerbell/tinkerbell.org/issues)
 
 ### Code of Conduct
-Available via [https://github.com/tinkerbell/tinkerbell.org/blob/master/.github/CODE_OF_CONDUCT.md](https://github.com/tinkerbell/tinkerbell.org/blob/master/.github/CODE_OF_CONDUCT.md)
+Available via [https://github.com/tinkerbell/.github/blob/master/CODE_OF_CONDUCT.md](https://github.com/tinkerbell/.github/blob/master/CODE_OF_CONDUCT.md)
 
 ### Environment Details
 Netlify: [https://github.com/tinkerbell/tinkerbell.org/blob/master/netlify.toml](https://github.com/tinkerbell/tinkerbell.org/blob/master/netlify.toml)
