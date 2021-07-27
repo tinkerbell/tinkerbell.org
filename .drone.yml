@@ -8,4 +8,5 @@ steps:
     image: node:lts-alpine
     commands:
       - yarn global add prettier@2.0.5
+      - prettier --write .
       - prettier --list-different .

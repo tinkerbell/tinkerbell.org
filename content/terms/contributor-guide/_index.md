@@ -6,19 +6,13 @@ Welcome to Tinkerbell! We're building the industry standard for bare metal infra
 
 ## Tinkerbell Projects
 
-Tinkerbell is a bare metal provisioning engine and consists of five components: a DHCP server (Boots), a metadata service (Hegel), an in-memory operating system installation environment (OSIE), a workflow engine (Tink), and a Power and Boot service (PBnJ) that communicates with BMCs. Learn more about these and other repos we host:
+Tinkerbell is a bare metal provisioning engine and consists of various components, some of which have pluggable alternatives.
 
-|                          Project Name                          |                                  Description                                  |
-| :------------------------------------------------------------: | :---------------------------------------------------------------------------: |
-|          [boots](https://github.com/tinkerbell/boots)          |                      DHCP and iPXE server for Tinkerbell                      |
-|          [hegel](https://github.com/tinkerbell/hegel)          |                   gRPC/http metadata service for Tinkerbell                   |
-|           [tink](https://github.com/tinkerbell/osie)           |               In-memory installation environment for bare metal               |
-|           [pbnj](https://github.com/tinkerbell/pbnj)           | Microservice that communicates with our bmcs, ipmi to control power, boot etc |
-| [tinkerbell.org](https://github.com/tinkerbell/tinkerbell.org) |                 The code behind our website, docs and guides                  |
+To install a known good combination of the components, refer to the [Tinkerbell Sandbox](https://github.com/tinkerbell/sandbox).
+
+To see all repositories, refer to the [Tinkerbell Github Organization](https://github.com/tinkerbell)
 
 ## How To Get Involved
-
-We are grateful for our contributors and want this to be as easy and open as possible. We have a #tinkerbell [Slack channel](https://slack.packet.com) in the Packet community and it's the best place to keep up-to-date with all of the Tinkerbell projects.
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
@@ -26,10 +20,11 @@ We love your input! We want to make contributing to this project as easy and tra
 - Discussing the current state of the code
 - Submitting a fix
 - Proposing new features
-- We develop with GitHub
-- Test out new features
-- Contributes to docs
-- Give talks at meetups, conferences, webinars about Tinkerbell
+- Testing out new features
+- Contributing to the docs
+- Giving talks about Tinkerbell at Meetups, conferences and webinars
+
+The latest information about how to interact with the project maintainers and broader community is kept in [COMMUNICATION.md](https://github.com/tinkerbell/.github/blob/master/COMMUNICATION.md).
 
 ## Contribute to our Projects
 
@@ -41,8 +36,8 @@ Pull requests are the best way to propose changes to the codebase. We use GitHub
 - Ensure the test suite passes.
 - Issue that pull request!
 
-Any contributions you make will be under the MIT Software License
-In short, when you submit code changes, your submissions are understood to be under the same MIT License that covers the project. Feel free to contact the maintainers if that's a concern.
+Any contributions you make will be under the Apache Software License
+In short, when you submit code changes, your submissions are understood to be under the same Apache License that covers the project. Feel free to contact the maintainers if that's a concern.
 
 ### Write Thorough Commit Messages
 
@@ -76,11 +71,11 @@ When you commit, you are accepting our DCO:
 > (c) The contribution was provided directly to me by some other person who certified (a), (b) or (c) and I have not modified it.
 >
 > (d) I understand and agree that this project and the contribution are public and that a record of the contribution (including all personal information I submit with it, including my sign-off) is maintained indefinitely and may be redistributed consistent with this project or the open source license(s) involved.
->
-> - When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`
-> - The commit subject-line should start with an uppercase letter
-> - The commit subject-line should not exceed 72 characters in length
-> - The commit subject-line should not end with punctuation (., etc)
+
+- When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`
+- The commit subject-line should start with an uppercase letter
+- The commit subject-line should not exceed 72 characters in length
+- The commit subject-line should not end with punctuation (., etc)
 
 Note: please do not use the GitHub suggestions feature, since it will not allow your commits to be signed-off.
 
@@ -119,11 +114,7 @@ If you would like to ammend your commit follow this guide: [Git: Rewriting Histo
 
 All bugs are tracked using Github issues. If you find something that needs to be addressed, open a new issue; it's easy!
 
-When you open a new issue, please use the ticket template and provide as much detail, background, and sample code as you can.
-
-### The Tinkerbell GitHub Issue Template
-
-![](https://i.imgur.com/tUzEipZ.png)
+The Tinkerbell repositories have default templates for both [issues](https://github.com/tinkerbell/.github/blob/master/ISSUE_TEMPLATE.md) and [pull requests](https://github.com/tinkerbell/.github/blob/master/PULL_REQUEST_TEMPLATE.md). Please aim to complete as many of the fields as possible to make the maintainer's lives easier.
 
 ## Propose an Idea
 
@@ -131,4 +122,4 @@ Have an idea to propose or something you'd like us all to discuss? Great, we hav
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under its Apache License, adhere to the Developer Certificate of Origin, and adhere to our code of condense.
+By contributing, you agree that your contributions will be licensed under its Apache License, adhere to the Developer Certificate of Origin, and adhere to our code of conduct.

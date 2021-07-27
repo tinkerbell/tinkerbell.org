@@ -10,13 +10,13 @@ The "Hello World" example uses an example hardware data, template, and workflow 
 
 ## Prerequisites
 
-- You have a Provisioner up and running, with the Tinkerbell stack installed and configured. This can be done locally with Vagrant as an experimental environment, on Packet for a more robust setup, or installed on any other environment that you have configured.
+- You have a Provisioner up and running, with the Tinkerbell stack installed and configured. This can be done locally with Vagrant as an experimental environment, on Equinix Metal for a more robust setup, or installed on any other environment that you have configured.
 
 - You have a Worker that has not yet been brought up, or can be restarted.
 
 ## Hardware Data
 
-This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](/hardware-data/#the-minimal-hardware-data) with your targeted Worker's MAC Address and/or IP Address substituted in.
+This example is intended to be environment agnostic, and assumes that you have a Worker machine as the intended target. The workflow in this example is simple enough that you can use the [Minimal Hardware Data example](https://docs.tinkerbell.org/hardware-data/) with your targeted Worker's MAC Address and/or IP Address substituted in.
 
 ## The `hello-world` Action Image
 
