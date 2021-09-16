@@ -24,13 +24,13 @@ We love your input! We want to make contributing to this project as easy and tra
 - Contributing to the docs
 - Giving talks about Tinkerbell at Meetups, conferences and webinars
 
-The latest information about how to interact with the project maintainers and broader community is kept in [COMMUNICATION.md](https://github.com/tinkerbell/.github/blob/master/COMMUNICATION.md).
+The latest information about how to interact with the project maintainers and broader community is kept in [COMMUNICATION.md](https://github.com/tinkerbell/.github/blob/main/COMMUNICATION.md).
 
 ## Contribute to our Projects
 
 Pull requests are the best way to propose changes to the codebase. We use GitHub flow and everything happens through pull requests. We welcome your pull requests; to make it simple, here are the steps to contribute:
 
-- Fork the repo you're updating and create your branch from master.
+- Fork the repo you're updating and create your branch from main.
 - If you've added code that should be tested, add tests.
 - If you've changed APIs, update the documentation.
 - Ensure the test suite passes.
@@ -114,7 +114,7 @@ If you would like to ammend your commit follow this guide: [Git: Rewriting Histo
 
 All bugs are tracked using Github issues. If you find something that needs to be addressed, open a new issue; it's easy!
 
-The Tinkerbell repositories have default templates for both [issues](https://github.com/tinkerbell/.github/blob/master/ISSUE_TEMPLATE.md) and [pull requests](https://github.com/tinkerbell/.github/blob/master/PULL_REQUEST_TEMPLATE.md). Please aim to complete as many of the fields as possible to make the maintainer's lives easier.
+The Tinkerbell repositories have default templates for both [issues](https://github.com/tinkerbell/.github/blob/main/ISSUE_TEMPLATE.md) and [pull requests](https://github.com/tinkerbell/.github/blob/main/PULL_REQUEST_TEMPLATE.md). Please aim to complete as many of the fields as possible to make the maintainer's lives easier.
 
 ## Propose an Idea
 
