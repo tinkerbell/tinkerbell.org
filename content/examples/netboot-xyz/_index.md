@@ -1,8 +1,8 @@
 +++
 title = "Netboot.xyz"
 date = 2021-03-12
-draft = true
-weight = 11
+draft = false
+weight = 10
 toc = true
 +++
 
