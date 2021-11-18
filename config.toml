@@ -40,6 +40,7 @@ home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-examples", "sitema
  twitter = "@tinkerbell_oss"
  ogtitle = "Flexible automation for bare metal"
  ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed by Equinix Metal."
+ editURL = "https://github.com/tinkerbell/tinkerbell.org/edit/main/content/"
 
 [[menu.shortcuts]] 
 name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"  
