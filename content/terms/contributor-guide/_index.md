@@ -24,7 +24,7 @@ We love your input! We want to make contributing to this project as easy and tra
 - Contributing to the docs
 - Giving talks about Tinkerbell at Meetups, conferences and webinars
 
-The latest information about how to interact with the project maintainers and broader community is kept in [COMMUNICATION.md](https://github.com/tinkerbell/.github/blob/main/COMMUNICATION.md).
+The latest information about how to interact with the project maintainers and broader community is kept in [COMMUNICATION.md](https://github.com/tinkerbell/org/blob/main/COMMUNICATION.md).
 
 ## Contribute to our Projects
 
