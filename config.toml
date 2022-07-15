@@ -26,8 +26,8 @@ Paginate = 4
 home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-examples", "sitemap-terms", "sitemap-faq"]
 
 [params]
- author = "Equinix Metal" # add your company name
- description = "Tinkerbell is an open-source bare metal provisioning engine, built for a cloud native world and maintained by the team at Equinix Metal."
+ author = "Tinkerbell Community" # add your company name
+ description = "Tinkerbell is an open-source bare metal provisioning engine, built for a cloud native world and maintained by the Tinkerbell community."
  github = "https://github.com/tinkerbell" # add your github profile name
  email = "hello@tinkerbell.org"
  showVisitedLinks = false
@@ -39,7 +39,7 @@ home = [ "HTML", "RSS", "JSON", "sitemap-community", "sitemap-examples", "sitema
  sitename = "Tinkerbell.org"
  twitter = "@tinkerbell_oss"
  ogtitle = "Flexible automation for bare metal"
- ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed by Equinix Metal."
+ ogdescription = "Designed for scalable provisioning of physical hardware, Tinkerbell is both open-source and cloud native. Contributed to the CNCF by Equinix Metal."
 
 [[menu.shortcuts]] 
 name = "<i class='fab fa-fw fa-slack'></i> <em>Community Slack</em>"  
@@ -134,9 +134,9 @@ title = "Metadata Service"
 weight = 30
 
 [[menu.tink]]
-name = "OSIE"
-url = "https://github.com/tinkerbell/osie"
-title = "OS Install Environment"
+name = "Hook"
+url = "https://github.com/tinkerbell/hook"
+title = "Tinkerbell Install Environment"
 weight = 40
 
 [[menu.tink]]

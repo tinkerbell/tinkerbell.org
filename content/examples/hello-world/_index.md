@@ -72,7 +72,7 @@ You can now boot up or restart your Worker and a few things are going to happen:
 
 While the workflow execution does not have much effect on the state of the Worker, you can check that the workflow was successfully executed from the `tink workflow events` command.
 
-```
+```sh
 tink workflow events <ID>
 >
 +--------------------------------------+-------------+-------------+----------------+---------------------------------+--------------------+
