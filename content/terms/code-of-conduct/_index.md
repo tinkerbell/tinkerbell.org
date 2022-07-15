@@ -42,7 +42,7 @@ Examples of representing our community include using an official email address, 
 
 ## Enforcement
 
-Instances of abusive, harassing or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at hello@tinkerbell.org.
+Instances of abusive, harassing or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at <cncf-tinkerbell-maintainers@lists.cncf.io>.
 
 All complaints will be reviewed and investigated promptly and fairly and will result in a response that is deemed necessary and appropriate to the circumstances.
 
