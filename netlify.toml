@@ -66,22 +66,22 @@ HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
   from = "/docs/setup/local-with-vagrant"
-  to = "https://docs.tinkerbell.org/setup/local-vagrant/"
+  to = "https://docs.tinkerbell.org/setup/"
   status = 301
 
 [[redirects]]
   from = "/docs/setup/packet-with-terraform"
-  to = "https://docs.tinkerbell.org/setup/equinix-metal-terraform/"
+  to = "https://docs.tinkerbell.org/setup/"
   status = 301
 
 [[redirects]]
   from = "/docs/setup/packet-with-terraform/provisioner"
-  to = "https://docs.tinkerbell.org/setup/equinix-metal-terraform/#setting-up-the-provisioner"
+  to = "https://docs.tinkerbell.org/setup/#setting-up-the-provisioner"
   status = 301
 
 [[redirects]]
   from = "/docs/setup/packet-terraform"
-  to = "https://docs.tinkerbell.org/setup/equinix-metal-terraform/"
+  to = "https://docs.tinkerbell.org/setup/"
   status = 301
 
 [[redirects]]
@@ -101,12 +101,12 @@ HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
   from = "/docs/setup/terraform"
-  to = "https://docs.tinkerbell.org/setup/equinix-metal-terraform/"
+  to = "https://docs.tinkerbell.org/setup/"
   status = 301
 
 [[redirects]]
   from = "/docs/setup/terraform/provisioner"
-  to = "https://docs.tinkerbell.org/setup/equinix-metal-terraform//#setting-up-the-provisioner"
+  to = "https://docs.tinkerbell.org/setup/"
   status = 301
 
 [[redirects]]
@@ -131,7 +131,7 @@ HUGO_ENABLEGITINFO = "true"
 
 [[redirects]]
   from = "/setup"
-  to = "https://docs.tinkerbell.org/setup/local-vagrant/"
+  to = "https://docs.tinkerbell.org/setup/"
   status = 301
 
 [[redirects]]

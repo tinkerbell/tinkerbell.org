@@ -12,7 +12,7 @@ This example does not require creating a [template](https://docs.tinkerbell.org/
 ## Prerequisites
 
 - You have a Tinkerbell stack installed, configured, and up and running.
-This can be done [locally with Vagrant](https://docs.tinkerbell.org/setup/local-vagrant/), on [Equinix Metal](https://docs.tinkerbell.org/setup/equinix-metal-terraform/), or on [any other environment](https://docs.tinkerbell.org/setup/on-bare-metal-with-docker/) that you have configured.
+  This can be done [locally with Vagrant](https://docs.tinkerbell.org/setup/), on [Equinix Metal](https://docs.tinkerbell.org/setup/), or on [any other environment](https://docs.tinkerbell.org/setup/on-bare-metal-with-docker/) that you have configured.
 - You have a Worker that has not yet been brought up, or can be restarted.
 
 ## Hardware Data
@@ -34,45 +34,42 @@ docker exec -i deploy_tink-cli_1 tink hardware push < ./hardware.json
 
 ```json
 {
-    "id": "ce2e62ed-826f-4485-a39f-a82bb74338e3",
-    "metadata": {
-        "facility": {
-            "facility_code": "onprem",
-            "plan_slug": "c2.medium.x86",
-            "plan_version_slug": ""
-        },
-        "instance": {
-            "ipxe_script_url": "https://boot.netboot.xyz/ipxe/netboot.xyz.lkrn",
-            "operating_system": {
-                "distro": "custom_ipxe",
-                "slug": "custom_ipxe"
-              }
-        },
-        "state": ""
+  "id": "ce2e62ed-826f-4485-a39f-a82bb74338e3",
+  "metadata": {
+    "facility": {
+      "facility_code": "onprem",
+      "plan_slug": "c2.medium.x86",
+      "plan_version_slug": ""
     },
-    "network": {
-        "interfaces": [
-            {
-                "dhcp": {
-                    "mac": "00:50:56:25:11:0e",
-                    "name_servers": [
-                        "1.1.1.1",
-                        "8.8.8.8"
-                    ],
-                    "arch": "x86_64",
-                    "ip": {
-                        "address": "192.168.2.130",
-                        "netmask": "255.255.255.0",
-                        "gateway": "192.168.2.1"
-                    }
-                },
-                "netboot": {
-                    "allow_pxe": true,
-                    "allow_workflow": true
-                }
-            }
-        ]
-    }
+    "instance": {
+      "ipxe_script_url": "https://boot.netboot.xyz/ipxe/netboot.xyz.lkrn",
+      "operating_system": {
+        "distro": "custom_ipxe",
+        "slug": "custom_ipxe"
+      }
+    },
+    "state": ""
+  },
+  "network": {
+    "interfaces": [
+      {
+        "dhcp": {
+          "mac": "00:50:56:25:11:0e",
+          "name_servers": ["1.1.1.1", "8.8.8.8"],
+          "arch": "x86_64",
+          "ip": {
+            "address": "192.168.2.130",
+            "netmask": "255.255.255.0",
+            "gateway": "192.168.2.1"
+          }
+        },
+        "netboot": {
+          "allow_pxe": true,
+          "allow_workflow": true
+        }
+      }
+    ]
+  }
 }
 ```
 
