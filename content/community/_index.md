@@ -28,5 +28,6 @@ Looking to get started with Tinkerbell? Here is the best way to do that
 
 ## Keep In Touch
 
-- [Twitter](https://twitter.com/tinkerbell_oss): Follow us on Twitter for news, updates, and stories from the community [@tinkerbell_oss](https://twitter.com/tinkerbell_oss).
+- [Community Meetings](https://www.cncf.io/calendar/): Join the user focused CNCF Tinkerbell Community and developer focused Triage Party meetings. (Currently held on alternating Tuesdays @ 11a EDT)
+- [X (Twitter)](https://twitter.com/tinkerbell_oss): Follow us on X (Twitter) for news, updates, and stories from the community [@tinkerbell_oss](https://twitter.com/tinkerbell_oss).
 - [YouTube](https://www.youtube.com/channel/UCTzWInTQPvzH21KHS8jrq7A/): Our YouTube channel is a place to go to see recordings of our weekly contributors' meetings, talks, demos, and workshops about Tinkerbell and bare metal automation.
