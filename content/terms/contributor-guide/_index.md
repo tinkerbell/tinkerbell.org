@@ -8,7 +8,7 @@ Welcome to Tinkerbell! We're building the industry standard for bare metal infra
 
 Tinkerbell is a bare metal provisioning engine and consists of various components, some of which have pluggable alternatives.
 
-To install a known good combination of the components, refer to the [Tinkerbell Sandbox](https://github.com/tinkerbell/sandbox).
+To install a known good combination of the components, refer to the [Tinkerbell Playground](https://github.com/tinkerbell/playground).
 
 To see all repositories, refer to the [Tinkerbell Github Organization](https://github.com/tinkerbell)
 
