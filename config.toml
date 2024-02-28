@@ -122,8 +122,8 @@ title = "Provisioning & Workflow Engine"
 weight = 10
 
 [[menu.tink]]
-name = "Boots"
-url = "https://github.com/tinkerbell/boots"
+name = "Smee"
+url = "https://github.com/tinkerbell/smee"
 title = "DHCP & iPXE Server"
 weight = 20
 
