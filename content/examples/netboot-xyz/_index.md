@@ -20,7 +20,7 @@ This example does not require creating a [template](https://docs.tinkerbell.org/
 This is the only Tinkerbell resource you'll need to create.
 Use the example below as a template.
 At a minimum update the `"mac"`, `"address"`, `"netmask"`, and `"gateway"` fields for your targeted machine and network.
-Setting the "`ipxe_script_url`", "`distro`", and "`slug`" are what tell [boots](https://docs.tinkerbell.org/services/boots/) to load into the `netboot.xyz` iPXE menu.
+Setting the "`ipxe_script_url`", "`distro`", and "`slug`" are what tell [smee](https://docs.tinkerbell.org/services/boots/) to load into the `netboot.xyz` iPXE menu.
 
 ## Usage
 
