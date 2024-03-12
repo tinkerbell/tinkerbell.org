@@ -1,145 +1,31 @@
 [build]
 publish = "public"
-command = "hugo --gc --minify"
+command = "hugo --gc"
 
 [context.production.environment]
-HUGO_VERSION = "0.69.2"
+HUGO_VERSION = "0.120.4"
 HUGO_ENV = "production"
 HUGO_ENABLEGITINFO = "true"
 
 [context.split1]
-command = "hugo --gc --minify --enableGitInfo"
+command = "hugo --gc --enableGitInfo"
 
 [context.split1.environment]
-HUGO_VERSION = "0.69.2"
+HUGO_VERSION = "0.120.4"
 HUGO_ENV = "production"
 
 [context.deploy-preview]
-command = "hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL"
+command = "hugo --gc --buildFuture -b $DEPLOY_PRIME_URL"
 
 [context.deploy-preview.environment]
-HUGO_VERSION = "0.69.2"
+HUGO_VERSION = "0.120.4"
 
 [context.branch-deploy]
-command = "hugo --gc --minify -b $DEPLOY_PRIME_URL"
+command = "hugo --gc -b $DEPLOY_PRIME_URL"
 
 [context.branch-deploy.environment]
-HUGO_VERSION = "0.69.2"
+HUGO_VERSION = "0.120.4"
 
 [context.next.environment]
 HUGO_ENABLEGITINFO = "true"
 
-[[redirects]]
-  from = "/contributors"
-  to = "/community/contributors"
-  status = 301
-
-[[redirects]]
-  from = "/community-slack"
-  to = "/community/slack"
-  status = 301
-
-[[redirects]]
-  from = "/support"
-  to = "/community/support"
-  status = 301
-
-[[redirects]]
-  from = "/license"
-  to = "/terms/license"
-  status = 301
-
-[[redirects]]
-  from = "/docs/#whats-powering-tinkerbell"
-  to = "https://docs.tinkerbell.org/#whats-powering-tinkerbell"
-  status = 301
-
-[[redirects]]
-  from = "/docs"
-  to = "https://docs.tinkerbell.org"
-  status = 301
-
-[[redirects]]
-  from = "/docs/architecture"
-  to = "https://docs.tinkerbell.org/architecture/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/setup/local-with-vagrant"
-  to = "https://docs.tinkerbell.org/setup/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/setup/packet-with-terraform"
-  to = "https://docs.tinkerbell.org/setup/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/setup/packet-with-terraform/provisioner"
-  to = "https://docs.tinkerbell.org/setup/#setting-up-the-provisioner"
-  status = 301
-
-[[redirects]]
-  from = "/docs/setup/packet-terraform"
-  to = "https://docs.tinkerbell.org/setup/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/hardware-data"
-  to = "https://docs.tinkerbell.org/hardware-data/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/templates"
-  to = "https://docs.tinkerbell.org/templates/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/troubleshooting"
-  to = "https://docs.tinkerbell.org/troubleshooting/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/setup/terraform"
-  to = "https://docs.tinkerbell.org/setup/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/setup/terraform/provisioner"
-  to = "https://docs.tinkerbell.org/setup/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/cli"
-  to = "https://docs.tinkerbell.org/cli-reference/hardware/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/cli/hardware"
-  to = "https://docs.tinkerbell.org/cli-reference/hardware/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/cli/template"
-  to = "https://docs.tinkerbell.org/cli-reference/template/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/cli/workflow"
-  to = "https://docs.tinkerbell.org/cli-reference/workflow/"
-  status = 301
-
-[[redirects]]
-  from = "/setup"
-  to = "https://docs.tinkerbell.org/setup/"
-  status = 301
-
-[[redirects]]
-  from = "/community/slack"
-  to = "/community/contact"
-  status = 301
-
-[[redirects]]
-  from = "/community/support"
-  to = "/community/contact"
-  status = 301
