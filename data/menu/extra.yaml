@@ -1,0 +1,16 @@
+---
+footer:
+  - name: Home
+    ref: /
+    icon: "house"
+  - name: GitHub
+    ref: https://github.com/tinkerbell
+    icon: "github"
+    external: true
+  - name: Slack
+    ref: https://cloud-native.slack.com/archives/C01SRB41GMT
+    icon: "slack"
+    external: true
+  - name: Docs
+    ref: "/docs/"
+    icon: gdoc_keyboard_arrow_up

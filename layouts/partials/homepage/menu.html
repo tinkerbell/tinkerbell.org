@@ -10,7 +10,7 @@
                       {{ $id := .Identifier }}
                       <li class="{{if eq $currentPage.Section $id }}active{{ end }} {{ if .Pre }}pre{{end}}"> 
                           {{ if .Pre }}
-                           <a href="{{.URL | absLangURL }}">{{.Pre}}</a><!-- {{.Post}} -->
+                          <a href="{{.URL | absLangURL }}">{{.Pre}}</a><!-- {{.Post}} -->
                           {{ else }}
                           <a href="{{.URL | absLangURL }}">{{safeHTML .Name}}</a>
                           {{ end }}

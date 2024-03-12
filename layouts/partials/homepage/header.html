@@ -6,17 +6,18 @@
     <title>{{ .Site.Title }}</title>
 
     {{ hugo.Generator }}
-    {{ partial "meta.html" . }}
+    {{ partial "homepage/meta.html" . }}
     {{ partial "favicon.html" . }}
     
     {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
     
     <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6193438/6190832/css/fonts.css">
+    <script defer src="{{"fontawesome/fontawesome-all.js" | relURL}}"></script>
     
     {{ $css := resources.Get "css/theme-tinkerbell.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $css.RelPermalink }}">
-    <link href="{{"css/fontawesome-all.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
-    {{ partial "ga.html" . }}
+    <link href="{{"css/font-awesome.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+    {{ partial "homepage/ga.html" . }}
   </head>
   <body class="" data-url="{{ .RelPermalink }}">
     {{ partial "homepage/menu.html" . }}
