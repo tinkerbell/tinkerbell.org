@@ -1,0 +1,75 @@
+---
+main:
+  - name: Concepts
+    ref: "/docs/concepts"
+    sub:
+      - name: Hardware
+        ref: "/docs/concepts/hardware"
+      - name: Templates
+        ref: "/docs/concepts/templates"
+      - name: Actions
+        ref: "/docs/concepts/actions"
+      - name: Workflows
+        ref: "/docs/concepts/workflows"
+
+  - name: Setup
+    ref: "/docs/setup"
+    sub:
+      - name: Getting Started
+        ref: "/docs/setup/getting_started"
+
+  - name: Services
+    ref: "/docs/services"
+    sub:
+      - name: Tink Server
+        ref: "/docs/services/tink-server"
+      - name: Tink Controller
+        ref: "/docs/services/tink-controller"
+      - name: Tink Worker
+        ref: "/docs/services/tink-worker"
+      - name: Smee
+        ref: "/docs/services/smee"
+      - name: Hegel
+        ref: "/docs/services/hegel"
+      - name: Rufio
+        ref: "/docs/services/rufio"
+      - name: PBnJ
+        ref: "/docs/services/pbnj"
+      - name: Cluster API Provider Tinkerbell
+        ref: "/docs/services/cluster-api-provider-tinkerbell"
+
+  - name: Additional Components
+    ref: "/docs/additionalcomponents"
+    sub:
+      - name: HookOS
+        ref: "/docs/additionalcomponents/hookos"
+      - name: iPXE
+        ref: "/docs/additionalcomponents/ipxe"
+
+  - name: Operations
+    ref: "/docs/operations"
+    sub:
+      - name: Troubleshooting
+        ref: "/docs/operations/troubleshooting"
+  
+  - name: Integrations
+    ref: "/docs/integrations"
+    sub:
+      - name: Cloud-init
+        ref: "/docs/integrations/cloudinit"
+      - name: Packer
+        ref: "/docs/integrations/packer"
+
+  - name: Reference
+    ref: "/docs/reference"
+    sub:
+      - name: OS Installation primer
+        ref: "/docs/reference/os-installation-primer"
+      - name: Architecture
+        ref: "/docs/reference/architecture"
+      - name: Community
+        ref: "/docs/reference/community"
+      - name: Contributing
+        ref: "/docs/reference/contributing"
+      - name: Roadmap
+        ref: "/docs/reference/roadmap"

@@ -1,0 +1,5 @@
+{{ $repo := .Get 0 }}
+{{ $loc := .Get 1 }}
+{{ $json := getJSON "https://api.github.com/repos/tinkerbell/" $repo "/contents/" $loc }}
+{{ $content := $json.content | base64Decode }}
+{{ $content | markdownify }}

@@ -1,11 +1,11 @@
-+++
-type = "section-2"
-title = "How Does it Work?"
-image = "/images/table-art.png"
-hidden = true
-+++
+---
+type: "section-2"
+title: "How Does it Work?"
+image: "images/table-art.png"
+hidden: true
+---
 
-Tinkerbell has four major components: a DHCP server (Smee), a metadata service (Hegel), an in-memory operating system installation environment (Hook) and a workflow engine (Tink).
-There is also an optional fifth component useful in VM and server setups: a Power and Boot service (PBnJ) that communicates with BMCs.
-The workflow engine is comprised of a server and a CLI, which communicate over gRPC.
-The CLI is used to create a workflow along with its building blocks, templates and targets.
+Tinkerbell has a few core components: a DHCP server ([Smee](https://github.com/tinkerbell/smee)), a metadata service ([Hegel](https://github.com/tinkerbell/hegel)), an in-memory operating system installation environment ([HookOS](https://github.com/tinkerbell/hook)) and a workflow engine ([Tink Server/Worker](https://github.com/tinkerbell/tink)).
+The workflow engine is comprised of a controller, server and worker. The server and agent communicate over gRPC.
+`kubectl` is used to create workflows along with hardware and template objects.
+There are also a few optional components: 2 Power and Boot services ([PBnJ](https://github.com/tinkerbell/pbnj) and [Rufio](https://github.com/tinkerbell/rufio)) that communicate with BMCs. A Cluster API provider ([CAPT](https://github.com/tinkerbell/cluster-api-provider-tinkerbell)) for provisioning and managing Kubernetes clusters.

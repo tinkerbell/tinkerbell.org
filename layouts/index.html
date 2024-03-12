@@ -1,4 +1,5 @@
 {{ partial "homepage/header.html" . }}
+
 <div id="content-wrapper">
     <section class="section larger">
         <div class="grid-container">
@@ -40,13 +41,12 @@
                 {{with .Site.Menus.tink}}
                 <div class="cell large-10 pt40">
                     <div class="grid-x grid-padding-x">
-                          
                           {{ range sort . "Weight"}}
                             {{ $.Scratch.Set "i" (add ($.Scratch.Get "i") 1) }}
                             {{ if eq ($.Scratch.Get "i") 1 }}
                             <div class="cell large-12">
                             {{ else }}
-                            <div class="cell large-3">
+                            <div class="cell large-4">
                             {{ end }}
                                
                                 <div class="box">
@@ -65,4 +65,6 @@
         </div>
     </section>
 </div>
+
+
 {{ partial "homepage/footer.html" . }}

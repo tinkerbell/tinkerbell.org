@@ -1,7 +1,7 @@
-+++
-type = "section-3"
-title = "Five Microservices"
-hidden = true
-+++
+---
+type: "section-3"
+title: "Core Components"
+hidden: true
+---
 
-There are five microservices that constitute Tinkerbell’s provisioning stack.
+The Tinkerbell stack is comprised of the following core components.

@@ -1,0 +1,311 @@
+/* Global customization */
+
+:root {
+  --code-max-height: 60rem;
+}
+
+:root .dark-mode-dim .gdoc-markdown img {
+  filter: none;
+}
+
+.gdoc-brand__img {
+  /*width: fit-content;
+  height: 3vmax;*/
+  width: 50%;
+  height: auto;
+}
+
+.gdoc-page__header svg.gdoc-icon, .gdoc-page__footer svg.gdoc-icon, .gdoc-brand__title {
+  display: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+.gdoc-menu-header,
+.header_link,
+.header_link_item {
+  font-weight: 500;
+  padding-left: 4rem;
+  font-size: 1.125rem;
+  color: #ffffff;
+  --body-font-color: #ffffff;
+  --link-color: #ffffff;
+}
+
+.gdoc-footer__item {
+  padding-right: 1rem;
+}
+
+.gdoc-language__entry,
+.gdoc-nav__entry {
+  &:hover {
+    text-decoration: underline;
+    text-decoration-style: solid !important;
+  }
+  &.is-active {
+    text-decoration: none;
+  }
+}
+
+.no {
+  display: flex;  
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: .875em;
+}
+
+.gdoc-nav nav section {
+  margin-top: -1em;
+}
+
+.container {
+  /*width: 100%;
+  max-width: 44vmax;
+  margin: 0 auto;*/
+  padding: 1.25rem;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gdoc-nav {
+  padding: 1.25em;
+  padding-top: 0;
+  flex: 0 0 auto;
+}
+
+.gdoc-nav nav {
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 1.25em;
+  padding-top: 3.75em;
+  margin-top: 0.5em;
+}
+
+.gdoc-search {
+  margin-top: -0.75em;
+}
+
+.gdoc-search__input {
+  width: 100%;
+  padding: 0.5rem;
+  padding-left: 2rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  border: 2px solid #05254c;
+  border-radius: 0.15rem;
+  background: var(--accent-color-lite);
+  color: var(--body-font-color);
+}
+
+.gdoc-page__header {
+  background: var(--body-background);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+.section-index {
+  display: grid;
+  grid-template-columns: [entry] 1fr;
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
+
+  @media (min-width: 576px) {
+      grid-template-columns: [entry] 1fr [entry] 1fr;
+  }
+
+  @media (min-width: 768px) {
+      grid-column-gap: 4rem;
+  }
+
+  @media (min-width: 1200px) {
+      grid-template-columns: [entry] 1fr [entry] 1fr [entry] 1fr;
+  }
+
+  h5 {
+    margin-bottom: 0;
+
+    a {
+        font-weight: 700;
+    }
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.code {
+  color: var(--textCodeColor);
+  font-size: 80%;
+  font-weight: var(--textCodeWeight);
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  word-break: break-word;
+}
+
+.gdoc-markdown pre, .gdoc-markdown code {
+  background-color: var(--code-background);
+  border-radius: 0.15rem;
+  color: #02508a;
+  font-size: .875rem;
+  line-height: 1rem;
+}
+
+/* Light mode theming */
+:root,
+:root[color-theme="light"] {
+  --header-background: #05254c;
+  --header-font-color: #ffffff;
+
+  --body-background: #ffffff;
+  --body-font-color: #343a40;
+
+  --mark-color: #ffab00;
+
+  --button-background: #62cb97;
+  --button-border-color: #4ec58a;
+
+  --link-color: #518169;
+  --link-color-visited: none;
+
+  --code-background: #f5f6f8;
+  --code-accent-color: #e3e7eb;
+  --code-accent-color-lite: #eff1f3;
+  --code-font-color: #5f5f5f;
+
+  --code-copy-background: #f5f6f8;
+  --code-copy-font-color: #6b7784;
+  --code-copy-border-color: #adb4bc;
+  --code-copy-success-color: #00c853;
+
+  --accent-color: #e9ecef;
+  --accent-color-lite: #f8f9fa;
+
+  --control-icons: #b2bac1;
+
+  --footer-background: #05254c;
+  --footer-font-color: #ffffff;
+  --footer-link-color: #ffcc5c;
+  --footer-link-color-visited: #ffcc5c;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --header-background: #05254c;
+    --header-font-color: #ffffff;
+
+    --body-background: #ffffff;
+    --body-font-color: #343a40;
+
+    --mark-color: #ffab00;
+
+    --button-background: #62cb97;
+    --button-border-color: #4ec58a;
+
+    --link-color: #518169;
+    --link-color-visited: none;
+
+    --code-background: #f5f6f8;
+    --code-accent-color: #e3e7eb;
+    --code-accent-color-lite: #eff1f3;
+    --code-font-color: #5f5f5f;
+
+    --code-copy-background: #f5f6f8;
+    --code-copy-font-color: #6b7784;
+    --code-copy-border-color: #adb4bc;
+    --code-copy-success-color: #00c853;
+
+    --accent-color: #e9ecef;
+    --accent-color-lite: #f8f9fa;
+
+    --control-icons: #b2bac1;
+
+    --footer-background: #05254c;
+    --footer-font-color: #ffffff;
+    --footer-link-color: #ffcc5c;
+    --footer-link-color-visited: #ffcc5c;
+  }
+}
+
+/* Dark mode theming */
+:root[color-theme="dark"] {
+  --header-background: #05254c;
+  --header-font-color: #ffffff;
+
+  --body-background: #ffffff;
+  --body-font-color: #343a40;
+
+  --mark-color: #ffab00;
+
+  --button-background: #62cb97;
+  --button-border-color: #4ec58a;
+
+  --link-color: #518169;
+  /*--link-color-visited: #4e7ec5;*/
+
+  --code-background: #f5f6f8;
+  --code-accent-color: #e3e7eb;
+  --code-accent-color-lite: #eff1f3;
+  --code-font-color: #5f5f5f;
+
+  --code-copy-background: #f5f6f8;
+  --code-copy-font-color: #6b7784;
+  --code-copy-border-color: #adb4bc;
+  --code-copy-success-color: #00c853;
+
+  --accent-color: #e9ecef;
+  --accent-color-lite: #f8f9fa;
+
+  --control-icons: #b2bac1;
+
+  --footer-background: #05254c;
+  --footer-font-color: #ffffff;
+  --footer-link-color: #ffcc5c;
+  --footer-link-color-visited: #ffcc5c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --header-background: #05254c;
+    --header-font-color: #ffffff;
+    --header-link-visisted: none;
+
+    --body-background: #ffffff;
+    --body-font-color: #343a40;
+
+    --mark-color: #ffab00;
+
+    --button-background: #62cb97;
+    --button-border-color: #4ec58a;
+
+    --link-color: #0287ad;
+    --link-color-visited: none;
+
+    --code-background: #f8f9fa;
+    --code-accent-color: #e3e7eb;
+    --code-accent-color-lite: #eff1f3;
+    --code-font-color: #5f5f5f;
+    
+
+    --code-copy-background: #f5f6f8;
+    --code-copy-font-color: #6b7784;
+    --code-copy-border-color: #adb4bc;
+    --code-copy-success-color: #00c853;
+
+    --accent-color: #e9ecef;
+    --accent-color-lite: #f8f9fa;
+
+    --control-icons: #b2bac1;
+
+    --footer-background: #05254c;
+    --footer-font-color: #ffffff;
+    --footer-link-color: #ffcc5c;
+    --footer-link-color-visited: #ffcc5c;
+  }
+}
