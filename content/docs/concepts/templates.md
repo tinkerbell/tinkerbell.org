@@ -3,11 +3,12 @@ title: 'Templates'
 draft: false
 weight: 20
 geekdocDescription: 'The resource that describes the collection of tasks and actions.'
+latestTinkVersion: "https://github.com/tinkerbell/tink/tree/v0.10.0"
 ---
 
 A Template is a collection of tasks that are executed sequentially. Each Task is a collection of actions that are executed sequentially on a specific worker. Actions are the individual unit of work, such as streaming an image to a disk, writing a file, or partitioning a disk.
 
-Templates are specified as a Kubernetes [custom resource definition].
+Templates are specified as a Kubernetes custom resource definitions ([CRD]).
 
 ```yaml
 apiVersion: tinkerbell.org/v1alpha1
@@ -18,8 +19,6 @@ metadata:
 spec:
   data: ""
 ```
-
-The Template CRD is found [here](https://github.com/tinkerbell/tink/blob/01818192d62a5657b72eac2e205fd6dc1ec8e5b6/config/crd/bases/tinkerbell.org_templates.yaml) and the corresponding Go struct definition is found [here](https://github.com/tinkerbell/tink/blob/01818192d62a5657b72eac2e205fd6dc1ec8e5b6/api/v1alpha1/template_types.go#L36).
 
 ## Tasks
 
@@ -68,8 +67,6 @@ tasks:
 - volumes `[]string`: A list of strings that are used to mount volumes into all action containers. The format for each string should be `source:destination`.
 - environment `map[string]string`: A map of strings that are used to set environment variables in all action containers.
 - actions `[]action`: A list of actions that are executed sequentially. Required.
-
-The Go struct for a Task is found [here](https://github.com/tinkerbell/tink/blob/01818192d62a5657b72eac2e205fd6dc1ec8e5b6/api/v1alpha1/workflow_types.go#L42) and the Kubernetes custom resource definition [here](https://github.com/tinkerbell/tink/blob/01818192d62a5657b72eac2e205fd6dc1ec8e5b6/config/crd/bases/tinkerbell.org_workflows.yaml). The spec can also be explored [here](https://doc.crds.dev/github.com/tinkerbell/tink/tinkerbell.org/Workflow/v1alpha1#status-tasks).
 
 ## Actions
 
@@ -236,19 +233,103 @@ spec:
 
 ## Templating a Template
 
-A Template spec can contain Go template values, for example `{{ .device_1 }}`. Any top level field, like `{{ .device_1 }}`, will be replaced with the corresponding field value defined in the [Workflow spec](/docs/concepts/workflows). See the [Workflow doc](/docs/concepts/workflows) for more information. Along with the default Go template functions there are some custom functions available: https://github.com/tinkerbell/tink/blob/v0.10.0/internal/workflow/template_funcs.go (`contains`, `hasPrefix`, `hasSuffix`, and `formatPartition`)
-There is some data from the Hardware spec that is also available for use, disk devices for example.
+A Template spec can contain Go template values, for example `{{ .device_1 }}`. The values come from a workflow spec that references the Template. For example, given the following template and workflow, the `{{ .device_1 }}` in the Template will be evaluated to `02:00:00:00:00:01` as defined in the Workflow spec at `spec.hardwareMap.device_1`. The `spec.hardwareMap` in the Workflow takes arbitrary key/value pairs.
 
+```yaml
+apiVersion: tinkerbell.org/v1alpha1
+kind: Template
+metadata:
+  name: ubuntu
+  namespace: tink-system
+spec:
+  data: |
+    global_timeout: 9800
+    tasks:
+      - name: "os installation"
+        worker: "{{.device_1}}"
+        volumes:
+          - /dev:/dev
+        actions:
+          - name: "stream image"
+            image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+            timeout: 9600
+            environment:
+              DEST_DISK: {{ index .Hardware.Disks 0 }}
+              IMG_URL: "http://{{ .artifact_server_ip_port }}/jammy-server-cloudimg-amd64.raw.gz"
+              COMPRESSED: true
+```
 
-## Notes
+```yaml
+apiVersion: tinkerbell.org/v1alpha1
+kind: Workflow
+metadata:
+  name: ubuntu-install
+  namespace: tink-system
+spec:
+  templateRef: ubuntu
+  hardwareRef: hardware-1
+  hardwareMap:
+    device_1: 02:00:00:00:00:01
+```
 
-- More info on the specific areas of the spec can be found in the following docs:
-  Actions - [here](/docs/concepts/actions)
+### Available template arguments
 
-- where does the spec live?  
-  Current version is v1alpha1
+Key names that are defined by a User in the Workflow spec at `spec.hardwareMap`:
 
-- Which services use the spec?  
-  Tink controller - Uses the spec to match a worker with a template.
+| source | output |
+| ---    | ---    |
+| `{{ .device_1 }}` | `02:00:00:00:00:01` |
+| `{{ .key_name }}` | `value` |
 
-[custom resource definition]: https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/
+Values from the Hardware spec (currently, only [Disks][Hardware data contract] are available):
+
+| source | output |
+| ---    | ---    |
+| `{{ .Hardware.Disks }}` | `[ /dev/nvme0n1, /dev/sda ]` |
+
+### Available template functions
+
+[Standard Go template functions]:
+
+| source | output |
+| ---    | ---    |
+| `{{ .device_1 \| printf "%s" }}`            | `02:00:00:00:00:01` |
+| `{{ if eq .device_1 "02:00:00:00:00:01" }}` | `true` |
+| `{{ index .Hardware.Disks 0 }}`             | `/dev/nvme0n1` |
+
+[Tinkerbell custom functions]:
+
+| source | output |
+| ---    | ---    |
+| `{{ formatPartition ( index .Hardware.Disks 0 ) 1 }}` | `/dev/nvme0n1p1` |
+| `{{ contains .device_1 "02:00:00:00:00:01" }}`        | `true` |
+| `{{ hasPrefix .device_1 "02:00:00" }}`                | `true` |
+| `{{ hasSuffix .device_1 "00:01" }}`                   | `true` |
+
+## Other Resources
+
+### v1alpha1 Spec
+
+- [Template Kubernetes CRD]
+- [Template Go struct definition]
+- [Explorable Template Spec]
+- [Task Go struct definition]
+- [Explorable Task Spec]
+- [Workflow Kubernetes CRD]
+
+### Services that use the Template spec
+
+- [Tink Controller]
+
+[CRD]: <https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/>
+[latest Tink version]: {{< stringparam "latestTinkVersion" >}}
+[Standard Go template functions]: <https://golang.org/pkg/text/template/>
+[Tinkerbell custom functions]: {{< stringparam "latestTinkVersion" >}}/internal/workflow/template_funcs.go#L9
+[Hardware data contract]: {{< stringparam "latestTinkVersion" >}}/internal/workflow/reconciler.go#L127-L140
+[Template Kubernetes CRD]: {{< stringparam "latestTinkVersion" >}}/config/crd/bases/tinkerbell.org_templates.yaml
+[Template Go struct definition]: {{< stringparam "latestTinkVersion" >}}/api/v1alpha1/template_types.go#L36
+[Explorable Template Spec]: <https://doc.crds.dev/github.com/tinkerbell/tink/tinkerbell.org/Template/v1alpha1>
+[Task Go struct definition]: {{< stringparam "latestTinkVersion" >}}/api/v1alpha1/workflow_types.go#L42
+[Explorable Task Spec]: <https://doc.crds.dev/github.com/tinkerbell/tink/tinkerbell.org/Workflow/v1alpha1#status-tasks>
+[Workflow Kubernetes CRD]: <{{< stringparam "latestTinkVersion" >}}/config/crd/bases/tinkerbell.org_workflows.yaml>
+[Tink Controller]: /docs/services/tink-controller
