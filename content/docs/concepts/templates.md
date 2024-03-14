@@ -8,7 +8,7 @@ latestTinkVersion: "https://github.com/tinkerbell/tink/tree/v0.10.0"
 
 A Template is a collection of tasks that are executed sequentially. Each Task is a collection of actions that are executed sequentially on a specific worker. Actions are the individual unit of work, such as streaming an image to a disk, writing a file, or partitioning a disk.
 
-Templates are specified as a Kubernetes custom resource definitions ([CRD]).
+Templates are specified as a Kubernetes custom resource definition ([CRD]).
 
 ```yaml
 apiVersion: tinkerbell.org/v1alpha1
