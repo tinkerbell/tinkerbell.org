@@ -50,3 +50,6 @@ If after submitting a Workflow and a `kubectl get workflow example` does not sho
 [Hardware]: /docs/concepts/hardware
 [Template]: /docs/concepts/templates
 [tink-controller]: /docs/services/tink-controller
+[Workflow Kubernetes CRD]: {{< stringparam "latestTinkVersion" >}}/config/crd/bases/tinkerbell.org_workflows.yaml
+[Workflow Go struct definition]: {{< stringparam "latestTinkVersion" >}}/api/v1alpha1/workflow_types.go#L18
+[Explorable Workflow Spec]: <https://doc.crds.dev/github.com/tinkerbell/tink/tinkerbell.org/Workflow/v1alpha1>
