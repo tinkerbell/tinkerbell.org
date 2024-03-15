@@ -5,7 +5,7 @@ geekdocDescription: "Install the Tinkerbell stack."
 tinkerbellStackVersion: "0.4.3"
 ---
 
-This doc will guide you through the installation of the Tinkerbell stack. You will need to have
+This doc will guide you through the installation of the Tinkerbell stack.
 
 ## Prerequisites
 
@@ -60,9 +60,16 @@ Default configuration values can be changed using one or more `--set <parameter>
 
    Other customization to note:
 
-   - `stack.kubevip.enabled`: By default, the stack chart will install kube-vip to manage the load balancer IP. If you have a different solution for managing the load balancer IP, you can set this to `false`.
+   - `stack.kubevip.enabled`: By default, the stack chart will install kube-vip to manage the load balancer IP. If you have a different solution for managing the load balancer IP, you can set this to `false`. When `false`, it should be used in conjunction with `stack.lbClass`.
    - `stack.lbClass`: Use this only in conjunction with `stack.kubevip.enabled=false` to specify your load balancer class to use.
    - `stack.relay.enabled`: By default, this is set to `true`. If you have a DHCP relay agent in your environment that points to the Tinkerbell stack IP, you can set this to `false`.
+   - `stack.hook.enabled`: By default, this is set to `true`. If you do not want the stack chart to download HookOS, you can set this to `false`. When set to `false`, it should be used in conjunction with `smee.http.osieUrl`.
+   - `smee.http.osieUrl.scheme`, `smee.http.osieUrl.host`, `smee.http.osieUrl.port`, `smee.http.osieUrl.path`: By default these are configured automatically. These should only be used in conjunction with `stack.hook.enabled=false`. These specify the URL to the HookOS artifacts[^1].
+
+scheme: "http"
+    host: ""
+    port: 8080
+    path: ""
 
 1. Install the Tinkerbell stack chart.
 
@@ -71,7 +78,7 @@ Default configuration values can be changed using one or more `--set <parameter>
    # for RKE2 clusters run: 
    # trusted_proxies=$(kubectl describe pod -n kube-system -l component=kube-controller-manager | grep "cluster-cidr" | xargs | cut -d"=" -f2)
    LB_IP=<specify a Load balancer IP>
-   STACK_CHART_VERSION=0.4.3
+   STACK_CHART_VERSION={{< stringparam "tinkerbellStackVersion" >}}
    helm install tink-stack oci://ghcr.io/tinkerbell/charts/stack --version "$STACK_CHART_VERSION" --create-namespace --namespace tink-system --wait --set "smee.trustedProxies={${trusted_proxies}}" --set "hegel.trustedProxies={${trusted_proxies}}" --set "stack.loadBalancerIP=$LB_IP" --set "smee.publicIP=$LB_IP"
    ```
 
@@ -106,6 +113,8 @@ In order to achieve this the stack chart does not use a Kubernetes ingress objec
 The stack chart deploys a very light weight Nginx deployment with a straightforward configuration that accommodates almost all the Tinkerbell stack services and file serving of the HookOS artifacts. Nginx does not support DHCP. For this a DHCP relay agent is required and we deploy a lightweight agent in the same pod as Nginx.
 
 In the future there is potential for moving away from this lightweight Nginx setup and using the [GatewayAPI] for traffic routing. As the Tinkerbell stack will require both UDP, TCP, and gRPC we'll need an implementation that can support all three. Currently, because of limited Maintainer cycles and the limited support for all these protocols in the existing GatewayAPI implementations, we have not pursued this path.
+
+[^1]: The HookOS artifacts must be named as follows: `vmlinuz-x86_64`, `initramfs-x86_64`, `vmlinuz-aarch64`, and `initramfs-aarch64`
 
 [GatewayAPI]: <https://kubernetes.io/docs/concepts/services-networking/gateway/>
 [Hegel]: /docs/services/hegel
