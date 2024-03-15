@@ -33,7 +33,7 @@ The `hardwareMap` field is a map of User defined key-value pairs that can be ref
 
 ## Workflow Status
 
-The status of a Workflow is updated by the [tink-controller]. Tink-controller will initially render the Template from `templateRef` interpolating any templating in the Template and then saving the whole Template into the status. As the Workflow progresses through its lifecycle, tink-controller will update fields like `seconds`, `startedAt`, and `status`. The status field can be used to determine the current state of the Workflow and to identify any issues that may have occurred during the execution of the Workflow. Get the workflow status by running `kubectl get workflow -o yaml example`.
+The status of a Workflow is updated by the [tink-controller]. Tink-controller will initially render the Template from `templateRef` interpolating any templating in the Template and then saving the whole Template into the status. As the Workflow progresses through its lifecycle, tink-controller will update fields like `seconds`, `startedAt`, and `status`. The status field can be used to determine the current state of the Workflow and to identify any issues that may have occurred during the execution of the Workflow. Get the workflow status by running `kubectl get workflow -o yaml example`. The following Workflow `status` values are possible: `STATE_PENDING`, `STATE_RUNNING`, `STATE_FAILED`, `STATE_TIMEOUT`, and `STATE_SUCCESS`.
 
 ## Troubleshooting
 
