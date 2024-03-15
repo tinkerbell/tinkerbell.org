@@ -56,9 +56,11 @@ geekdocDarkModeToggle = false
 geekdocDarkModeCode = false
 geekdocDarkModeDim = true
 geekdocLogo = "Tinkerbell-Logo-Landscape-Light.png"
-geekdocOverwriteHTMLBase = true
+geekdocOverwriteHTMLBase = false
 geekdocMenuBundle = true
 geekdocBackToTop = false
+geekdocRepo = "https://github.com/tinkerbell/tinkerbell.org"
+geekdocEditPath = "edit/main/"
   
 [[menu.shortcuts]] 
 name = "<i class='fab fa-fw fa-slack'></i> <em>Slack</em>"
