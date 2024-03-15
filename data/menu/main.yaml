@@ -7,8 +7,6 @@ main:
         ref: "/docs/concepts/hardware"
       - name: Templates
         ref: "/docs/concepts/templates"
-      - name: Actions
-        ref: "/docs/concepts/actions"
       - name: Workflows
         ref: "/docs/concepts/workflows"
 
@@ -63,8 +61,8 @@ main:
   - name: Reference
     ref: "/docs/reference"
     sub:
-      - name: OS Installation primer
-        ref: "/docs/reference/os-installation-primer"
+      - name: OS installation primer
+        ref: "/docs/reference/osprimer"
       - name: Architecture
         ref: "/docs/reference/architecture"
       - name: Community

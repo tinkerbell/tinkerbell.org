@@ -4,4 +4,4 @@ draft: false
 geekdocDescription: "Learn about some general concepts around installing operating systems."
 ---
 
-Learn about some general concepts around installing operating systems.
+Learn about some general concepts for installing operating systems.
