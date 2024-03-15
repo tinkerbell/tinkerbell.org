@@ -55,8 +55,10 @@ a:visited {
   padding: 0;
   margin: 0;
   font-weight: 500;
-  font-size: .875em;
+  font-size: .875rem;
 }
+
+
 
 .gdoc-nav nav section {
   margin-top: -1em;

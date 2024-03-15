@@ -1,3 +1,10 @@
+{{ $geekdocRepo := default (default false .Site.Params.geekdocRepo) .Page.Params.geekdocRepo }}
+{{ $geekdocEditPath := default (default false .Site.Params.geekdocEditPath) .Page.Params.geekdocEditPath }}
+{{ if .File }}
+  {{ $.Scratch.Set "geekdocFilePath" (default (strings.TrimPrefix hugo.WorkingDir .File.Filename) .Page.Params.geekdocFilePath) }}
+{{ else }}
+  {{ $.Scratch.Set "geekdocFilePath" false }}
+{{ end }}
 {{ $url := replace .Permalink ( printf "%s" .Site.BaseURL) "" }}
 {{ $page := .Page }}
 {{ $last := false }}
@@ -29,25 +36,34 @@
     {{ end }}
 {{ end }}
 
-
-<ol class="no">
-    {{ $len := len ($.Scratch.Get "titles") }}
-    {{ range $index, $element := $.Scratch.Get "titles" }}
-        {{ $i := sub (sub $len $index) 1 }}
-        {{ $title := index ($.Scratch.Get "titles") $i }}
-        {{ $description := index ($.Scratch.Get "descriptions") $i }}
-        {{ $url := index ($.Scratch.Get "urls") $i }}
-        {{ if ne $index 0 }}
-            {{ if ne $i 0 }}
-                <li>
-                    <a href="{{- $url -}}" title="{{- $description -}}">{{- $title -}}</a>
-                    <svg class="gdoc-icon gdoc_keyboard_arrow_right">
-                        <use xlink:href="#gdoc_keyboard_arrow_right"></use>
-                    </svg>
-                </li>
-            {{ else }}
-                <li>{{- $title -}}</li>
+<div class="no flex flex-wrap justify-between">
+  <div>
+    <ol class="no">
+        {{ $len := len ($.Scratch.Get "titles") }}
+        {{ range $index, $element := $.Scratch.Get "titles" }}
+            {{ $i := sub (sub $len $index) 1 }}
+            {{ $title := index ($.Scratch.Get "titles") $i }}
+            {{ $description := index ($.Scratch.Get "descriptions") $i }}
+            {{ $url := index ($.Scratch.Get "urls") $i }}
+            {{ if ne $index 0 }}
+                {{ if ne $i 0 }}
+                    <li>
+                        <a href="{{- $url -}}" title="{{- $description -}}">{{- $title -}}</a>
+                        <svg class="gdoc-icon gdoc_keyboard_arrow_right">
+                            <use xlink:href="#gdoc_keyboard_arrow_right"></use>
+                        </svg>
+                    </li>
+                {{ else }}
+                    <li>{{- $title -}}</li>
+                {{ end }}
             {{ end }}
         {{ end }}
-    {{ end }}
-</ol>
+    </ol>
+  </div>
+  <div>
+    <span class="editpage">
+      <svg class="gdoc-icon gdoc_code"><use xlink:href="#gdoc_code"></use></svg>
+      <a href="{{ $geekdocRepo }}/{{ path.Join $geekdocEditPath ($.Scratch.Get "geekdocFilePath") }}"> Edit page </a>
+    </span>
+  </div>
+</div>
