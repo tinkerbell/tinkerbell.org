@@ -1,5 +1,3 @@
-![](https://img.shields.io/badge/Stability-Experimental-red.svg)
-
 # Tinkerbell
 
 For complete documentation visit [tinkerbell.org](https://tinkerbell.org/)
