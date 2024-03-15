@@ -56,7 +56,7 @@ geekdocDarkModeToggle = false
 geekdocDarkModeCode = false
 geekdocDarkModeDim = true
 geekdocLogo = "Tinkerbell-Logo-Landscape-Light.png"
-geekdocOverwriteHTMLBase = true
+geekdocOverwriteHTMLBase = false
 geekdocMenuBundle = true
 geekdocBackToTop = false
   
