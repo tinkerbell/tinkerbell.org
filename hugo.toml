@@ -138,10 +138,16 @@ title = "Metadata Service"
 weight = 30
 
 [[menu.tink]]
+name = "Rufio"
+url = "https://github.com/tinkerbell/rufio"
+title = "BMC Interactions"
+weight = 40
+
+[[menu.tink]]
 name = "Hook"
 url = "https://github.com/tinkerbell/hook"
 title = "Operating System Installation Environment (OSIE)"
-weight = 40
+weight = 50
 
 [[menu.footer]]
 name = "Terms"
