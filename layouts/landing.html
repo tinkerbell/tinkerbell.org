@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="{{ .Page.Language | default "en" }}" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Site.Title }}</title>
+
+    {{ hugo.Generator }}
+
+    {{ partial "head/meta.html" . }}
+    {{ partial "head/favicons.html" . }}
+
+    {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap">
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6193438/6190832/css/fonts.css">
+    <script defer src="{{ "fontawesome/fontawesome-all.js" | relURL }}"></script>
+
+    <link rel="stylesheet" href="{{ (resources.Get "css/theme-tinkerbell.css" | minify | fingerprint).RelPermalink }}">
+    <link href="{{"css/font-awesome.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-52258647-10"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-52258647-10');
+    </script>
+  </head>
+
+  <body class="" data-url="{{ .RelPermalink }}">
+
+    {{ partial "navbar.html" . }}
+
+    <header id="hero">
+        <div class="grid-container">
+            <section class="grid-x grid-padding-x align-middle hero-content">
+                {{ range where .Site.Pages "Type" "=" "hero" }}
+                <div class="cell large-5 pr0 medium-order-1 small-order-2">
+                    <h1>{{ .Title }}</h1>
+                    {{ .Content }}
+                </div>
+                <div class="cell large-7 medium-order-2 small-order-1 m-mb50">
+                    <img src="{{ .Params.image }}">
+                </div>
+                {{ end }}
+            </section>
+        </div>
+    </header>
+
+    <div id="content-wrapper">
+        <section class="section larger">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x align-justify align-middle">
+                    {{range where .Site.Pages "Type" "=" "section-1"}}
+                    <div class="cell large-5 medium-order-1 small-order-2 mb80">
+                        <h2>{{ .Title }}</h2>
+                        {{ .Content }}
+                    </div>
+                    <div class="cell large-6 medium-order-2 small-order-1 mb80 m-mb40">
+                        <img src="{{ .Params.image }}">
+                    </div>
+                    {{ end }}
+                </div>
+                <div class="grid-x grid-padding-x align-justify align-middle">
+                    {{range where .Site.Pages "Type" "=" "section-2"}}
+                    <div class="cell large-6 medium-order-1 small-order-1 m-mb40 ">
+                        <img src="{{ .Params.image }}">
+                    </div>
+                    <div class="cell large-5 medium-order-2 small-order-2 ">
+                        <h2>{{ .Title }}</h2>
+                        {{ .Content }}
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </section>
+
+        <section class="section bg-yellow">
+            <div class="grid-container">
+                <div class="grid-x grid-padding-x align-center">
+                    {{range where .Site.Pages "Type" "=" "section-3"}}
+                    <div class="cell large-10 text-center">
+                        <h2>{{ .Title }}</h2>
+                        {{ .Content }}
+                    </div>
+                    {{ end }}
+
+                    {{ .Scratch.Set "i" 0 }}
+                    {{with .Site.Menus.tink}}
+                    <div class="cell large-10 pt40">
+                        <div class="grid-x grid-padding-x">
+                            {{ range sort . "Weight"}}
+                                {{ $.Scratch.Set "i" (add ($.Scratch.Get "i") 1) }}
+                                {{ if eq ($.Scratch.Get "i") 1 }}
+                                <div class="cell large-12">
+                                {{ else }}
+                                <div class="cell large-4">
+                                {{ end }}
+
+                                    <div class="box">
+                                    {{.Pre}}
+                                    <a class="permalink" href="{{.URL | absLangURL }}"></a>
+                                    <h3>{{safeHTML .Name}} </h3>
+                                    <p>{{safeHTML .Title}}</p>
+                                    {{.Post}}
+                                    </div>
+                                </div>
+                            {{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer id="footer" class="bg-blue">
+        <div class="grid-container">
+            <section class="grid-x grid-margin-x align-middle text-center">
+                <div class="cell large-12">
+                    <nav id="nav-footer">
+                        <ul>
+                        {{ range .Site.Menus.footer }}
+                            <li><a href="{{.URL | absLangURL }}" title="{{safeHTML .Title}}">{{safeHTML .Name}}</a></li>
+                        {{end}}
+                        </ul>
+                    </nav>
+                    <p>
+                        © 2021 <a href="https://www.linuxfoundation.org/">The Linux Foundation</a>. All right reserved
+                    </p>
+                    <p>
+                        The Linux Foundation has registered trademarks and uses trademarks.
+                    </p>
+                    <p>
+                        For a list trademarks of The Linux Foundation, please see our <a href="https://www.linuxfoundation.org/en/trademark-usage">Trademark Usage</a> page.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </footer>
+</body>
