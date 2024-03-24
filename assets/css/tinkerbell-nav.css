@@ -1,3 +1,12 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Barlow,sans-serif;
+}
+
+nav {
+    font-family: Barlow, sans-serif;
+}
 #nav-main {
     background: #05254c;
     padding: 50px 0 30px;
@@ -32,6 +41,13 @@
 .nav ul li a:hover {
     color: #fff;
     border-bottom: 1px solid #fff;
+    text-decoration: none !important;
+}
+
+dl,ol,ul {
+    margin-bottom: 1rem;
+    list-style-position: outside;
+    line-height: 1.6
 }
 
 .nav ul li.pre {
@@ -70,6 +86,45 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+#nav-footer ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+#nav-footer ul li {
+    line-height: 1;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 7px;
+    position: relative;
+}
+
+#nav-footer ul li a {
+    line-height: 1;
+}
+
+#nav-footer ul li:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    border-right: 2px solid #000;
+}
+
+#nav-footer ul li:last-child {
+    padding-right: 0;
+}
+
+#nav-footer ul li:last-child:after {
+    display: none;
 }
 
 *,
@@ -150,8 +205,20 @@ screen and (max-width: 64em) {
     .nav .logo svg {
         height: 40px;
     }
+
+    #footer p {
+        font-size: 10px;
+    }
+
+    #nav-footer ul li a {
+        font-size: 10px;
+    }
 }
 
+.grid-x {
+    display: flex;
+    flex-flow: row wrap
+}
 
 .grid-container {
     max-width: 75rem;
