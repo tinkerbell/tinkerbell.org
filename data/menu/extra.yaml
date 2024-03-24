@@ -1,5 +1,5 @@
 ---
-footer:
+header:
   - name: Home
     ref: /
     icon: "house"

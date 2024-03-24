@@ -151,26 +151,26 @@ url = "https://github.com/tinkerbell/hook"
 title = "Operating System Installation Environment (OSIE)"
 weight = 50
 
-[[menu.footer]]
-name = "Terms"
-url = "/terms"
-title = "Terms"
-weight = 10
+# [[menu.footer]]
+# name = "Terms"
+# url = "/terms"
+# title = "Terms"
+# weight = 10
 
-[[menu.footer]]
-name = "License"
-url = "/terms/license"
-title = "License"
-weight = 30
+# [[menu.footer]]
+# name = "License"
+# url = "/terms/license"
+# title = "License"
+# weight = 30
 
-[[menu.footer]]
-name = "Code of Conduct"
-url = "/terms/code-of-conduct"
-title = "Code of Conduct"
-weight = 40
+# [[menu.footer]]
+# name = "Code of Conduct"
+# url = "/terms/code-of-conduct"
+# title = "Code of Conduct"
+# weight = 40
 
-[[menu.footer]]
-name = "Contributor Guide"
-url = "/terms/contributor-guide"
-title = "Contributor Guide"
-weight = 50
+# [[menu.footer]]
+# name = "Contributor Guide"
+# url = "/terms/contributor-guide"
+# title = "Contributor Guide"
+# weight = 50
