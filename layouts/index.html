@@ -1,10 +1,10 @@
-{{ partial "homepage/header.html" . }}
+{{/*  {{ partial "homepage/header.html" . }}
 
 <div id="content-wrapper">
     <section class="section larger">
         <div class="grid-container">
             <div class="grid-x grid-padding-x align-justify align-middle">
-                {{range where .Site.Pages "Type" "=" "section-1"}} 
+                {{range where .Site.Pages "Type" "=" "section-1"}}
                 <div class="cell large-5 medium-order-1 small-order-2 mb80">
                     <h2>{{ .Title }}</h2>
                     {{ .Content }}
@@ -15,7 +15,7 @@
                 {{ end }}
             </div>
             <div class="grid-x grid-padding-x align-justify align-middle">
-                {{range where .Site.Pages "Type" "=" "section-2"}} 
+                {{range where .Site.Pages "Type" "=" "section-2"}}
                 <div class="cell large-6 medium-order-1 small-order-1 m-mb40 ">
                     <img src="{{ .Params.image }}">
                 </div>
@@ -30,13 +30,13 @@
     <section class="section bg-yellow">
         <div class="grid-container">
             <div class="grid-x grid-padding-x align-center">
-                {{range where .Site.Pages "Type" "=" "section-3"}} 
+                {{range where .Site.Pages "Type" "=" "section-3"}}
                 <div class="cell large-10 text-center">
                     <h2>{{ .Title }}</h2>
                     {{ .Content }}
                 </div>
                 {{ end }}
-                
+
                 {{ .Scratch.Set "i" 0 }}
                 {{with .Site.Menus.tink}}
                 <div class="cell large-10 pt40">
@@ -48,7 +48,7 @@
                             {{ else }}
                             <div class="cell large-3">
                             {{ end }}
-                               
+
                                 <div class="box">
                                 {{.Pre}}
                                 <a class="permalink" href="{{.URL | absLangURL }}"></a>
@@ -67,4 +67,4 @@
 </div>
 
 
-{{ partial "homepage/footer.html" . }}
+{{ partial "homepage/footer.html" . }}  */}}

@@ -1,0 +1,34 @@
+<meta charset="UTF-8" />
+<meta name="referrer" content="no-referrer" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="light dark" />
+{{ hugo.Generator }}
+
+{{ $keywords := default .Site.Params.Keywords .Keywords }}
+
+{{- with partial "utils/description" . }}
+  <meta name="description" content="{{ trim (. | plainify) "\n" | safeHTML }}" />
+{{- end }}
+{{- with $keywords }}
+  <meta name="keywords" content="{{ delimit . "," }}" />
+{{- end }}
+
+{{ $baseUrl := .Site.BaseURL }}
+
+<!-- Standard -->
+{{ with .Site.Params.author }}<meta name="author" content="{{ . }}">{{ end }}
+{{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+
+<!-- Open Graph -->
+{{ with .Site.Params.sitename }}<meta property="og:site_name" content="{{ . }}" />{{ end }}
+{{ with .Site.Params.ogtitle }}<meta property="og:title" content="{{ . }}" />{{ end }}
+{{ with .Site.Params.image }}<meta property="og:image" content="{{ $baseUrl }}{{ . }}">{{ end }}
+{{ with .Site.Params.ogdescription }}<meta property="og:description" content="{{ . }}" />{{ end }}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+{{ with .Site.Params.image }}<meta property="twitter:image" content="{{ $baseUrl }}{{ . }}">{{ end }}
+{{ with .Site.Params.twitter }}<meta name="twitter:creator" content="{{ . }}" />{{ end }}
+{{ with .Site.Params.sitename }}<meta name="twitter:title" content="{{ . }}" />{{ end }}
+{{ with .Site.Params.ogdescription }}<meta name="twitter:description" content="{{ . }}" />{{ end }}
+
