@@ -78,7 +78,7 @@ actions:
       COMPRESSED: "true"
       DEST_DISK: /dev/vda
       IMG_URL: http://192.168.2.112:8080/jammy-server-cloudimg-amd64.raw.gz
-    image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+    image: quay.io/tinkerbell/actions/image2disk:v1.0.0
     name: stream ubuntu image
     timeout: 9600
   - environment:
@@ -97,7 +97,7 @@ actions:
       GID: "0"
       MODE: "0600"
       UID: "0"
-    image: quay.io/tinkerbell-actions/writefile:v1.0.0
+    image: quay.io/tinkerbell/actions/writefile:v1.0.0
     name: add-cloud-init-config
     timeout: 90
   - environment:
@@ -110,10 +110,10 @@ actions:
       GID: "0"
       MODE: "0600"
       UID: "0"
-    image: quay.io/tinkerbell-actions/writefile:v1.0.0
+    image: quay.io/tinkerbell/actions/writefile:v1.0.0
     name: add-tink-cloud-init-ds-config
     timeout: 90
-  - image: quay.io/tinkerbell-actions/writefile:v1.0.0
+  - image: quay.io/tinkerbell/actions/writefile:v1.0.0
     name: write-netplan
     timeout: 90
 ```
@@ -124,7 +124,7 @@ An Action is an individual units of work, such as streaming an image to a disk, 
 
 ```yaml
 name: stream ubuntu image
-image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+image: quay.io/tinkerbell/actions/image2disk:v1.0.0
 timeout: 9600
 command: ["echo", "override", "entrypoint", "in", "container", "image", "here"]
 on-timeout: ["echo", "timeout"]
@@ -159,6 +159,8 @@ metadata:
   namespace: tink-system
 spec:
   data: |
+    name: ubuntu
+    version: "1.0"
     global_timeout: 9800
     tasks:
       - name: "os installation"
@@ -171,14 +173,14 @@ spec:
           GLOBAL_VALUE: "my global value"
         actions:
           - name: "stream image"
-            image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+            image: quay.io/tinkerbell/actions/image2disk:v1.0.0
             timeout: 9600
             environment:
               DEST_DISK: {{ index .Hardware.Disks 0 }}
               IMG_URL: "http://{{ .artifact_server_ip_port }}/jammy-server-cloudimg-amd64.raw.gz"
               COMPRESSED: true
           - name: "add cloud init config"
-            image: quay.io/tinkerbell-actions/writefile:v1.0.0
+            image: quay.io/tinkerbell/actions/writefile:v1.0.0
             timeout: 90
             environment:
               CONTENTS: |
@@ -197,7 +199,7 @@ spec:
               MODE: "0600"
               UID: "0"
           - name: "add cloud-init ds config"
-            image: quay.io/tinkerbell-actions/writefile:v1.0.0
+            image: quay.io/tinkerbell/actions/writefile:v1.0.0
             timeout: 90
             environment:
               DEST_DISK: {{ formatPartition ( index .Hardware.Disks 0 ) 1 }}
@@ -210,7 +212,7 @@ spec:
               CONTENTS: |
                 datasource: Ec2
           - name: "write netplan"
-            image: quay.io/tinkerbell-actions/writefile:v1.0.0
+            image: quay.io/tinkerbell/actions/writefile:v1.0.0
             timeout: 90
             environment:
               DEST_DISK: {{ formatPartition ( index .Hardware.Disks 0 ) 1 }}
@@ -243,6 +245,8 @@ metadata:
   namespace: tink-system
 spec:
   data: |
+    name: ubuntu
+    version: "1.0"
     global_timeout: 9800
     tasks:
       - name: "os installation"
@@ -251,7 +255,7 @@ spec:
           - /dev:/dev
         actions:
           - name: "stream image"
-            image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+            image: quay.io/tinkerbell/actions/image2disk:v1.0.0
             timeout: 9600
             environment:
               DEST_DISK: {{ index .Hardware.Disks 0 }}
