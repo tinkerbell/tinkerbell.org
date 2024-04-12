@@ -147,6 +147,10 @@ environment:
 - pid `string`: A string that describes the pid mode for the action. Generally it is either "host" or not defined.
 - environment `map[string]string`: A map of strings that are used to set environment variables in the action container.
 
+> **Note**: Actions are user-defined and can be any container image that is available to the worker.
+> The Actions you see in this doc are examples and are not the only way to accomplish these tasks.
+> See this [Actions repo] for the Tinkerbell maintained Actions.
+
 ## Full example
 
 This is a full example of a Template for installing Ubuntu and configuring it to use cloud-init.
@@ -337,3 +341,4 @@ Values from the Hardware spec (currently, only [Disks][Hardware data contract] a
 [Explorable Task Spec]: <https://doc.crds.dev/github.com/tinkerbell/tink/tinkerbell.org/Workflow/v1alpha1#status-tasks>
 [Workflow Kubernetes CRD]: <{{< stringparam "latestTinkVersion" >}}/config/crd/bases/tinkerbell.org_workflows.yaml>
 [Tink Controller]: /docs/services/tink-controller
+[Actions repo]: <https://github.com/tinkerbell/actions>

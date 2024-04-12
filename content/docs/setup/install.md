@@ -56,7 +56,7 @@ Default configuration values can be changed using one or more `--set <parameter>
    The following values are required to get the stack up and running in your environment. They are set either in a values file or as `--set` arguments.
 
    - `smee.trustedProxies` and `hegel.trustedProxies`: A comma-separated list of trusted proxies. This is used to configure the `X-Forwarded-For` header in HTTP requests for [Hegel] and `auto.ipxe` in [Smee].
-   - `stack.loadBalancerIP` and `smee.publicIP`: The IP address to use for the Kubernetes North/South load balancer.
+   - `stack.loadBalancerIP` and `smee.publicIP`: The IP address to use for the Kubernetes North/South load balancer. This should be a free IP address in the network where the Tinkerbell stack is deployed. See the upstream Kubernetes docs on [load balancers] for more information.
 
    Other customization to note:
 
@@ -122,3 +122,4 @@ In the future there is potential for moving away from this lightweight Nginx set
 [Hardware]: /docs/concepts/hardware
 [Templates]: /docs/concepts/templates
 [Workflows]: /docs/concepts/workflows
+[load balancers]: <https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer>

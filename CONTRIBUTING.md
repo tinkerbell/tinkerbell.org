@@ -1,43 +1,24 @@
-## Hello Contributors!
+# Contributing to Tinkerbell.org
 
-Thanks for your interest!
-We're so glad you're here.
+Thanks for your interest! We're so glad you're here.
 
-### Important Resources
+Please follow the guidelines below to contribute to the Tinkerbell.org website.
 
-#### bugs: [https://github.com/tinkerbell/tinkerbell.org/issues](https://github.com/tinkerbell/tinkerbell.org/issues)
+1. Read the [Code of Conduct].
+2. Read, understand, and use the [DCO sign off].
+3. Search the [issues] to see if your issue has already been reported. If you find your issue, please add a comment to it.
+4. If you don't find your issue, please create a [new issue].
+5. If you want to contribute to the codebase, please [fork the repository] and create a [pull request].
 
-### Code of Conduct
+## Development
 
-Please read and understand the code of conduct found [here](https://github.com/tinkerbell/.github/blob/main/CODE_OF_CONDUCT.md).
+Tinkerbell.org is run as a static website via [Hugo]. To run the website locally, you need to have Hugo installed. You can [install Hugo] by following the instructions on the Hugo website. With Hugo installed, run `hugo server --logLevel debug --ignoreCache` to start the server. Then navigate to the URL provided in the terminal to view the website.
 
-### DCO Sign Off
-
-Please read and understand the DCO found [here](docs/DCO.md).
-
-### Environment Details
-
-#### Nix
-
-This repo's build environment can be reproduced using `nix`.
-
-##### Install Nix
-
-Follow the [Nix installation](https://nixos.org/download.html) guide to setup Nix on your box.
-
-##### Load Dependencies
-
-Loading build dependencies is as simple as running `nix-shell` or using [lorri](https://github.com/nix-community/lorri).
-If you have `direnv` installed the included `.envrc` will make that step automatic.
-
-### How to Submit Change Requests
-
-Please submit change requests and / or features via [Issues](https://github.com/tinkerbell/tinkerbell.org/issues).
-There's no guarantee it'll be changed, but you never know until you try.
-We'll try to add comments as soon as possible, though.
-
-### How to Report a Bug
-
-Bugs are problems in code, in the functionality of an application or in its UI design; you can submit them through [Issues](https://github.com/tinkerbell/tinkerbell.org/issues).
-
-## Code Style Guides
+[issues]: https://github.com/tinkerbell/tinkerbell.org/issues
+[DCO sign off]: https://github.com/tinkerbell/org/blob/main/DCO.md
+[Code of Conduct]: https://github.com/tinkerbell/org/blob/main/CODE_OF_CONDUCT.md
+[new issue]: https://github.com/tinkerbell/tinkerbell.org/issues/new/choose
+[fork the repository]: https://github.com/tinkerbell/tinkerbell.org/fork
+[pull request]: https://github.com/tinkerbell/tinkerbell.org/compare
+[Hugo]: https://gohugo.io/
+[install Hugo]: https://gohugo.io/installation/
