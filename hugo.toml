@@ -80,11 +80,6 @@ name = "<i class='fas fa-fw fa-file-contract '></i> License"
 url = "/terms/license"
 weight = 40
 
-[[menu.shortcuts]]
-name = "<i class='fas fa-fw fa-question-circle'></i> Support"
-url = "/community/support"
-weight = 50
-
 [[menu.homepage]]
 identifier = "docs"
 name = "Docs"
@@ -100,7 +95,7 @@ weight = 1
 [[menu.homepage]]
 identifier = "community"
 name = "Community"
-url = "/community/"
+url = "/docs/reference/community/"
 weight = 20
 
 [[menu.homepage]]
