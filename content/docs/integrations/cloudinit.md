@@ -112,7 +112,7 @@ To use cloud-init with Tinkerbell, you need to set up cloud-init to use Hegel as
 
 ```yaml
 - name: "add cloud-init config"
-  image: quay.io/tinkerbell/actions/writefile:v1.0.0
+  image: quay.io/tinkerbell-actions/writefile:v1.0.0
   timeout: 90
   environment:
     CONTENTS: |
@@ -131,7 +131,7 @@ To use cloud-init with Tinkerbell, you need to set up cloud-init to use Hegel as
     MODE: "0600"
     UID: "0"
 - name: "add cloud-init ds-identity"
-  image: quay.io/tinkerbell/actions/writefile:v1.0.0
+  image: quay.io/tinkerbell-actions/writefile:v1.0.0
   timeout: 90
   environment:
     DEST_DISK: {{ formatPartition ( index .Hardware.Disks 0 ) 1 }}
