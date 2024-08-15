@@ -2,7 +2,7 @@
 title: "Install"
 draft: false
 geekdocDescription: "Install the Tinkerbell stack."
-tinkerbellStackVersion: "0.4.3"
+tinkerbellStackVersion: "0.4.5"
 ---
 
 This doc will guide you through the installation of the Tinkerbell stack.
