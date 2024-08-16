@@ -164,7 +164,7 @@ metadata:
 spec:
   data: |
     name: ubuntu
-    version: "1.0"
+    version: "0.1"
     global_timeout: 9800
     tasks:
       - name: "os installation"
@@ -250,7 +250,7 @@ metadata:
 spec:
   data: |
     name: ubuntu
-    version: "1.0"
+    version: "0.1"
     global_timeout: 9800
     tasks:
       - name: "os installation"
