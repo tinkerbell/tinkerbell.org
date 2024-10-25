@@ -55,8 +55,8 @@ Default configuration values can be changed using one or more `--set <parameter>
 
    The following values are required to get the stack up and running in your environment. They are set either in a values file or as `--set` arguments.
 
-   - `smee.trustedProxies` and `hegel.trustedProxies`: A comma-separated list of trusted proxies. This is used to configure the `X-Forwarded-For` header in HTTP requests for [Hegel] and `auto.ipxe` in [Smee].
-   - `stack.loadBalancerIP` and `smee.publicIP`: The IP address to use for the Kubernetes North/South load balancer. This should be a free IP address in the network where the Tinkerbell stack is deployed. See the upstream Kubernetes docs on [load balancers] for more information.
+   - `global.trustedProxies`: A comma-separated list of trusted proxies. This is used to configure the `X-Forwarded-For` header in HTTP requests for [Hegel] and `auto.ipxe` in [Smee].
+   - `global.publicIP`: The IP address to use for the Kubernetes North/South load balancer. This should be a free IP address in the network where the Tinkerbell stack is deployed. See the upstream Kubernetes docs on [load balancers] for more information.
 
    Other customization to note:
 
@@ -66,11 +66,6 @@ Default configuration values can be changed using one or more `--set <parameter>
    - `stack.hook.enabled`: By default, this is set to `true`. If you do not want the stack chart to download HookOS, you can set this to `false`. When set to `false`, it should be used in conjunction with `smee.http.osieUrl`.
    - `smee.http.osieUrl.scheme`, `smee.http.osieUrl.host`, `smee.http.osieUrl.port`, `smee.http.osieUrl.path`: By default these are configured automatically. These should only be used in conjunction with `stack.hook.enabled=false`. These specify the URL to the HookOS artifacts[^1].
 
-scheme: "http"
-    host: ""
-    port: 8080
-    path: ""
-
 1. Install the Tinkerbell stack chart.
 
    ```bash
@@ -79,15 +74,15 @@ scheme: "http"
    # trusted_proxies=$(kubectl describe pod -n kube-system -l component=kube-controller-manager | grep "cluster-cidr" | xargs | cut -d"=" -f2)
    LB_IP=<specify a Load balancer IP>
    STACK_CHART_VERSION={{< stringparam "tinkerbellStackVersion" >}}
-   helm install tink-stack oci://ghcr.io/tinkerbell/charts/stack --version "$STACK_CHART_VERSION" --create-namespace --namespace tink-system --wait --set "smee.trustedProxies={${trusted_proxies}}" --set "hegel.trustedProxies={${trusted_proxies}}" --set "stack.loadBalancerIP=$LB_IP" --set "smee.publicIP=$LB_IP"
+   helm install tink-stack oci://ghcr.io/tinkerbell/charts/stack --version "$STACK_CHART_VERSION" --create-namespace --namespace tink --wait --set "global.trustedProxies={${trusted_proxies}}" --set "global.publicIP=$LB_IP"
    ```
 
 1. Verify the stack is up and running.
 
    ```bash
-   kubectl get pods -n tink-system # verify all pods are running
-   kubectl get svc -n tink-system # Verify the tink-stack service has the IP you specified with $LB_IP under the EXTERNAL-IP column
-   kubectl get jobs -n tink-system # Verify the download-hook job has completed
+   kubectl get pods -n tink # verify all pods are running
+   kubectl get svc -n tink # Verify the tink-stack service has the IP you specified with $LB_IP under the EXTERNAL-IP column
+   kubectl get jobs -n tink # Verify the download-hook job has completed
    ```
 
 ## Post installation steps
@@ -100,7 +95,7 @@ See the docs on [Hardware], [Templates], and [Workflows] for more information.
 Uninstall the Tinkerbell stack via Helm and by deleting the HookOS artifacts.
 
 ```bash
-helm uninstall tink-stack -n tink-system
+helm uninstall tink-stack -n tink
 # either ssh into the cluster or use a Kubernetes job to delete the HookOS artifacts. By default the will live on the host at /opt/hook. See `stack.hook.downloadsDest`.
 ```
 
