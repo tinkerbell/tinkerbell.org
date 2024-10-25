@@ -2,7 +2,7 @@
 title: "Install"
 draft: false
 geekdocDescription: "Install the Tinkerbell stack."
-tinkerbellStackVersion: "0.4.5"
+tinkerbellStackVersion: "0.5.0"
 ---
 
 This doc will guide you through the installation of the Tinkerbell stack.
@@ -29,7 +29,7 @@ trusted_proxies=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr 
 # trusted_proxies=$(kubectl describe pod -n kube-system -l component=kube-controller-manager | grep "cluster-cidr" | xargs | cut -d"=" -f2)
 LB_IP=<specify a Load balancer IP>
 STACK_CHART_VERSION={{< stringparam "tinkerbellStackVersion" >}}
-helm install tink-stack oci://ghcr.io/tinkerbell/charts/stack --version "$STACK_CHART_VERSION" --create-namespace --namespace tink-system --wait --set "smee.trustedProxies={${trusted_proxies}}" --set "hegel.trustedProxies={${trusted_proxies}}" --set "stack.loadBalancerIP=$LB_IP" --set "smee.publicIP=$LB_IP"
+helm install tink-stack oci://ghcr.io/tinkerbell/charts/stack --version "$STACK_CHART_VERSION" --create-namespace --namespace tink --wait --set "global.trustedProxies={${trusted_proxies}}" --set "global.publicIP=$LB_IP"
 ```
 
 ## Installation steps
