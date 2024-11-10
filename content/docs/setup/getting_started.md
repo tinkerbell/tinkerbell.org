@@ -35,7 +35,7 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
 1. Start the stack
 
    ```bash
-   cd vagrant
+   cd stack/vagrant
    vagrant up
    # This process will take about 5-10 minutes depending on your internet connection.
    # Hook is about 400MB in size and the Ubuntu jammy image is about 500MB
@@ -513,7 +513,7 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 1. Start the stack
 
    ```bash
-   cd vagrant
+   cd stack/vagrant
    vagrant up
    # This process will take up to 10 minutes depending on your internet connection.
    # It will download HookOS, which is a couple hundred megabytes in size, and an Ubuntu cloud image, which is about 600MB.
