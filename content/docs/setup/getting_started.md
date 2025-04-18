@@ -455,7 +455,7 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
 
    # watch for the workflow to complete
    # once the workflow is complete (see the expected output below for completion), move on to the next step
-   kubectl get -n tink-system workflow sandbox-workflow --watch
+   kubectl get -n tink-system workflow playground-workflow --watch
    ```
 
    <details>
@@ -463,21 +463,21 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
 
    ```bash
    NAME               TEMPLATE       STATE
-   sandbox-workflow   ubuntu-jammy   STATE_PENDING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_RUNNING
-   sandbox-workflow   ubuntu-jammy   STATE_SUCCESS
+   playground-workflow   ubuntu-jammy   STATE_PENDING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_RUNNING
+   playground-workflow   ubuntu-jammy   STATE_SUCCESS
    ```
 
    </details>
