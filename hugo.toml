@@ -129,8 +129,8 @@ title = "DHCP & iPXE Server"
 weight = 20
 
 [[menu.tink]]
-name = "Hegel"
-url = "https://github.com/tinkerbell/hegel"
+name = "Tootles"
+url = "https://github.com/tinkerbell/tinkerbell/tree/main/tootles"
 title = "Metadata Service"
 weight = 30
 

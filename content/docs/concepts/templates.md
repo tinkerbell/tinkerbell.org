@@ -190,7 +190,7 @@ spec:
               CONTENTS: |
                 datasource:
                   Ec2:
-                    metadata_urls: ["http://{{ .hegel_ip_port }}"]
+                    metadata_urls: ["http://{{ .tootles_ip_port }}"]
                     strict_id: false
                 manage_etc_hosts: localhost
                 warnings:

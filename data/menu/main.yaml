@@ -29,8 +29,8 @@ main:
         ref: "/docs/services/tink-worker"
       - name: Smee
         ref: "/docs/services/smee"
-      - name: Hegel
-        ref: "/docs/services/hegel"
+      - name: Tootles
+        ref: "/docs/services/tootles"
       - name: Rufio
         ref: "/docs/services/rufio"
       - name: PBnJ
@@ -51,7 +51,7 @@ main:
     sub:
       - name: Troubleshooting
         ref: "/docs/operations/troubleshooting"
-  
+
   - name: Integrations
     ref: "/docs/integrations"
     sub:

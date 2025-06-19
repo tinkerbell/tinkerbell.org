@@ -6,7 +6,7 @@ geekdocDescription: "Learn how to integrate Tinkerbell and Cloud-init."
 
 _"Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically."_ - [cloud-init]
 
-Tinkerbell via [Hegel] supports a good portion of the `2009-04-04` version of the EC2 API version for metadata and user data. This allows you to use Hegel to provide cloud-init data to your machines. See the [Hegel] doc for more details. This document will guide you through the process of integrating Tinkerbell and cloud-init. For details on how to use cloud-init, refer to the [cloud-init documentation].
+Tinkerbell via [Tootles] supports a good portion of the `2009-04-04` version of the EC2 API version for metadata and user data. This allows you to use Tootles to provide cloud-init data to your machines. See the [Tootles] doc for more details. This document will guide you through the process of integrating Tinkerbell and cloud-init. For details on how to use cloud-init, refer to the [cloud-init documentation].
 
 ## Defining data
 
@@ -66,9 +66,9 @@ metadata:
 spec:
   userData: >-
     #cloud-config
-    
+
     package_update: true
-    
+
     users:
       - name: tink
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
@@ -104,11 +104,11 @@ spec:
         version: "22.04"
 ```
 
-## Setup cloud-init to use Hegel
+## Setup cloud-init to use Tootles
 
-To use cloud-init with Tinkerbell, you need to set up cloud-init to use Hegel as the configuration source. This is done via [Actions] in a [Template]. When using these example Actions, be sure to replace `<Hegel_IP:Port>` with the IP address and port of your Hegel instance.
+To use cloud-init with Tinkerbell, you need to set up cloud-init to use Tootles as the configuration source. This is done via [Actions] in a [Template]. When using these example Actions, be sure to replace `<Tootles_IP:Port>` with the IP address and port of your Tootles instance.
 
-> Please note that this is a known working configuration but not necessarily the only way to configure cloud-init to use Hegel.
+> Please note that this is a known working configuration but not necessarily the only way to configure cloud-init to use Tootles.
 
 ```yaml
 - name: "add cloud-init config"
@@ -118,7 +118,7 @@ To use cloud-init with Tinkerbell, you need to set up cloud-init to use Hegel as
     CONTENTS: |
       datasource:
         Ec2:
-          metadata_urls: ["http://<Hegel_IP:Port>"]
+          metadata_urls: ["http://<Tootles_IP:Port>"]
           strict_id: false
       manage_etc_hosts: localhost
       warnings:
@@ -145,7 +145,7 @@ To use cloud-init with Tinkerbell, you need to set up cloud-init to use Hegel as
       datasource: Ec2
 ```
 
-[Hegel]: /docs/services/hegel
+[Tootles]: /docs/services/tootles
 [cloud-init]: https://cloud-init.io/
 [cloud-init documentation]: https://cloudinit.readthedocs.io/en/latest/explanation/introduction.html
 [Hardware]: /docs/concepts/hardware

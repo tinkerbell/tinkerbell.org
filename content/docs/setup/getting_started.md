@@ -5,7 +5,7 @@ geekdocDescription: "How to try out Tinkerbell quickly and easily."
 ---
 
 This guide lets you quickly evaluate Tinkerbell. We'll walk you through setting up the Tinkerbell stack and provisioning a sample machine.
-See the [install guide](/docs/setup/install) for details on setting up Tinkerbell in a production environment.  
+See the [install guide](/docs/setup/install) for details on setting up Tinkerbell in a production environment.
 
 There are couple of ways to get started with Tinkerbell, pick the one that suits you best.
 

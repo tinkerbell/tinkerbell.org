@@ -7,20 +7,20 @@ weight: 10
 
 The Hardware spec describes a physical machine. Its main purpose is for IP Address Management. Its current version is `v1alpha`. The v1alpha1 spec includes fields for specifying disk devices, cloudinit user data, and a few others. At installation time, it is deployed as a Kubernetes custom resource definition, `hardware.tinkerbell.org`. There are no required fields, but generally speaking and at a minimum you'll want IPAM data. This is specified at `spec.interfaces`. More info on the specific areas of the spec can be found in the following docs:
 
-- Cloudinit - [here](/docs/integrations/cloudinit) and [here](/docs/services/hegel)
+- Cloudinit - [here](/docs/integrations/cloudinit) and [here](/docs/services/tootles)
 - DHCP and IPAM - [here](/docs/services/smee)
 - Template Rendering - [here](/docs/services/tink-controller)
 
-- where does the spec live?  
+- where does the spec live?
     Current version is v1alpha1
     Go spec -> https://github.com/tinkerbell/tink/blob/main/api/v1alpha1/hardware_types.go
     Kubernetes Custom Resource Definition -> https://github.com/tinkerbell/tink/blob/main/config/crd/bases/tinkerbell.org_hardware.yaml
     Explorable Spec -> https://doc.crds.dev/github.com/tinkerbell/tink/tinkerbell.org/Hardware/v1alpha1
 
-- Which services use the spec?  
+- Which services use the spec?
     Smee - Uses the IPAM fields for serving DHCP and gating of whether a machine should be given network boot info or not.
     Tink Controller - Uses the spec for template rendering of workflows.
-    Hegel - Uses the spec for serving metadata.
+    Tootles - Uses the spec for serving metadata.
 
 ## Example
 
