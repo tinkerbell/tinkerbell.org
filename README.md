@@ -11,12 +11,13 @@ This website uses Hugo to generate static HTML pages.
 It's hosted and automatically build by Netlify (see [netlify.toml](./netlify.toml "View file") for more details).
 
 - [`content/`](./content/ "View the directory") directory contains documentation files
-- [`config.toml`](./config.toml "View file") is the Hugo configuration
+- [`hugo.toml`](./hugo.toml "View file") is the Hugo configuration
 - [`netlify.toml`](./netlify.toml "View file") is Netlify configuration
 
 ### Build the site locally
 
 Make sure you have installed [Hugo](https://gohugo.io/getting-started/installing/) on your system.
+At the moment, this page is based on `v0.120.4` of Hugo.
 Follow the instructions to clone this repository and build the docs locally.
 
 - Clone the repository
@@ -26,12 +27,6 @@ git clone https://github.com/tinkerbell/tinkerbell.org
 cd tinkerbell.org
 ```
 
-- Fetch the theme submodule
-
-```sh
-git submodule update --init --recursive
-```
-
 - Start local server
 
 ```sh
@@ -39,26 +34,6 @@ hugo server -D
 ```
 
 Site can be viewed at [http://localhost:1313](http://localhost:1313)
-
-### Generate custom css files
-
-- Run npm insall
-
-```sh
-npm install
-```
-
-- Development
-
-```sh
-npm run watch
-```
-
-- Production
-
-```sh
-npm run production
-```
 
 ### Making changes
 
