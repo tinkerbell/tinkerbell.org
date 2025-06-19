@@ -2,6 +2,7 @@
 title: 'Rufio'
 draft: false
 geekdocDescription: "Kubernetes controller for BMC interactions."
+latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 ## Who is Rufio?
@@ -12,7 +13,7 @@ Besides being the leader of the Lost Boys after Peter Pan left Neverland, Rufio 
 
 ![architecture](images/services/rufio/architecture.png)
 
-Rufio controller consists of three main API types, [Machine](https://github.com/tinkerbell/rufio/blob/main/api/v1alpha1/machine.go), [Job](https://github.com/tinkerbell/rufio/blob/main/api/v1alpha1/job.go) and [Task](https://github.com/tinkerbell/rufio/blob/main/api/v1alpha1/task.go). An operator or an automated client like [CAPT](https://github.com/tinkerbell/cluster-api-provider-tinkerbell) can interact with Rufio using these APIs to manage the state of their physical machines.
+Rufio controller consists of three main API types, [Machine]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/machine.go), [Job]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/job.go) and [Task]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/task.go). An operator or an automated client like [CAPT](https://github.com/tinkerbell/cluster-api-provider-tinkerbell) can interact with Rufio using these APIs to manage the state of their physical machines.
 
 ### Machine API
 
@@ -97,7 +98,7 @@ The Task controller watches for Task objects on the cluster. When a new Task is 
 
 ## Getting Started
 
-For running Rufio, we require a k8s cluster that has access to the BMC network of the physical machines. 
+For running Rufio, we require a k8s cluster that has access to the BMC network of the physical machines.
 
 For the purpose of this tutorial, lets create a [kind](https://kind.sigs.k8s.io/) cluster.
 
@@ -140,7 +141,7 @@ data:
 type: kubernetes.io/basic-auth
 ```
 
-Now we can modify the sample [yaml](https://github.com/tinkerbell/rufio/blob/main/config/samples/bmc_v1alpha1_machine.yaml) with the relavent connetion values and create a Machine object.
+Now we can modify the sample [yaml](https://github.com/tinkerbell/rufio/blob/main/config/samples/machine_v1alpha1.yaml) with the relavent connetion values and create a Machine object.
 
 ```bash
 kubectl apply -f ./config/samples/bmc_v1alpha1_machine.yaml
@@ -197,7 +198,7 @@ Options per provider can be defined in the `spec.connection.providerOptions` fie
 
 `Machine` CR example:
 
-> Note: The provider options below are not comprehensive. See the [spec](../api/v1alpha1/) for all available options.
+> Note: The provider options below are not comprehensive. See the [spec]({{< stringparam "latestTinkerbellVersion" >}}/crd/bases/bmc.tinkerbell.org_machines.yaml) for all available options.
 
 ```yaml
 apiVersion: bmc.tinkerbell.org/v1alpha1

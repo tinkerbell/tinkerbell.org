@@ -19,4 +19,4 @@ Tinkerbell has a Cluster API [Infrastructure provider](https://cluster-api.sigs.
 
 ## Other Resources
 
-<iframe src="https://doc.crds.dev/github.com/tinkerbell/cluster-api-provider-tinkerbell" width="100%" height="700"></iframe>
+* [Explorable Cluster API Spec](https://doc.crds.dev/github.com/tinkerbell/cluster-api-provider-tinkerbell)

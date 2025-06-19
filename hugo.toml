@@ -118,25 +118,25 @@ weight = 20
 
 [[menu.tink]]
 name = "Tink"
-url = "https://github.com/tinkerbell/tink"
+url = "https://github.com/tinkerbell/tinkerbell"
 title = "Workflow Server, Worker, and Controller"
 weight = 10
 
 [[menu.tink]]
 name = "Smee"
-url = "https://github.com/tinkerbell/smee"
+url = "https://github.com/tinkerbell/tinkerbell"
 title = "DHCP & iPXE Server"
 weight = 20
 
 [[menu.tink]]
 name = "Tootles"
-url = "https://github.com/tinkerbell/tinkerbell/tree/main/tootles"
+url = "https://github.com/tinkerbell/tinkerbell"
 title = "Metadata Service"
 weight = 30
 
 [[menu.tink]]
 name = "Rufio"
-url = "https://github.com/tinkerbell/rufio"
+url = "https://github.com/tinkerbell/tinkerbell"
 title = "BMC Interactions"
 weight = 40
 

@@ -2,6 +2,7 @@
 title: "Tootles"
 draft: false
 geekdocDescription: "The metadata server for Tinkerbell."
+latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 ## Overview
@@ -9,7 +10,7 @@ geekdocDescription: "The metadata server for Tinkerbell."
 Tootles is Tinkerbell's metadata store that can be used during common provisioning processes such as cloud-init.
 Metadata is exposed over HTTP and sources from various fields on the [`Hardware`] custom resource.
 
-Take a look at the code in the [tinkerbell/tinkerbell] GitHub repository.
+Take a look at the code in the [tootles directory]({{< stringparam "latestTinkerbellVersion" >}}/tootles) of the GitHub repository.
 
 ## Architecture
 
@@ -65,6 +66,5 @@ Some examples are:
 [aws: instance metadata and user data]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html
 [equinix metal: metadata]: https://metal.equinix.com/developers/docs/servers/metadata/
 [gcp: storing and retrieving instance metadata]: https://cloud.google.com/compute/docs/metadata/overview
-[hook]: /hookOS
-[tinkerbell/tinkerbell]: https://github.com/tinkerbell/tinkerbell
-[`hardware`]: https://github.com/tinkerbell/tink/blob/main/config/crd/bases/tinkerbell.org_hardware.yaml
+[hook]: /docs/additionalcomponents/hookOS
+[`hardware`]: {{< stringparam "latestTinkerbellVersion" >}}/crd/bases/tinkerbell.org_hardware.yaml

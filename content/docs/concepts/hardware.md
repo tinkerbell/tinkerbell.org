@@ -11,11 +11,10 @@ The Hardware spec describes a physical machine. Its main purpose is for IP Addre
 - DHCP and IPAM - [here](/docs/services/smee)
 - Template Rendering - [here](/docs/services/tink-controller)
 
-- where does the spec live?
-    Current version is v1alpha1
-    Go spec -> https://github.com/tinkerbell/tink/blob/main/api/v1alpha1/hardware_types.go
-    Kubernetes Custom Resource Definition -> https://github.com/tinkerbell/tink/blob/main/config/crd/bases/tinkerbell.org_hardware.yaml
-    Explorable Spec -> https://doc.crds.dev/github.com/tinkerbell/tink/tinkerbell.org/Hardware/v1alpha1
+- The current v1alpha1 specs can be found here:
+  - [Go spec](https://github.com/tinkerbell/tinkerbell/blob/main/api/v1alpha1/tinkerbell/hardware.go)
+  - [Kubernetes Custom Resource Definition](https://github.com/tinkerbell/tinkerbell/blob/main/crd/bases/tinkerbell.org_hardware.yaml)
+  - [Explorable Spec](https://doc.crds.dev/github.com/tinkerbell/tinkerbell/tinkerbell.org/Hardware/v1alpha1)
 
 - Which services use the spec?
     Smee - Uses the IPAM fields for serving DHCP and gating of whether a machine should be given network boot info or not.
