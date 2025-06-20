@@ -11,7 +11,7 @@ Besides being the leader of the Lost Boys after Peter Pan left Neverland, Rufio 
 
 ## Architecture
 
-![architecture](images/services/rufio/architecture.png)
+![architecture](/images/services/rufio/architecture.png)
 
 Rufio controller consists of three main API types, [Machine]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/machine.go), [Job]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/job.go) and [Task]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/task.go). An operator or an automated client like [CAPT](https://github.com/tinkerbell/cluster-api-provider-tinkerbell) can interact with Rufio using these APIs to manage the state of their physical machines.
 
