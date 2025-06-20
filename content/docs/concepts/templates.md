@@ -155,6 +155,10 @@ environment:
 
 This is a full example of a Template for installing Ubuntu and configuring it to use cloud-init.
 
+The `.artifact_server_ip_port` and `.tootles_ip_port` variables are assumed to
+be set to the `IP:port` combinations of the artifact server housing the
+Ubuntu image and the Tootles instance respectively.
+
 ```yaml
 apiVersion: tinkerbell.org/v1alpha1
 kind: Template
