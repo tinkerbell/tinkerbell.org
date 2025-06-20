@@ -57,8 +57,6 @@ main:
     sub:
       - name: Cloud-init
         ref: "/docs/integrations/cloudinit"
-      - name: Packer
-        ref: "/docs/integrations/packer"
 
   - name: Reference
     ref: "/docs/reference"
