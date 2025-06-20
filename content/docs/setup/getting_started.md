@@ -967,13 +967,12 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 
 Need a little help getting started? We're here!
 
-- Check out the [FAQs] - When there are questions, we document the answers.
+- Open a topic in the [GitHub discussions](https://github.com/tinkerbell/tinkerbell/discussions)
 - Join the [CNCF Community Slack].
   Look for the [#tinkerbell] channel.
 - Submit an issue on [Github].
 
 [cncf community slack]: https://slack.cncf.io/
-[faqs]: /faq/
 [github]: https://github.com/tinkerbell
 [#tinkerbell]: https://app.slack.com/client/T08PSQ7BQ/C01SRB41GMT
 [playground]: https://github.com/tinkerbell/playground
