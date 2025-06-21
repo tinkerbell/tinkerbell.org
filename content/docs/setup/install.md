@@ -13,7 +13,7 @@ This doc will guide you through the installation of the Tinkerbell stack.
 - [Helm](https://helm.sh/docs/intro/install/)
 - A Kubernetes cluster running version 1.26 or later
 - Network connectivity
-  - Layer 2 network connectivity between the Tinkerbell stack and the machines to be provisioned  
+  - Layer 2 network connectivity between the Tinkerbell stack and the machines to be provisioned
   **OR**
   - a DHCP relay agent in your environment that is configured to forward DHCP traffic to the Tinkerbell stack.
 
@@ -25,7 +25,7 @@ This is the recommended way to install a production grade Tinkerbell stack. This
 
 ```bash
 trusted_proxies=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
-# for RKE2 clusters run: 
+# for RKE2 clusters run:
 # trusted_proxies=$(kubectl describe pod -n kube-system -l component=kube-controller-manager | grep "cluster-cidr" | xargs | cut -d"=" -f2)
 LB_IP=<specify a Load balancer IP>
 STACK_CHART_VERSION={{< stringparam "tinkerbellStackVersion" >}}
@@ -55,7 +55,7 @@ Default configuration values can be changed using one or more `--set <parameter>
 
    The following values are required to get the stack up and running in your environment. They are set either in a values file or as `--set` arguments.
 
-   - `global.trustedProxies`: A comma-separated list of trusted proxies. This is used to configure the `X-Forwarded-For` header in HTTP requests for [Hegel] and `auto.ipxe` in [Smee].
+   - `global.trustedProxies`: A comma-separated list of trusted proxies. This is used to configure the `X-Forwarded-For` header in HTTP requests for [Tootles] and `auto.ipxe` in [Smee].
    - `global.publicIP`: The IP address to use for the Kubernetes North/South load balancer. This should be a free IP address in the network where the Tinkerbell stack is deployed. See the upstream Kubernetes docs on [load balancers] for more information.
 
    Other customization to note:
@@ -70,7 +70,7 @@ Default configuration values can be changed using one or more `--set <parameter>
 
    ```bash
    trusted_proxies=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
-   # for RKE2 clusters run: 
+   # for RKE2 clusters run:
    # trusted_proxies=$(kubectl describe pod -n kube-system -l component=kube-controller-manager | grep "cluster-cidr" | xargs | cut -d"=" -f2)
    LB_IP=<specify a Load balancer IP>
    STACK_CHART_VERSION={{< stringparam "tinkerbellStackVersion" >}}
@@ -112,7 +112,7 @@ In the future there is potential for moving away from this lightweight Nginx set
 [^1]: The HookOS artifacts must be named as follows: `vmlinuz-x86_64`, `initramfs-x86_64`, `vmlinuz-aarch64`, and `initramfs-aarch64`
 
 [GatewayAPI]: <https://kubernetes.io/docs/concepts/services-networking/gateway/>
-[Hegel]: /docs/services/hegel
+[Tootles]: /docs/services/tootles
 [Smee]: /docs/services/smee
 [Hardware]: /docs/concepts/hardware
 [Templates]: /docs/concepts/templates

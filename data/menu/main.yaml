@@ -29,8 +29,8 @@ main:
         ref: "/docs/services/tink-worker"
       - name: Smee
         ref: "/docs/services/smee"
-      - name: Hegel
-        ref: "/docs/services/hegel"
+      - name: Tootles
+        ref: "/docs/services/tootles"
       - name: Rufio
         ref: "/docs/services/rufio"
       - name: PBnJ
@@ -51,20 +51,16 @@ main:
     sub:
       - name: Troubleshooting
         ref: "/docs/operations/troubleshooting"
-  
+
   - name: Integrations
     ref: "/docs/integrations"
     sub:
       - name: Cloud-init
         ref: "/docs/integrations/cloudinit"
-      - name: Packer
-        ref: "/docs/integrations/packer"
 
   - name: Reference
     ref: "/docs/reference"
     sub:
-      - name: OS installation primer
-        ref: "/docs/reference/osprimer"
       - name: Architecture
         ref: "/docs/reference/architecture"
       - name: Community

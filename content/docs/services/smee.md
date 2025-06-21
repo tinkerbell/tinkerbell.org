@@ -2,6 +2,7 @@
 title: "Smee"
 draft: false
 geekdocDescription: "DHCP, iPXE, Syslog, network boot server."
+latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 ## Overview
@@ -11,7 +12,8 @@ Smee is Tinkerbell's DHCP server, handling IP addresses and requests.
 It is also the TFTP server, serving iPXE and the initial installation image.
 
 Smee is written in Go, and can be built, run, and tested outside of the Tinkerbell stack.
-Take a look at the code in the [tinkerbell/smee] GitHub repository.
+Take a look at the code in the [smee/ directory]({{< stringparam "latestTinkerbellVersion" >}}/smee)
+of the Tinkerbell [GitHub repository](https://github.com/tinkerbell/tinkerbell).
 
 ##### Responsibilities
 
@@ -51,7 +53,6 @@ There are a lot of articles and use cases for netbooting, here a few that our co
 - [RedHat Enterprise Linux: PREPARING FOR A NETWORK INSTALLATION]
 
 [first journeys with netboot and ipxe installing ubuntu]: https://gianarb.it/blog/first-journeys-with-netboot-ipxe
-[hook]: /hookOS
+[hook]: /docs/additionalcomponents/hookOS
 [redhat enterprise linux: preparing for a network installation]: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/installation_guide/chap-installation-server-setup
 [the state of netbooting raspberry pis]: https://blog.alexellis.io/the-state-of-netbooting-raspberry-pi/
-[tinkerbell/smee]: https://github.com/tinkerbell/smee

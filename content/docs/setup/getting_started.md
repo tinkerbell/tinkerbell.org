@@ -5,7 +5,7 @@ geekdocDescription: "How to try out Tinkerbell quickly and easily."
 ---
 
 This guide lets you quickly evaluate Tinkerbell. We'll walk you through setting up the Tinkerbell stack and provisioning a sample machine.
-See the [install guide](/docs/setup/install) for details on setting up Tinkerbell in a production environment.  
+See the [install guide](/docs/setup/install) for details on setting up Tinkerbell in a production environment.
 
 There are couple of ways to get started with Tinkerbell, pick the one that suits you best.
 
@@ -967,13 +967,12 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 
 Need a little help getting started? We're here!
 
-- Check out the [FAQs] - When there are questions, we document the answers.
+- Open a topic in the [GitHub discussions](https://github.com/tinkerbell/tinkerbell/discussions)
 - Join the [CNCF Community Slack].
   Look for the [#tinkerbell] channel.
 - Submit an issue on [Github].
 
 [cncf community slack]: https://slack.cncf.io/
-[faqs]: /faq/
 [github]: https://github.com/tinkerbell
 [#tinkerbell]: https://app.slack.com/client/T08PSQ7BQ/C01SRB41GMT
 [playground]: https://github.com/tinkerbell/playground

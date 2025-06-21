@@ -2,6 +2,7 @@
 title: "Tink Server"
 draft: false
 geekdocDescription: "A gRPC server for interacting with Tink workers."
+latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 ## Overview
@@ -17,4 +18,4 @@ Tink Server retrieves tasks from and updates task status' on [`Workflow`][workfl
 ## Other Resources
 
 [tink worker]: /docs/services/tink-worker
-[workflow]: https://github.com/tinkerbell/tink/blob/main/pkg/apis/core/v1alpha1/workflow_types.go
+[workflow]: {{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/workflow.go

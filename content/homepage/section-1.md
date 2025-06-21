@@ -6,4 +6,4 @@ hidden: true
 ---
 
 Tinkerbell is a bare metal provisioning engine, built and maintained by the [Tinkerbell Community](/docs/reference/community/).
-The core Tinkerbell stack is comprised of the following services: Smee, Hegel, Hook, and Tink.
+The core Tinkerbell stack is comprised of the following services: Smee, Tootles, Hook, and Tink.
