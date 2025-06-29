@@ -64,6 +64,9 @@ geekdocBackToTop = false
 geekdocRepo = "https://github.com/tinkerbell/tinkerbell.org"
 geekdocEditPath = "edit/main/"
 
+tinkerbellVersion = "v0.18.3"
+tinkerbellRepo = "https://github.com/tinkerbell/tinkerbell/"
+
 [[menu.shortcuts]]
 name = "<i class='fab fa-fw fa-slack'></i> <em>Slack</em>"
 url = "https://cloud-native.slack.com/archives/C01SRB41GMT"

@@ -3,7 +3,6 @@ title: 'Templates'
 draft: false
 weight: 20
 geekdocDescription: 'The resource that describes the collection of tasks and actions.'
-latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 A Template is a collection of tasks that are executed sequentially. Each Task is a collection of actions that are executed sequentially on a specific worker. Actions are the individual unit of work, such as streaming an image to a disk, writing a file, or partitioning a disk.
@@ -36,7 +35,7 @@ tasks: []
 - global_timeout `int`: An integer that describes the global timeout in seconds for the template.
 - tasks `[]task`: A list of task objects. Required.
 
-The Go struct for Tasks is found [here]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/workflow.go).
+The Go struct for Tasks is found [here]({{< repo_tree "api/v1alpha1/tinkerbell/workflow.go" >}}).
 
 ## Task
 
@@ -334,12 +333,12 @@ Values from the Hardware spec (currently, only [Disks][Hardware data contract] a
 
 [CRD]: <https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/>
 [Standard Go template functions]: <https://golang.org/pkg/text/template/>
-[Tinkerbell custom functions]: {{< stringparam "latestTinkerbellVersion" >}}/tink/controller/internal/workflow/template_funcs.go
-[Hardware data contract]: {{< stringparam "latestTinkerbellVersion" >}}/tink/controller/internal/workflow/reconciler.go#L401
-[Template Kubernetes CRD]: {{< stringparam "latestTinkerbellVersion" >}}/crd/bases/tinkerbell.org_templates.yaml
-[Template Go struct definition]: {{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/template.go#L36
-[Explorable Template Spec]: <https://doc.crds.dev/github.com/tinkerbell/tinkerbell/tinkerbell.org/Template/v1alpha1>
-[Task Go struct definition]: {{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/workflow.go#L208
-[Workflow Kubernetes CRD]: <{{< stringparam "latestTinkerbellVersion" >}}/crd/bases/tinkerbell.org_workflows.yaml>
+[Tinkerbell custom functions]: {{< repo_tree "tink/controller/internal/workflow/template_funcs.go" >}}
+[Hardware data contract]: {{< repo_tree "tink/controller/internal/workflow/reconciler.go#L401" >}}
+[Template Kubernetes CRD]: {{< repo_tree "crd/bases/tinkerbell.org_templates.yaml" >}}
+[Template Go struct definition]: {{< repo_tree "api/v1alpha1/tinkerbell/template.go#L36" >}}
+[Explorable Template Spec]: https://doc.crds.dev/github.com/tinkerbell/tinkerbell/tinkerbell.org/Hardware/v1alpha1@{{< tinkerbell_version >}}
+[Task Go struct definition]: {{< repo_tree "api/v1alpha1/tinkerbell/workflow.go#L208" >}}
+[Workflow Kubernetes CRD]: {{< repo_tree "crd/bases/tinkerbell.org_workflows.yaml" >}}
 [Tink Controller]: /docs/services/tink-controller
 [Actions repo]: <https://github.com/tinkerbell/actions>

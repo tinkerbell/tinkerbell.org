@@ -3,7 +3,6 @@ title: 'Workflows'
 draft: false
 weight: 40
 geekdocDescription: 'Workflows bring together Hardware and a Template for execution.'
-latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 A Workflow brings together [Hardware] and a [Template] for execution.
@@ -50,6 +49,6 @@ If after submitting a Workflow and a `kubectl get workflow example` does not sho
 [Hardware]: /docs/concepts/hardware
 [Template]: /docs/concepts/templates
 [tink-controller]: /docs/services/tink-controller
-[Workflow Kubernetes CRD]: {{< stringparam "latestTinkerbellVersion" >}}/crd/bases/tinkerbell.org_workflows.yaml
-[Workflow Go struct definition]: {{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/workflow.go#L53
-[Explorable Workflow Spec]: <https://doc.crds.dev/github.com/tinkerbell/tinkerbell/tinkerbell.org/Workflow/v1alpha1>
+[Workflow Kubernetes CRD]: {{< repo_tree "crd/bases/tinkerbell.org_workflows.yaml" >}}
+[Workflow Go struct definition]: {{< repo_tree "api/v1alpha1/tinkerbell/workflow.go#L53" >}}
+[Explorable Workflow Spec]: https://doc.crds.dev/github.com/tinkerbell/tinkerbell/tinkerbell.org/Workflow/v1alpha1@{{< tinkerbell_version >}}
