@@ -287,35 +287,35 @@ spec:
 
 Key names that are defined by a User in the Workflow spec at `spec.hardwareMap`:
 
-| source | output |
-| ---    | ---    |
+| source            | output              |
+|-------------------|---------------------|
 | `{{ .device_1 }}` | `02:00:00:00:00:01` |
-| `{{ .key_name }}` | `value` |
+| `{{ .key_name }}` | `value`             |
 
 Values from the Hardware spec (currently, only [Disks][Hardware data contract] are available):
 
-| source | output |
-| ---    | ---    |
+| source                  | output                       |
+|-------------------------|------------------------------|
 | `{{ .Hardware.Disks }}` | `[ /dev/nvme0n1, /dev/sda ]` |
 
 ### Available template functions
 
 [Standard Go template functions]:
 
-| source | output |
-| ---    | ---    |
+| source                                      | output              |
+|---------------------------------------------|---------------------|
 | `{{ .device_1 \| printf "%s" }}`            | `02:00:00:00:00:01` |
-| `{{ if eq .device_1 "02:00:00:00:00:01" }}` | `true` |
-| `{{ index .Hardware.Disks 0 }}`             | `/dev/nvme0n1` |
+| `{{ if eq .device_1 "02:00:00:00:00:01" }}` | `true`              |
+| `{{ index .Hardware.Disks 0 }}`             | `/dev/nvme0n1`      |
 
 [Tinkerbell custom functions]:
 
-| source | output |
-| ---    | ---    |
+| source                                                | output           |
+|-------------------------------------------------------|------------------|
 | `{{ formatPartition ( index .Hardware.Disks 0 ) 1 }}` | `/dev/nvme0n1p1` |
-| `{{ contains .device_1 "02:00:00:00:00:01" }}`        | `true` |
-| `{{ hasPrefix .device_1 "02:00:00" }}`                | `true` |
-| `{{ hasSuffix .device_1 "00:01" }}`                   | `true` |
+| `{{ contains .device_1 "02:00:00:00:00:01" }}`        | `true`           |
+| `{{ hasPrefix .device_1 "02:00:00" }}`                | `true`           |
+| `{{ hasSuffix .device_1 "00:01" }}`                   | `true`           |
 
 ## Other Resources
 
