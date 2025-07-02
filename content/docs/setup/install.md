@@ -2,7 +2,6 @@
 title: "Install"
 draft: false
 geekdocDescription: "Install the Tinkerbell stack."
-tinkerbellStackVersion: "0.5.0"
 ---
 
 This doc will guide you through the installation of the Tinkerbell stack.
@@ -24,12 +23,26 @@ This is the recommended way to install a production grade Tinkerbell stack. This
 ## TL;DR
 
 ```bash
-trusted_proxies=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
-# for RKE2 clusters run:
-# trusted_proxies=$(kubectl describe pod -n kube-system -l component=kube-controller-manager | grep "cluster-cidr" | xargs | cut -d"=" -f2)
-LB_IP=<specify a Load balancer IP>
-STACK_CHART_VERSION={{< stringparam "tinkerbellStackVersion" >}}
-helm install tink-stack oci://ghcr.io/tinkerbell/charts/stack --version "$STACK_CHART_VERSION" --create-namespace --namespace tink --wait --set "global.trustedProxies={${trusted_proxies}}" --set "global.publicIP=$LB_IP"
+# Get the pod CIDRs to set as trusted proxies
+TRUSTED_PROXIES=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
+
+# Set the LoadBalancer IP for Tinkerbell services
+LB_IP=192.0.2.116
+
+# Set the artifacts file server URL for HookOS
+ARTIFACTS_FILE_SERVER=http://192.0.2.117:7173
+
+# Specify the Tinkerbell Helm chart version, here we use the latest release.
+TINKERBELL_CHART_VERSION={{< tinkerbell_version >}}
+
+helm install tinkerbell oci://ghcr.io/tinkerbell/charts/tinkerbell \
+  --version $TINKERBELL_CHART_VERSION \
+  --create-namespace \
+  --namespace tinkerbell \
+  --wait \
+  --set "trustedProxies={${TRUSTED_PROXIES}}" \
+  --set "publicIP=$LB_IP" \
+  --set "artifactsFileServer=$ARTIFACTS_FILE_SERVER"
 ```
 
 ## Installation steps
@@ -49,40 +62,48 @@ The variables specified in the command are as follows:
 
 Default configuration values can be changed using one or more `--set <parameter>=<value>` arguments. Alternatively, you can specify several parameters in a custom values file using the `--values <file>` argument.
 
-> You can display the default values of configuration parameters using the `helm show values oci://ghcr.io/tinkerbell/charts/stack --version {{< stringparam "tinkerbellStackVersion" >}}` command.
+> You can display the default values of configuration parameters using the `helm show values oci://ghcr.io/tinkerbell/charts/tinkerbell --version {{< tinkerbell_version >}}` command.
 
 1. Configure the Helm values for your environment.
 
    The following values are required to get the stack up and running in your environment. They are set either in a values file or as `--set` arguments.
 
-   - `global.trustedProxies`: A comma-separated list of trusted proxies. This is used to configure the `X-Forwarded-For` header in HTTP requests for [Tootles] and `auto.ipxe` in [Smee].
-   - `global.publicIP`: The IP address to use for the Kubernetes North/South load balancer. This should be a free IP address in the network where the Tinkerbell stack is deployed. See the upstream Kubernetes docs on [load balancers] for more information.
+   - `trustedProxies`: A comma-separated list of trusted proxies. This is used to configure the `X-Forwarded-For` header in HTTP requests for [Tootles] and `auto.ipxe` in [Smee].
+   - `publicIP`: The IP address to use for the Kubernetes North/South load balancer. This should be a free IP address in the network where the Tinkerbell stack is deployed. See the upstream Kubernetes docs on [load balancers] for more information.
+   - `artifactsFileServer`: The full URL to the HTTP server serving HookOS artifacts like the kernel and initramfs, for example `http://192.0.2.117:7173`
 
-   Other customization to note:
+   For further settings, have a look at the [Chart's Readme]({{< repo_tree "helm/tinkerbell/README.md" >}}) and [values.yaml file]({{< repo_tree "helm/tinkerbell/values.yaml" >}}).
 
-   - `stack.kubevip.enabled`: By default, the stack chart will install kube-vip to manage the load balancer IP. If you have a different solution for managing the load balancer IP, you can set this to `false`. When `false`, it should be used in conjunction with `stack.lbClass`.
-   - `stack.lbClass`: Use this only in conjunction with `stack.kubevip.enabled=false` to specify your load balancer class to use.
-   - `stack.relay.enabled`: By default, this is set to `true`. If you have a DHCP relay agent in your environment that points to the Tinkerbell stack IP, you can set this to `false`.
-   - `stack.hook.enabled`: By default, this is set to `true`. If you do not want the stack chart to download HookOS, you can set this to `false`. When set to `false`, it should be used in conjunction with `smee.http.osieUrl`.
-   - `smee.http.osieUrl.scheme`, `smee.http.osieUrl.host`, `smee.http.osieUrl.port`, `smee.http.osieUrl.path`: By default these are configured automatically. These should only be used in conjunction with `stack.hook.enabled=false`. These specify the URL to the HookOS artifacts[^1].
-
-1. Install the Tinkerbell stack chart.
+1. Install the Tinkerbell Helm chart.
 
    ```bash
-   trusted_proxies=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
-   # for RKE2 clusters run:
-   # trusted_proxies=$(kubectl describe pod -n kube-system -l component=kube-controller-manager | grep "cluster-cidr" | xargs | cut -d"=" -f2)
-   LB_IP=<specify a Load balancer IP>
-   STACK_CHART_VERSION={{< stringparam "tinkerbellStackVersion" >}}
-   helm install tink-stack oci://ghcr.io/tinkerbell/charts/stack --version "$STACK_CHART_VERSION" --create-namespace --namespace tink --wait --set "global.trustedProxies={${trusted_proxies}}" --set "global.publicIP=$LB_IP"
+# Get the pod CIDRs to set as trusted proxies
+TRUSTED_PROXIES=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
+
+# Set the LoadBalancer IP for Tinkerbell services
+LB_IP=192.0.2.116
+
+# Set the artifacts file server URL for HookOS
+ARTIFACTS_FILE_SERVER=http://192.0.2.117:7173
+
+# Specify the Tinkerbell Helm chart version, here we use the latest release.
+TINKERBELL_CHART_VERSION={{< tinkerbell_version >}}
+
+helm install tinkerbell oci://ghcr.io/tinkerbell/charts/tinkerbell \
+  --version $TINKERBELL_CHART_VERSION \
+  --create-namespace \
+  --namespace tinkerbell \
+  --wait \
+  --set "trustedProxies={${TRUSTED_PROXIES}}" \
+  --set "publicIP=$LB_IP" \
+  --set "artifactsFileServer=$ARTIFACTS_FILE_SERVER"
    ```
 
 1. Verify the stack is up and running.
 
    ```bash
    kubectl get pods -n tink # verify all pods are running
-   kubectl get svc -n tink # Verify the tink-stack service has the IP you specified with $LB_IP under the EXTERNAL-IP column
-   kubectl get jobs -n tink # Verify the download-hook job has completed
+   kubectl get svc -n tink # Verify the tinkerbell service has the IP you specified with $LB_IP under the EXTERNAL-IP column
    ```
 
 ## Post installation steps
@@ -92,11 +113,10 @@ See the docs on [Hardware], [Templates], and [Workflows] for more information.
 
 ## Uninstall
 
-Uninstall the Tinkerbell stack via Helm and by deleting the HookOS artifacts.
+Uninstall the Tinkerbell stack via Helm.
 
 ```bash
 helm uninstall tink-stack -n tink
-# either ssh into the cluster or use a Kubernetes job to delete the HookOS artifacts. By default the will live on the host at /opt/hook. See `stack.hook.downloadsDest`.
 ```
 
 ## Design notes
@@ -105,7 +125,8 @@ The Helm chart was designed to allow the entire stack to be hosted behind a sing
 
 In order to achieve this the stack chart does not use a Kubernetes ingress object and controller. This is because most ingress controllers do not support UDP, TCP, HTTP, and gRPC. The ingress controllers that do support UDP are generally a bit heavy to deploy and operate and require a lot of extra configuration, custom resources, etc.
 
-The stack chart deploys a very light weight Nginx deployment with a straightforward configuration that accommodates almost all the Tinkerbell stack services and file serving of the HookOS artifacts. Nginx does not support DHCP. For this a DHCP relay agent is required and we deploy a lightweight agent in the same pod as Nginx.
+To allow for this, the chart deploys a [kube-vip](https://kube-vip.io/) instance, which provides a LoadBalancer IP to the Tinkerbell service. Tinkerbell itself is a single binary listening on multiple ports for the different services making up the stack.
+To allow for DHCP broadcast traffic to reach Tinkerbell, the chart manually creates an additional network interface on the host running Tinkerbell, which receives the broadcast traffic and forwards it to the Tinkerbell Pod.
 
 In the future there is potential for moving away from this lightweight Nginx setup and using the [GatewayAPI] for traffic routing. As the Tinkerbell stack will require both UDP, TCP, and gRPC we'll need an implementation that can support all three. Currently, because of limited Maintainer cycles and the limited support for all these protocols in the existing GatewayAPI implementations, we have not pursued this path.
 
