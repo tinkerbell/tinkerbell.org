@@ -32,7 +32,17 @@ The `hardwareMap` field is a map of User defined key-value pairs that can be ref
 
 ## Workflow Status
 
-The status of a Workflow is updated by the [tink-controller]. Tink-controller will initially render the Template from `templateRef` interpolating any templating in the Template and then saving the whole Template into the status. As the Workflow progresses through its lifecycle, tink-controller will update fields like `seconds`, `startedAt`, and `status`. The status field can be used to determine the current state of the Workflow and to identify any issues that may have occurred during the execution of the Workflow. Get the workflow status by running `kubectl get workflow -o yaml example`. The following Workflow `status` values are possible: `STATE_PENDING`, `STATE_RUNNING`, `STATE_FAILED`, `STATE_TIMEOUT`, and `STATE_SUCCESS`.
+The status of a Workflow is updated by the [tink-controller]. Tink-controller will initially render the Template from `templateRef` interpolating any templating in the Template and then saving the whole Template into the status. As the Workflow progresses through its lifecycle, tink-controller will update fields like `seconds`, `startedAt`, and `status`. The status field can be used to determine the current state of the Workflow and to identify any issues that may have occurred during the execution of the Workflow. Get the workflow status by running `kubectl get workflow -o yaml example`. The `state` can be roughly
+separated into two groups: Execution state and final result. During the execution, a workflow goes through the following states:
+- `PREPARING`: State of a new workflow that's not yet ready for execution, e.g. because the `allowPXE` option needs to be toggled on the [Hardware] first
+- `PENDING`: A workflow ready for execution. First state of a new Workflow that does not need any further preparation
+- `RUNNING`: State of a workflow that is currently being executed on the target Hardware
+- `POST`: This state indicates that the last Action of the last Task of the Workflow was successful and the Workflow is now executing post-run actions, e.g. toggling `allowPXE` back to `False` on the [Hardware]
+
+Then there are three states a Workflow can be in once it finishes, one way or another:
+- `SUCCESS`: The Workflow was successful, all Actions in all Tasks were successful
+- `FAILED`: At least one Action, or a preparatory/post step failed
+- `TIMEOUT`: A Workflow ends up in this state when it hits the `global_timeout` set in the [Template] while still in the `RUNNING` state
 
 ## Troubleshooting
 
