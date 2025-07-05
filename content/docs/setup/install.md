@@ -77,33 +77,33 @@ Default configuration values can be changed using one or more `--set <parameter>
 1. Install the Tinkerbell Helm chart.
 
    ```bash
-# Get the pod CIDRs to set as trusted proxies
-TRUSTED_PROXIES=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
-
-# Set the LoadBalancer IP for Tinkerbell services
-LB_IP=192.0.2.116
-
-# Set the artifacts file server URL for HookOS
-ARTIFACTS_FILE_SERVER=http://192.0.2.117:7173
-
-# Specify the Tinkerbell Helm chart version, here we use the latest release.
-TINKERBELL_CHART_VERSION={{< tinkerbell_version >}}
-
-helm install tinkerbell oci://ghcr.io/tinkerbell/charts/tinkerbell \
-  --version $TINKERBELL_CHART_VERSION \
-  --create-namespace \
-  --namespace tinkerbell \
-  --wait \
-  --set "trustedProxies={${TRUSTED_PROXIES}}" \
-  --set "publicIP=$LB_IP" \
-  --set "artifactsFileServer=$ARTIFACTS_FILE_SERVER"
+   # Get the pod CIDRs to set as trusted proxies
+   TRUSTED_PROXIES=$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ',')
+   
+   # Set the LoadBalancer IP for Tinkerbell services
+   LB_IP=192.0.2.116
+   
+   # Set the artifacts file server URL for HookOS
+   ARTIFACTS_FILE_SERVER=http://192.0.2.117:7173
+   
+   # Specify the Tinkerbell Helm chart version, here we use the latest release.
+   TINKERBELL_CHART_VERSION={{< tinkerbell_version >}}
+   
+   helm install tinkerbell oci://ghcr.io/tinkerbell/charts/tinkerbell \
+     --version $TINKERBELL_CHART_VERSION \
+     --create-namespace \
+     --namespace tinkerbell \
+     --wait \
+     --set "trustedProxies={${TRUSTED_PROXIES}}" \
+     --set "publicIP=$LB_IP" \
+     --set "artifactsFileServer=$ARTIFACTS_FILE_SERVER"
    ```
 
 1. Verify the stack is up and running.
 
    ```bash
-   kubectl get pods -n tink # verify all pods are running
-   kubectl get svc -n tink # Verify the tinkerbell service has the IP you specified with $LB_IP under the EXTERNAL-IP column
+   kubectl get pods -n tinkerbell # verify all pods are running
+   kubectl get svc -n tinkerbell # Verify the tinkerbell service has the IP you specified with $LB_IP under the EXTERNAL-IP column
    ```
 
 ## Post installation steps
@@ -116,7 +116,7 @@ See the docs on [Hardware], [Templates], and [Workflows] for more information.
 Uninstall the Tinkerbell stack via Helm.
 
 ```bash
-helm uninstall tink-stack -n tink
+helm uninstall tinkerbell -n tinkerbell
 ```
 
 ## Design notes
