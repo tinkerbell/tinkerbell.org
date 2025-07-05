@@ -192,8 +192,9 @@ default        job-sample-task-2      3s
 Options per provider can be defined in the `spec.connection.providerOptions` field of a `Machine` or `Task` object.
 
 > Note: when the `rpc` provider options are specified:
-    1. the `authSecretRef` is not required, otherwise it is required.
-    2. under the hood, no other providers will be tried/used.
+>
+> 1. the `authSecretRef` is not required, otherwise it is required.
+> 1. under the hood, no other providers will be tried/used.
 
 `Machine` CR example:
 
