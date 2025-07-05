@@ -121,14 +121,7 @@ helm uninstall tinkerbell -n tinkerbell
 
 ## Design notes
 
-The Helm chart was designed to allow the entire stack to be hosted behind a single IP. This significantly simplifies the proper deployment of the stack.
-
-In order to achieve this the stack chart does not use a Kubernetes ingress object and controller. This is because most ingress controllers do not support UDP, TCP, HTTP, and gRPC. The ingress controllers that do support UDP are generally a bit heavy to deploy and operate and require a lot of extra configuration, custom resources, etc.
-
-To allow for this, the chart deploys a [kube-vip](https://kube-vip.io/) instance, which provides a LoadBalancer IP to the Tinkerbell service. Tinkerbell itself is a single binary listening on multiple ports for the different services making up the stack.
-To allow for DHCP broadcast traffic to reach Tinkerbell, the chart manually creates an additional network interface on the host running Tinkerbell, which receives the broadcast traffic and forwards it to the Tinkerbell Pod.
-
-In the future there is potential for moving away from this lightweight Nginx setup and using the [GatewayAPI] for traffic routing. As the Tinkerbell stack will require both UDP, TCP, and gRPC we'll need an implementation that can support all three. Currently, because of limited Maintainer cycles and the limited support for all these protocols in the existing GatewayAPI implementations, we have not pursued this path.
+To allow for DHCP broadcast traffic to reach Tinkerbell, the chart has an init container that creates an additional network interface on the host running Tinkerbell and then moves this interface into the Tinkerbell Pod. This allows Tinkerbell to receive and send broadcast traffic on the layer 2 network.
 
 [^1]: The HookOS artifacts must be named as follows: `vmlinuz-x86_64`, `initramfs-x86_64`, `vmlinuz-aarch64`, and `initramfs-aarch64`
 
