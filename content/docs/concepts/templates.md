@@ -283,14 +283,12 @@ spec:
     device_1: 02:00:00:00:00:01
 ```
 
-{{< hint type=note >}}
-If the Template is defined as part of a Helm chart, you will need to escape
-the Go templates to make sure that Helm doesn't try to instantiate the template.
-One way to do so would be the following:
-```yaml
-worker: "{{ `{{.device_1}}` }}"
-```
-{{< /hint >}}
+> **Note**:
+> If the Template is defined as part of a Helm chart, you will need to escape the Go templates to make sure that Helm doesn't try to instantiate the template. One way to do so would be the following:
+>
+> ```yaml
+>  worker: "{{ `{{.device_1}}` }}"
+>  ```
 
 ### Available template arguments
 
@@ -303,11 +301,12 @@ Key names that are defined by a User in the Workflow spec at `spec.hardwareMap`:
 
 The following values from the [Hardware Spec]({{< repo_tree "api/v1alpha1/tinkerbell/hardware.go#L47" >}})
 can also be used:
-* Interfaces
-* Metadata
-* Disks
-* UserData
-* VendorData
+
+- Interfaces
+- Metadata
+- Disks
+- UserData
+- VendorData
 
 | source                                          | output                       |
 |-------------------------------------------------|------------------------------|
@@ -333,6 +332,7 @@ can also be used:
 
 The functions from the [Sprig templating library](https://masterminds.github.io/sprig/)
 can also be used:
+
 | source                                           | output                 |
 |--------------------------------------------------|------------------------|
 | `{{ "filename with spaces" \| replace " " "-" }}` | `filename-with-spaces` |
