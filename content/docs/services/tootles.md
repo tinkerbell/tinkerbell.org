@@ -2,7 +2,6 @@
 title: "Tootles"
 draft: false
 geekdocDescription: "The metadata server for Tinkerbell."
-latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 ## Overview
@@ -10,7 +9,7 @@ latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 Tootles is Tinkerbell's metadata store that can be used during common provisioning processes such as cloud-init.
 Metadata is exposed over HTTP and sources from various fields on the [`Hardware`] custom resource.
 
-Take a look at the code in the [tootles directory]({{< stringparam "latestTinkerbellVersion" >}}/tootles) of the GitHub repository.
+Take a look at the code in the [tootles directory]({{< repo_tree "tootles" >}}) of the GitHub repository.
 
 ## Architecture
 

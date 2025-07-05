@@ -3,7 +3,6 @@ title: 'Templates'
 draft: false
 weight: 20
 geekdocDescription: 'The resource that describes the collection of tasks and actions.'
-latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 A Template is a collection of tasks that are executed sequentially. Each Task is a collection of actions that are executed sequentially on a specific worker. Actions are the individual unit of work, such as streaming an image to a disk, writing a file, or partitioning a disk.
@@ -36,7 +35,7 @@ tasks: []
 - global_timeout `int`: An integer that describes the global timeout in seconds for the template.
 - tasks `[]task`: A list of task objects. Required.
 
-The Go struct for Tasks is found [here]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/workflow.go).
+The Go struct for Tasks is found [here]({{< repo_tree "api/v1alpha1/tinkerbell/workflow.go" >}}).
 
 ## Task
 
@@ -284,39 +283,59 @@ spec:
     device_1: 02:00:00:00:00:01
 ```
 
+> **Note**:
+> If the Template is defined as part of a Helm chart, you will need to escape the Go templates to make sure that Helm doesn't try to instantiate the template. One way to do so would be the following:
+>
+> ```yaml
+>  worker: "{{ `{{.device_1}}` }}"
+>  ```
+
 ### Available template arguments
 
 Key names that are defined by a User in the Workflow spec at `spec.hardwareMap`:
 
-| source | output |
-| ---    | ---    |
+| source            | output              |
+|-------------------|---------------------|
 | `{{ .device_1 }}` | `02:00:00:00:00:01` |
-| `{{ .key_name }}` | `value` |
+| `{{ .key_name }}` | `value`             |
 
-Values from the Hardware spec (currently, only [Disks][Hardware data contract] are available):
+The following values from the [Hardware Spec]({{< repo_tree "api/v1alpha1/tinkerbell/hardware.go#L47" >}})
+can also be used:
 
-| source | output |
-| ---    | ---    |
-| `{{ .Hardware.Disks }}` | `[ /dev/nvme0n1, /dev/sda ]` |
+- Interfaces
+- Metadata
+- Disks
+- UserData
+- VendorData
+
+| source                                          | output                       |
+|-------------------------------------------------|------------------------------|
+| `{{ .Hardware.Disks }}`                         | `[ /dev/nvme0n1, /dev/sda ]` |
+| `{{ (index .Hardware.Interfaces 0).DHCP.MAC }}` | `02:aa:ff:00:00:01`          |
+| `{{ .Hardware.UserData }}`                      | `#cloud-config [...]`        |
 
 ### Available template functions
 
 [Standard Go template functions]:
 
-| source | output |
-| ---    | ---    |
+| source                                      | output              |
+|---------------------------------------------|---------------------|
 | `{{ .device_1 \| printf "%s" }}`            | `02:00:00:00:00:01` |
-| `{{ if eq .device_1 "02:00:00:00:00:01" }}` | `true` |
-| `{{ index .Hardware.Disks 0 }}`             | `/dev/nvme0n1` |
+| `{{ if eq .device_1 "02:00:00:00:00:01" }}` | `true`              |
+| `{{ index .Hardware.Disks 0 }}`             | `/dev/nvme0n1`      |
 
 [Tinkerbell custom functions]:
 
-| source | output |
-| ---    | ---    |
+| source                                                | output           |
+|-------------------------------------------------------|------------------|
 | `{{ formatPartition ( index .Hardware.Disks 0 ) 1 }}` | `/dev/nvme0n1p1` |
-| `{{ contains .device_1 "02:00:00:00:00:01" }}`        | `true` |
-| `{{ hasPrefix .device_1 "02:00:00" }}`                | `true` |
-| `{{ hasSuffix .device_1 "00:01" }}`                   | `true` |
+
+The functions from the [Sprig templating library](https://masterminds.github.io/sprig/)
+can also be used:
+
+| source                                           | output                 |
+|--------------------------------------------------|------------------------|
+| `{{ "filename with spaces" \| replace " " "-" }}` | `filename-with-spaces` |
 
 ## Other Resources
 
@@ -334,12 +353,11 @@ Values from the Hardware spec (currently, only [Disks][Hardware data contract] a
 
 [CRD]: <https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/>
 [Standard Go template functions]: <https://golang.org/pkg/text/template/>
-[Tinkerbell custom functions]: {{< stringparam "latestTinkerbellVersion" >}}/tink/controller/internal/workflow/template_funcs.go
-[Hardware data contract]: {{< stringparam "latestTinkerbellVersion" >}}/tink/controller/internal/workflow/reconciler.go#L401
-[Template Kubernetes CRD]: {{< stringparam "latestTinkerbellVersion" >}}/crd/bases/tinkerbell.org_templates.yaml
-[Template Go struct definition]: {{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/template.go#L36
-[Explorable Template Spec]: <https://doc.crds.dev/github.com/tinkerbell/tinkerbell/tinkerbell.org/Template/v1alpha1>
-[Task Go struct definition]: {{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/tinkerbell/workflow.go#L208
-[Workflow Kubernetes CRD]: <{{< stringparam "latestTinkerbellVersion" >}}/crd/bases/tinkerbell.org_workflows.yaml>
+[Tinkerbell custom functions]: {{< repo_tree "tink/controller/internal/workflow/template_funcs.go" >}}
+[Template Kubernetes CRD]: {{< repo_tree "crd/bases/tinkerbell.org_templates.yaml" >}}
+[Template Go struct definition]: {{< repo_tree "api/v1alpha1/tinkerbell/template.go#L36" >}}
+[Explorable Template Spec]: https://doc.crds.dev/github.com/tinkerbell/tinkerbell/tinkerbell.org/Hardware/v1alpha1@{{< tinkerbell_version >}}
+[Task Go struct definition]: {{< repo_tree "api/v1alpha1/tinkerbell/workflow.go#L208" >}}
+[Workflow Kubernetes CRD]: {{< repo_tree "crd/bases/tinkerbell.org_workflows.yaml" >}}
 [Tink Controller]: /docs/services/tink-controller
 [Actions repo]: <https://github.com/tinkerbell/actions>

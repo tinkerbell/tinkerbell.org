@@ -2,7 +2,6 @@
 title: "Smee"
 draft: false
 geekdocDescription: "DHCP, iPXE, Syslog, network boot server."
-latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 ## Overview
@@ -12,7 +11,7 @@ Smee is Tinkerbell's DHCP server, handling IP addresses and requests.
 It is also the TFTP server, serving iPXE and the initial installation image.
 
 Smee is written in Go, and can be built, run, and tested outside of the Tinkerbell stack.
-Take a look at the code in the [smee/ directory]({{< stringparam "latestTinkerbellVersion" >}}/smee)
+Take a look at the code in the [smee/ directory]({{< repo_tree "smee/" >}})
 of the Tinkerbell [GitHub repository](https://github.com/tinkerbell/tinkerbell).
 
 ##### Responsibilities

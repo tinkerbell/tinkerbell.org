@@ -2,7 +2,6 @@
 title: 'Rufio'
 draft: false
 geekdocDescription: "Kubernetes controller for BMC interactions."
-latestTinkerbellVersion: "https://github.com/tinkerbell/tinkerbell/tree/v0.18.3"
 ---
 
 ## Who is Rufio?
@@ -13,7 +12,7 @@ Besides being the leader of the Lost Boys after Peter Pan left Neverland, Rufio 
 
 ![architecture](/images/services/rufio/architecture.png)
 
-Rufio controller consists of three main API types, [Machine]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/machine.go), [Job]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/job.go) and [Task]({{< stringparam "latestTinkerbellVersion" >}}/api/v1alpha1/bmc/task.go). An operator or an automated client like [CAPT](https://github.com/tinkerbell/cluster-api-provider-tinkerbell) can interact with Rufio using these APIs to manage the state of their physical machines.
+Rufio controller consists of three main API types, [Machine]({{< repo_tree "api/v1alpha1/bmc/machine.go" >}}), [Job]({{< repo_tree "api/v1alpha1/bmc/job.go" >}}) and [Task]({{< repo_tree "/api/v1alpha1/bmc/task.go" >}}). An operator or an automated client like [CAPT](https://github.com/tinkerbell/cluster-api-provider-tinkerbell) can interact with Rufio using these APIs to manage the state of their physical machines.
 
 ### Machine API
 
@@ -192,13 +191,14 @@ default        job-sample-task-2      3s
 
 Options per provider can be defined in the `spec.connection.providerOptions` field of a `Machine` or `Task` object.
 
-> Note: when the `rpc` provider options are specified:  
-    1. the `authSecretRef` is not required, otherwise it is required.  
-    2. under the hood, no other providers will be tried/used.
+> Note: when the `rpc` provider options are specified:
+>
+> 1. the `authSecretRef` is not required.
+> 1. under the hood, no other providers will be tried/used.
 
 `Machine` CR example:
 
-> Note: The provider options below are not comprehensive. See the [spec]({{< stringparam "latestTinkerbellVersion" >}}/crd/bases/bmc.tinkerbell.org_machines.yaml) for all available options.
+> Note: The provider options below are not comprehensive. See the [spec]({{< repo_tree "crd/bases/bmc.tinkerbell.org_machines.yaml" >}}) for all available options.
 
 ```yaml
 apiVersion: bmc.tinkerbell.org/v1alpha1
