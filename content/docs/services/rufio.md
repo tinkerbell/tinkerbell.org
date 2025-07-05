@@ -193,7 +193,7 @@ Options per provider can be defined in the `spec.connection.providerOptions` fie
 
 > Note: when the `rpc` provider options are specified:
 >
-> 1. the `authSecretRef` is not required, otherwise it is required.
+> 1. the `authSecretRef` is not required.
 > 1. under the hood, no other providers will be tried/used.
 
 `Machine` CR example:
