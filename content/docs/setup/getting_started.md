@@ -503,6 +503,12 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
    ```bash
    ssh tink@192.168.56.43 # user/pass => tink/tink
    ```
+1. Clean up
+
+   After you're done with the playground, clean up all VMs:
+   ```bash
+   vagrant destroy
+   ```
 
 ## Vagrant and VirtualBox
 
@@ -987,6 +993,13 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 
    ```bash
    ssh tink@192.168.56.43 # user/pass => tink/tink
+   ```
+
+1. Clean up
+
+   After you're done with the playground, clean up all VMs:
+   ```bash
+   vagrant destroy
    ```
 
 ## Get Help
