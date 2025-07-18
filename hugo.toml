@@ -64,7 +64,7 @@ geekdocBackToTop = false
 geekdocRepo = "https://github.com/tinkerbell/tinkerbell.org"
 geekdocEditPath = "edit/main/"
 
-tinkerbellVersion = "v0.19.0"
+tinkerbellVersion = "v0.19.1"
 tinkerbellRepo = "https://github.com/tinkerbell/tinkerbell/"
 
 [[menu.shortcuts]]
