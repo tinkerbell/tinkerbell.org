@@ -381,8 +381,8 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
 
    ```bash
    vagrant ssh stack
-   kubectl get jobs -n tink-system --watch
-   kubectl get pods -n tink-system --watch
+   kubectl get jobs -n tinkerbell --watch
+   kubectl get pods -n tinkerbell --watch
    exit
    # There is one Kubernetes job to download the Ubuntu image and an init
    # container in the hookos pod downloading the HookOS artifacts.
@@ -395,7 +395,7 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
 
    Ubuntu image download:
    ```bash
-   kubectl get jobs -n tink-system --watch
+   kubectl get jobs -n tinkerbell --watch
    NAME                    COMPLETIONS   DURATION   AGE
    download-ubuntu-jammy   0/1           49s        49s
    download-ubuntu-jammy   0/1           70s        70s
@@ -404,7 +404,7 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
    ```
    HookOS pod:
    ```bash
-   kubectl get pods -n tink-system --watch
+   kubectl get pods -n tinkerbell --watch
    NAME                          READY   STATUS      RESTARTS   AGE
    download-ubuntu-jammy-2w4wn   0/1     Completed   0          38m
    hookos-58b848576b-hzsv4       2/2     Running     0          38m
@@ -468,7 +468,7 @@ Follow these steps to create the stack on a Libvirt VM using Vagrant. Then deplo
 
    # watch for the workflow to complete
    # once the workflow is complete (see the expected output below for completion), move on to the next step
-   kubectl get -n tink-system workflow playground-workflow --watch
+   kubectl get -n tinkerbell workflow playground-workflow --watch
    ```
 
    <details>
@@ -864,8 +864,8 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 
    ```bash
    vagrant ssh stack
-   kubectl get jobs -n tink-system --watch
-   kubectl get pods -n tink-system --watch
+   kubectl get jobs -n tinkerbell --watch
+   kubectl get pods -n tinkerbell --watch
    exit
    # There is one Kubernetes job to download the Ubuntu image and an init
    # container in the hookos pod downloading the HookOS artifacts.
@@ -878,7 +878,7 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 
    Ubuntu image download:
    ```bash
-   kubectl get jobs -n tink-system --watch
+   kubectl get jobs -n tinkerbell --watch
    NAME                    COMPLETIONS   DURATION   AGE
    download-ubuntu-jammy   0/1           49s        49s
    download-ubuntu-jammy   0/1           70s        70s
@@ -887,7 +887,7 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
    ```
    HookOS pod:
    ```bash
-   kubectl get pods -n tink-system --watch
+   kubectl get pods -n tinkerbell --watch
    NAME                          READY   STATUS      RESTARTS   AGE
    download-ubuntu-jammy-2w4wn   0/1     Completed   0          38m
    hookos-58b848576b-hzsv4       2/2     Running     0          38m
@@ -959,7 +959,7 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 
    # watch for the workflow to complete
    # once the workflow is complete (see the example output below for completion), move on to the next step
-   kubectl get -n tink-system workflow sandbox-workflow --watch
+   kubectl get -n tinkerbell workflow sandbox-workflow --watch
    ```
 
    <details>

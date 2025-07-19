@@ -28,7 +28,7 @@ apiVersion: tinkerbell.org/v1alpha1
 kind: Hardware
 metadata:
   name: machine1
-  namespace: tink-system
+  namespace: tinkerbell
 spec:
   disks:
   - device: /dev/sda
