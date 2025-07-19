@@ -62,7 +62,7 @@ apiVersion: tinkerbell.org/v1alpha1
 kind: Hardware
 metadata:
   name: example
-  namespace: tink-system
+  namespace: tinkerbell
 spec:
   userData: >-
     #cloud-config
