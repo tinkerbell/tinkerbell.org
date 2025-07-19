@@ -14,7 +14,7 @@ apiVersion: tinkerbell.org/v1alpha1
 kind: Template
 metadata:
   name: ubuntu
-  namespace: tink-system
+  namespace: tinkerbell
 spec:
   data: ""
 ```
@@ -163,7 +163,7 @@ apiVersion: tinkerbell.org/v1alpha1
 kind: Template
 metadata:
   name: ubuntu
-  namespace: tink-system
+  namespace: tinkerbell
 spec:
   data: |
     name: ubuntu
@@ -249,7 +249,7 @@ apiVersion: tinkerbell.org/v1alpha1
 kind: Template
 metadata:
   name: ubuntu
-  namespace: tink-system
+  namespace: tinkerbell
 spec:
   data: |
     name: ubuntu
@@ -275,7 +275,7 @@ apiVersion: tinkerbell.org/v1alpha1
 kind: Workflow
 metadata:
   name: ubuntu-install
-  namespace: tink-system
+  namespace: tinkerbell
 spec:
   templateRef: ubuntu
   hardwareRef: hardware-1
