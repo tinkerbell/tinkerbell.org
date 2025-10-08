@@ -139,9 +139,7 @@ environment:
 - name `string`: A string that describes the action. It should be unique among actions in the task. Required.
 - image `string`: A string that describes the fully qualified location to a container image to be used for the action. Required.
 - timeout `int`: An integer that describes the timeout in seconds for the action.
-- command `[]string`: A list of strings that are used to override the entrypoint in the container image.
-- on-timeout `[]string`: A list of strings that are used to override the entrypoint in the container image when the action times out.
-- on-failure `[]string`: A list of strings that are used to override the entrypoint in the container image when the action fails.
+- command `[]string`: A list of strings that are used as arguments when running the Action container.
 - volumes `[]string`: A list of strings that are used to mount volumes into the action container. The format for each string should be `source:destination`.
 - pid `string`: A string that describes the pid mode for the action. Generally it is either "host" or not defined.
 - environment `map[string]string`: A map of strings that are used to set environment variables in the action container.
