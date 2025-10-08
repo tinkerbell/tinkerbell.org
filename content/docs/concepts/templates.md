@@ -125,7 +125,7 @@ An Action is an individual units of work, such as streaming an image to a disk, 
 name: stream ubuntu image
 image: quay.io/tinkerbell/actions/image2disk:latest
 timeout: 9600
-command: ["echo", "override", "entrypoint", "in", "container", "image", "here"]
+command: ["arguments", "used", "in", "container", "run", "here"]
 on-timeout: ["echo", "timeout"]
 on-failure: ["echo", "failure"]
 volumes: ["/var/run/data":"/data"]
