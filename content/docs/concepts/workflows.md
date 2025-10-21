@@ -23,7 +23,7 @@ spec:
 ```
 
 - `templateRef` is the name of the [Template] to use. Required.
-- `hardwareRef` is the name of the [Hardware] to use. Required.
+- `hardwareRef` is the name of the [Hardware] to use. Optional.
 - `hardwareMap` is a map of key-value pairs that are passed to the [Template] as environment variables.
 
 ## hardwareMap
