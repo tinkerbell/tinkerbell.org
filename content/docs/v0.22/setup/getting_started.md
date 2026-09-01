@@ -533,7 +533,7 @@ Follow these steps to create the stack on a Virtualbox VM using Vagrant. Then de
 
    ```bash
    cd stack/vagrant
-   vagrant up
+   vagrant up --provider=virtualbox
    # This process will take up to 10 minutes depending on your internet connection.
    # It will download HookOS, which is a couple hundred megabytes in size, and an Ubuntu cloud image, which is about 600MB.
    ```
